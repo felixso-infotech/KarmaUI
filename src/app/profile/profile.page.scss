@@ -1,0 +1,140 @@
+#profile {
+
+  display: flex;
+  border-radius: none !important;
+  margin:0px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border:none;
+  border-radius:0 !important;
+  box-shadow:none;
+  height: 100%;
+  overflow-y: scroll;     
+}
+
+#profile ion-card-content {
+margin: auto;
+width: 100%;
+padding: 0px;
+}
+
+#avatar {
+  
+  margin: auto;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background:white;
+}
+
+ion-avatar {
+  width:100px;
+  height: 100px;
+}
+
+ion-badge {
+  margin-right:10px;
+}
+
+#avatar img{
+  border-radius:100%;
+  border: 1px solid black;
+  padding: 2px;
+}
+
+#name {
+
+  font-size:35px;
+}
+
+#well {
+  font-size:20px;
+  color:white;
+}
+
+#coin-value {
+
+  font-size:1.5em;
+  color: #de2747;
+  padding-left:2px;
+}
+
+#coin-icon {
+  width: 25px;
+  height:25px;
+  color: deeppink;
+}
+.trophy-icon {
+
+  font-size:40px;
+  margin-right:2px;
+}
+
+#coin-grid , .coin-col{
+  
+  padding: 0px;
+}
+#coin-img-container {
+  flex: 0 0 25%;
+  width: 25%;
+  background: orangered;
+  max-width: 25%;
+  text-align: center;
+}
+
+#coin-img-container ion-icon {
+
+  width: 50px;
+  height: 50px;
+}
+ion-card-header{
+
+  font-size:17px;
+}
+
+.trophy-value {
+
+  font-size:30px;
+}
+
+.txt-white {
+  
+  color:white;
+}
+
+#medals , #medals ion-card-content , #badges , #badges ion-card-content {
+
+
+  border-radius: 0;
+  background: whitesmoke;
+  box-shadow: none;
+
+}
+
+#medals ion-item {
+  --ion-background-color:rgb(245, 245, 245);
+
+}
+
+.cl-yellow {
+  color:yellow;
+}
+
+.cl-grey {
+  color: grey;
+}
+
+.cl-gold{
+  color:rgb(153, 134, 24);
+}
+
+.cl-blue {
+  color: blue;
+}
+
+.flex-box {
+
+  display: flex;
+  justify-content: center;
+}
+.md-b-10 {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="tabs/home"></ion-back-button>
+        </ion-buttons>
+    <ion-title>finish activity</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!--   <div>
+      <span style="color:red;" *ngIf="message">{{message}}</span>
+      <ion-input #file type="file" accept='image/*' (change)="preview(file.files)"></ion-input>
+  </div>
+
+    <div><img [src]="imgURL" *ngIf="imgURL"></div>
+    <div>
+      <ion-button *ngIf="imgURL" (click)="sendStatements()">Finish</ion-button>
+    </div> -->
+    <ion-grid>
+      <ion-row>
+          <ion-col size="6">
+            <ion-text *ngIf="!imgURL" text-center>
+              <h5>Please choose images</h5>
+            </ion-text>
+          </ion-col>
+          <ion-col size="3">
+            <ion-icon color="primary" (click)="openGallery()" size="large" name="attach" margin></ion-icon>
+          </ion-col>
+          <ion-col size="3">
+              <ion-icon size="large" (click)="openCamera()" color="primary" name="camera" margin></ion-icon>
+            </ion-col>
+      </ion-row>
+    </ion-grid>
+      <div><img *ngIf="imgURL" [src]="imgURL"></div>
+      <div *ngIf="!imgURL"><div class="placeholder">Image will be appeared here</div></div>
+      <ion-item>
+          <ion-button [disabled]="!imgURL" routerLink="/success" (click)="presentToast()" size="large" slot="end" fill="outline" margin-bottom icon-only padding clear>
+              <ion-icon name="arrow-forward" size="large"></ion-icon>
+          </ion-button>
+          <ion-button [disabled]="!imgURL" (click)="share()" size="large" slot="end" fill="outline" margin-bottom icon-only padding clear>
+            <ion-icon name="share-alt" size="large"></ion-icon>
+        </ion-button>
+        </ion-item>
+
+    
+</ion-content>

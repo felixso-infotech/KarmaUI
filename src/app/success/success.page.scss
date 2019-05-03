@@ -1,0 +1,46 @@
+
+#profile {
+    min-height:85%;
+    background: #f9a45b;
+}
+#profile ion-item {
+
+    --ion-background-color:#f9a45b;
+}
+
+#avatar {
+  
+    margin: auto;
+    background:white;
+    width: 250px;
+    height: 250px;
+    padding: 0px;
+}
+
+.mr-0 {
+
+    margin: 0px;
+}
+
+.cl-white {
+    color: white;
+    font-style: italic;
+    font-size:18px;
+}
+
+#quote {
+    color:white;
+    margin-top:20px;
+    font-size: 30px;
+    font-style: italic;
+}
+
+.alert {
+
+    --ion-background-color: #f9a45b;
+}
+
+ion-toolbar {
+
+    --ion-background-color: transparent !important;
+}

@@ -1,0 +1,40 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Recommended activities</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-top>
+  <div padding>
+      <ngx-mobile-wheel
+      stroke="#f4ecd7"
+      [strokeWidth]="0"
+      fontColor="#221f1f"
+      arrowColor="#221f1f"
+      [spinRange]="[10,5]"
+      [centerText]="'Show gratitude'"
+      [prizeToWin]="prizeToWin"
+      [prize_descriptions]='prizes'
+      [colors]="colors"
+      (beforeSpin)="beforeSpin()"
+      (afterSpin)="afterSpin()">
+    </ngx-mobile-wheel>
+<!--     <ngx-mobile-wheel
+    stroke="#f4ecd7"
+    [strokeWidth]="0"
+    fontColor="#221f1f"
+    arrowColor="#221f1f"
+    [spinRange]="[10,5]"
+    [centerText]="'Show gratitude'"
+    [prizeToWin]="activitySelected?.title"
+    [prize_descriptions]="wheelActivities"
+    [colors]="colors"
+    (beforeSpin)="beforeSpin()"
+    (afterSpin)="afterSpin()">
+  </ngx-mobile-wheel> -->
+  </div>
+  <ion-text color="primary" mode="ios" class="ion-text-center">
+    <p>Touch the wheel to randomly pick a task</p>
+  </ion-text>
+</ion-content> 

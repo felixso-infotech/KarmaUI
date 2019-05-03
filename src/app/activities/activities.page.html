@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Activities for you</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-grid>
+    <ion-row>
+        <ion-col id="activity-heading">
+          Gratitude Challenge
+        </ion-col>
+      </ion-row>
+  <ion-row align-items-center>
+    <ion-col size='6'>
+      <div class="activity">
+        <div class="activity-image">
+          <img src="https://picsum.photos/200/200/?image=643">
+        </div><div class="activity-name">challenge 1</div>
+        
+        </div>
+    </ion-col>
+    <ion-col>
+      <div class="activity">
+          <p>challenge 2</p>
+      </div>
+    </ion-col>
+    </ion-row>  
+    <ion-row align-items-end>
+      <ion-col>
+        <div class="activity">
+            <p>challenge 3</p>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="activity">
+            challenge dsadshkajewdwedew1
+        </div>
+      </ion-col>
+    </ion-row>
+</ion-grid> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col id="activity-heading">
+        Gratitude Challenge
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <!-- <div *ngFor="let activity of activities"> -->
+        
+          <ion-col *ngFor="let activity of activities" size="6">
+              <a [href]="activity.url">
+            <div class="activity">
+              <div class="activity-image">
+                <img [src]="'http://192.168.43.69:3000'+activity.iconURL">
+              </div>
+              <div class="activity-name" (click)="finishActivity(activity)">{{activity.title | slice:0:-4}}</div>
+
+            </div>
+          </a>
+          </ion-col>
+        
+      <!-- </div> -->
+    </ion-row>
+  </ion-grid>
+</ion-content>
