@@ -7,7 +7,7 @@
 
 <ion-content padding-top>
   <div padding>
-      <ngx-mobile-wheel
+<!--       <ngx-mobile-wheel
       stroke="#f4ecd7"
       [strokeWidth]="0"
       fontColor="#221f1f"
@@ -19,8 +19,9 @@
       [colors]="colors"
       (beforeSpin)="beforeSpin()"
       (afterSpin)="afterSpin()">
-    </ngx-mobile-wheel>
-<!--     <ngx-mobile-wheel
+    </ngx-mobile-wheel> -->
+    <div *ngIf="wheelActivities && activitySelected">
+<ngx-mobile-wheel
     stroke="#f4ecd7"
     [strokeWidth]="0"
     fontColor="#221f1f"
@@ -32,9 +33,11 @@
     [colors]="colors"
     (beforeSpin)="beforeSpin()"
     (afterSpin)="afterSpin()">
-  </ngx-mobile-wheel> -->
-  </div>
+  </ngx-mobile-wheel>
+</div>
+  </div> 
   <ion-text color="primary" mode="ios" class="ion-text-center">
     <p>Touch the wheel to randomly pick a task</p>
+    <p>{{activitySelected?.title}}</p>
   </ion-text>
 </ion-content> 

@@ -1,4 +1,5 @@
-import { ActivityDTO } from './../api/models/activity-dto';
+import { ActivityModel } from './../api/models/activity-model';
+
 import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,19 +28,28 @@ export class HomePage implements OnInit {
     "The unforgettable help",
     "My pet"
   ]; */
-  activities:ActivityDTO[];
-  wheelActivities:string[];
-  activitySelected : ActivityDTO;
+  activities:ActivityModel[];
+  wheelActivities:string[]=[];
+  activitySelected : ActivityModel;
 
   constructor(private router: Router, private activityService: ActivityService,private alertController:AlertController,private service:AggregateResourceService) { }
 
+  ngOnChanges() {
+    console.log("ngOnChanges");
+
+
+    
+  }
+
   ngOnInit() {
-    this.service.findInompletedActivityByRegisteredUserIdUsingGET({registeredUserId: 1}).subscribe(response=>{
+    console.log("ngOninit");
+    this.service.findIncompletedActivityByRegisteredUserIdUsingGET({"registeredUserId": 1}).subscribe(response=>{
       this.activities=response;
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
       });
       this.activitySelected=this.activities[0];
+      console.log(this.activitySelected);
     });
   }
 

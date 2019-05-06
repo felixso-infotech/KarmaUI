@@ -7,9 +7,10 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { ActivityDTO } from '../models/activity-dto';
-import { CompletedActivityDTO } from '../models/completed-activity-dto';
-import { RegisteredUserDTO } from '../models/registered-user-dto';
+import { ActivityModel } from '../models/activity-model';
+import { CompletedActivityModel } from '../models/completed-activity-model';
+import { InstructionVideoModel } from '../models/instruction-video-model';
+import { RegisteredUserModel } from '../models/registered-user-model';
 
 /**
  * Aggregate Resource
@@ -18,16 +19,20 @@ import { RegisteredUserDTO } from '../models/registered-user-dto';
   providedIn: 'root',
 })
 class AggregateResourceService extends __BaseService {
-  static readonly getAllActivitiesUsingGETPath = '/api/activity';
+  static readonly getAllActivitiesUsingGETPath = '/api/activities';
   static readonly getActivityByIdUsingGETPath = '/api/activity/{activityId}';
-  static readonly createCompletedActivityUsingPOSTPath = '/api/completedActivity';
-  static readonly findCompletedActivityByIdUsingGETPath = '/api/completedActivity/{completedActivityId}';
-  static readonly findCompletedActivityByRegisteredUserIdUsingGETPath = '/api/completedActivity/{registeredUserId}';
-  static readonly findInompletedActivityByRegisteredUserIdUsingGETPath = '/api/incompletedActivity/{registeredUserId}';
-  static readonly createRegisteredUserUsingPOSTPath = '/api/registeredUser';
-  static readonly updateRegisteredUserUsingPUTPath = '/api/registeredUser';
-  static readonly getRegisteredUserUsingGETPath = '/api/registeredUser/{registeredUserId}';
-  static readonly getAllRegisteredUsersUsingGETPath = '/api/registeredUsers';
+  static readonly createCompletedActivityUsingPOSTPath = '/api/completed-activities';
+  static readonly findCompletedActivityByRegisteredUserPhoneNumberUsingGETPath = '/api/completed-activity-by-phonenumber/{phoneNumber}';
+  static readonly findCompletedActivityByRegisteredUserIdUsingGETPath = '/api/completed-activity-by-registered-user/{registeredUserId}';
+  static readonly findCompletedActivityByIdUsingGETPath = '/api/completed-activity/{completedActivityId}';
+  static readonly findIncompletedActivityByRegisteredUserPhoneNumberUsingGETPath = '/api/incompleted-activity-by-phonenumber/{phoneNumber}';
+  static readonly findIncompletedActivityByRegisteredUserIdUsingGETPath = '/api/incompleted-activity-by-registered-user/{registeredUserId}';
+  static readonly getInstructionVideoByActivityIdUsingGETPath = '/api/instruction-video-by-activityId/{activityId}';
+  static readonly getAllRegisteredUsersUsingGETPath = '/api/registered-users';
+  static readonly createRegisteredUserUsingPOSTPath = '/api/registered-users';
+  static readonly updateRegisteredUserUsingPUTPath = '/api/registered-users';
+  static readonly getRegisteredUserByPhoneNumberUsingGETPath = '/api/registered-users-by-phonenumber/{phoneNumber}';
+  static readonly getRegisteredUserUsingGETPath = '/api/registered-users/{id}';
 
   constructor(
     config: __Configuration,
@@ -61,7 +66,7 @@ class AggregateResourceService extends __BaseService {
    *
    * @return OK
    */
-  getAllActivitiesUsingGETResponse(params: AggregateResourceService.GetAllActivitiesUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityDTO>>> {
+  getAllActivitiesUsingGETResponse(params: AggregateResourceService.GetAllActivitiesUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityModel>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -77,7 +82,7 @@ class AggregateResourceService extends __BaseService {
     if (params.offset != null) __params = __params.set('offset', params.offset.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/activity`,
+      this.rootUrl + `/api/activities`,
       __body,
       {
         headers: __headers,
@@ -88,7 +93,7 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<ActivityDTO>>;
+        return _r as __StrictHttpResponse<Array<ActivityModel>>;
       })
     );
   }
@@ -117,24 +122,57 @@ class AggregateResourceService extends __BaseService {
    *
    * @return OK
    */
-  getAllActivitiesUsingGET(params: AggregateResourceService.GetAllActivitiesUsingGETParams): __Observable<Array<ActivityDTO>> {
+  getAllActivitiesUsingGET(params: AggregateResourceService.GetAllActivitiesUsingGETParams): __Observable<Array<ActivityModel>> {
     return this.getAllActivitiesUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<ActivityDTO>)
+      __map(_r => _r.body as Array<ActivityModel>)
     );
   }
 
   /**
-   * @param activityId activityId
+   * @param params The `AggregateResourceService.GetActivityByIdUsingGETParams` containing the following parameters:
+   *
+   * - `activityId`: activityId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
    * @return OK
    */
-  getActivityByIdUsingGETResponse(activityId: number): __Observable<__StrictHttpResponse<ActivityDTO>> {
+  getActivityByIdUsingGETResponse(params: AggregateResourceService.GetActivityByIdUsingGETParams): __Observable<__StrictHttpResponse<ActivityModel>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
+    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
+    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
+    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
+    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/activity/${activityId}`,
+      this.rootUrl + `/api/activity/${params.activityId}`,
       __body,
       {
         headers: __headers,
@@ -145,35 +183,58 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<ActivityDTO>;
+        return _r as __StrictHttpResponse<ActivityModel>;
       })
     );
   }
   /**
-   * @param activityId activityId
+   * @param params The `AggregateResourceService.GetActivityByIdUsingGETParams` containing the following parameters:
+   *
+   * - `activityId`: activityId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
    * @return OK
    */
-  getActivityByIdUsingGET(activityId: number): __Observable<ActivityDTO> {
-    return this.getActivityByIdUsingGETResponse(activityId).pipe(
-      __map(_r => _r.body as ActivityDTO)
+  getActivityByIdUsingGET(params: AggregateResourceService.GetActivityByIdUsingGETParams): __Observable<ActivityModel> {
+    return this.getActivityByIdUsingGETResponse(params).pipe(
+      __map(_r => _r.body as ActivityModel)
     );
   }
 
   /**
-   * @param completedActivityDTO completedActivityDTO
+   * @param completedActivityModel completedActivityModel
    * @return OK
    */
-  createCompletedActivityUsingPOSTResponse(completedActivityDTO: CompletedActivityDTO): __Observable<__StrictHttpResponse<CompletedActivityDTO>> {
+  createCompletedActivityUsingPOSTResponse(completedActivityModel: CompletedActivityModel): __Observable<__StrictHttpResponse<CompletedActivityModel>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __headers.append('Content-Type', 'multipart/form-data');
     let __formData = new FormData();
     __body = __formData;
-   if(completedActivityDTO !== null && typeof completedActivityDTO !== "undefined") { __formData.append('completedActivityDTO', JSON.stringify(completedActivityDTO));}
+   if(completedActivityModel !== null && typeof completedActivityModel !== "undefined") { __formData.append('completedActivityModel', JSON.stringify(completedActivityModel));}
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/api/completedActivity`,
+      this.rootUrl + `/api/completed-activities`,
       __body,
       {
         headers: __headers,
@@ -184,60 +245,24 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<CompletedActivityDTO>;
+        return _r as __StrictHttpResponse<CompletedActivityModel>;
       })
     );
   }
   /**
-   * @param completedActivityDTO completedActivityDTO
+   * @param completedActivityModel completedActivityModel
    * @return OK
    */
-  createCompletedActivityUsingPOST(completedActivityDTO: CompletedActivityDTO): __Observable<CompletedActivityDTO> {
-    return this.createCompletedActivityUsingPOSTResponse(completedActivityDTO).pipe(
-      __map(_r => _r.body as CompletedActivityDTO)
+  createCompletedActivityUsingPOST(completedActivityModel: CompletedActivityModel): __Observable<CompletedActivityModel> {
+    return this.createCompletedActivityUsingPOSTResponse(completedActivityModel).pipe(
+      __map(_r => _r.body as CompletedActivityModel)
     );
   }
 
   /**
-   * @param completedActivityId completedActivityId
-   * @return OK
-   */
-  findCompletedActivityByIdUsingGETResponse(completedActivityId: number): __Observable<__StrictHttpResponse<CompletedActivityDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/completedActivity/${completedActivityId}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<CompletedActivityDTO>;
-      })
-    );
-  }
-  /**
-   * @param completedActivityId completedActivityId
-   * @return OK
-   */
-  findCompletedActivityByIdUsingGET(completedActivityId: number): __Observable<CompletedActivityDTO> {
-    return this.findCompletedActivityByIdUsingGETResponse(completedActivityId).pipe(
-      __map(_r => _r.body as CompletedActivityDTO)
-    );
-  }
-
-  /**
-   * @param params The `AggregateResourceService.FindCompletedActivityByRegisteredUserIdUsingGETParams` containing the following parameters:
+   * @param params The `AggregateResourceService.FindCompletedActivityByRegisteredUserPhoneNumberUsingGETParams` containing the following parameters:
    *
-   * - `registeredUserId`: registeredUserId
+   * - `phoneNumber`: phoneNumber
    *
    * - `unpaged`:
    *
@@ -261,7 +286,7 @@ class AggregateResourceService extends __BaseService {
    *
    * @return OK
    */
-  findCompletedActivityByRegisteredUserIdUsingGETResponse(params: AggregateResourceService.FindCompletedActivityByRegisteredUserIdUsingGETParams): __Observable<__StrictHttpResponse<Array<CompletedActivityDTO>>> {
+  findCompletedActivityByRegisteredUserPhoneNumberUsingGETResponse(params: AggregateResourceService.FindCompletedActivityByRegisteredUserPhoneNumberUsingGETParams): __Observable<__StrictHttpResponse<Array<CompletedActivityModel>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -278,7 +303,7 @@ class AggregateResourceService extends __BaseService {
     if (params.offset != null) __params = __params.set('offset', params.offset.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/completedActivity/${params.registeredUserId}`,
+      this.rootUrl + `/api/completed-activity-by-phonenumber/${params.phoneNumber}`,
       __body,
       {
         headers: __headers,
@@ -289,7 +314,99 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<CompletedActivityDTO>>;
+        return _r as __StrictHttpResponse<Array<CompletedActivityModel>>;
+      })
+    );
+  }
+  /**
+   * @param params The `AggregateResourceService.FindCompletedActivityByRegisteredUserPhoneNumberUsingGETParams` containing the following parameters:
+   *
+   * - `phoneNumber`: phoneNumber
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  findCompletedActivityByRegisteredUserPhoneNumberUsingGET(params: AggregateResourceService.FindCompletedActivityByRegisteredUserPhoneNumberUsingGETParams): __Observable<Array<CompletedActivityModel>> {
+    return this.findCompletedActivityByRegisteredUserPhoneNumberUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<CompletedActivityModel>)
+    );
+  }
+
+  /**
+   * @param params The `AggregateResourceService.FindCompletedActivityByRegisteredUserIdUsingGETParams` containing the following parameters:
+   *
+   * - `registeredUserId`: registeredUserId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  findCompletedActivityByRegisteredUserIdUsingGETResponse(params: AggregateResourceService.FindCompletedActivityByRegisteredUserIdUsingGETParams): __Observable<__StrictHttpResponse<Array<CompletedActivityModel>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
+    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
+    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
+    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
+    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/completed-activity-by-registered-user/${params.registeredUserId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<CompletedActivityModel>>;
       })
     );
   }
@@ -320,16 +437,16 @@ class AggregateResourceService extends __BaseService {
    *
    * @return OK
    */
-  findCompletedActivityByRegisteredUserIdUsingGET(params: AggregateResourceService.FindCompletedActivityByRegisteredUserIdUsingGETParams): __Observable<Array<CompletedActivityDTO>> {
+  findCompletedActivityByRegisteredUserIdUsingGET(params: AggregateResourceService.FindCompletedActivityByRegisteredUserIdUsingGETParams): __Observable<Array<CompletedActivityModel>> {
     return this.findCompletedActivityByRegisteredUserIdUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<CompletedActivityDTO>)
+      __map(_r => _r.body as Array<CompletedActivityModel>)
     );
   }
 
   /**
-   * @param params The `AggregateResourceService.FindInompletedActivityByRegisteredUserIdUsingGETParams` containing the following parameters:
+   * @param params The `AggregateResourceService.FindCompletedActivityByIdUsingGETParams` containing the following parameters:
    *
-   * - `registeredUserId`: registeredUserId
+   * - `completedActivityId`: completedActivityId
    *
    * - `unpaged`:
    *
@@ -353,7 +470,7 @@ class AggregateResourceService extends __BaseService {
    *
    * @return OK
    */
-  findInompletedActivityByRegisteredUserIdUsingGETResponse(params: AggregateResourceService.FindInompletedActivityByRegisteredUserIdUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityDTO>>> {
+  findCompletedActivityByIdUsingGETResponse(params: AggregateResourceService.FindCompletedActivityByIdUsingGETParams): __Observable<__StrictHttpResponse<CompletedActivityModel>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -370,7 +487,7 @@ class AggregateResourceService extends __BaseService {
     if (params.offset != null) __params = __params.set('offset', params.offset.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/incompletedActivity/${params.registeredUserId}`,
+      this.rootUrl + `/api/completed-activity/${params.completedActivityId}`,
       __body,
       {
         headers: __headers,
@@ -381,12 +498,137 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<ActivityDTO>>;
+        return _r as __StrictHttpResponse<CompletedActivityModel>;
       })
     );
   }
   /**
-   * @param params The `AggregateResourceService.FindInompletedActivityByRegisteredUserIdUsingGETParams` containing the following parameters:
+   * @param params The `AggregateResourceService.FindCompletedActivityByIdUsingGETParams` containing the following parameters:
+   *
+   * - `completedActivityId`: completedActivityId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  findCompletedActivityByIdUsingGET(params: AggregateResourceService.FindCompletedActivityByIdUsingGETParams): __Observable<CompletedActivityModel> {
+    return this.findCompletedActivityByIdUsingGETResponse(params).pipe(
+      __map(_r => _r.body as CompletedActivityModel)
+    );
+  }
+
+  /**
+   * @param params The `AggregateResourceService.FindIncompletedActivityByRegisteredUserPhoneNumberUsingGETParams` containing the following parameters:
+   *
+   * - `phoneNumber`: phoneNumber
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  findIncompletedActivityByRegisteredUserPhoneNumberUsingGETResponse(params: AggregateResourceService.FindIncompletedActivityByRegisteredUserPhoneNumberUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityModel>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
+    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
+    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
+    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
+    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/incompleted-activity-by-phonenumber/${params.phoneNumber}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<ActivityModel>>;
+      })
+    );
+  }
+  /**
+   * @param params The `AggregateResourceService.FindIncompletedActivityByRegisteredUserPhoneNumberUsingGETParams` containing the following parameters:
+   *
+   * - `phoneNumber`: phoneNumber
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  findIncompletedActivityByRegisteredUserPhoneNumberUsingGET(params: AggregateResourceService.FindIncompletedActivityByRegisteredUserPhoneNumberUsingGETParams): __Observable<Array<ActivityModel>> {
+    return this.findIncompletedActivityByRegisteredUserPhoneNumberUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<ActivityModel>)
+    );
+  }
+
+  /**
+   * @param params The `AggregateResourceService.FindIncompletedActivityByRegisteredUserIdUsingGETParams` containing the following parameters:
    *
    * - `registeredUserId`: registeredUserId
    *
@@ -412,24 +654,24 @@ class AggregateResourceService extends __BaseService {
    *
    * @return OK
    */
-  findInompletedActivityByRegisteredUserIdUsingGET(params: AggregateResourceService.FindInompletedActivityByRegisteredUserIdUsingGETParams): __Observable<Array<ActivityDTO>> {
-    return this.findInompletedActivityByRegisteredUserIdUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<ActivityDTO>)
-    );
-  }
-
-  /**
-   * @param registeredUserDTO registeredUserDTO
-   * @return OK
-   */
-  createRegisteredUserUsingPOSTResponse(registeredUserDTO: RegisteredUserDTO): __Observable<__StrictHttpResponse<RegisteredUserDTO>> {
+  findIncompletedActivityByRegisteredUserIdUsingGETResponse(params: AggregateResourceService.FindIncompletedActivityByRegisteredUserIdUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityModel>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = registeredUserDTO;
+
+    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
+    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
+    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
+    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
+    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
     let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/registeredUser`,
+      'GET',
+      this.rootUrl + `/api/incompleted-activity-by-registered-user/${params.registeredUserId}`,
       __body,
       {
         headers: __headers,
@@ -440,32 +682,214 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<RegisteredUserDTO>;
+        return _r as __StrictHttpResponse<Array<ActivityModel>>;
       })
     );
   }
   /**
-   * @param registeredUserDTO registeredUserDTO
+   * @param params The `AggregateResourceService.FindIncompletedActivityByRegisteredUserIdUsingGETParams` containing the following parameters:
+   *
+   * - `registeredUserId`: registeredUserId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
    * @return OK
    */
-  createRegisteredUserUsingPOST(registeredUserDTO: RegisteredUserDTO): __Observable<RegisteredUserDTO> {
-    return this.createRegisteredUserUsingPOSTResponse(registeredUserDTO).pipe(
-      __map(_r => _r.body as RegisteredUserDTO)
+  findIncompletedActivityByRegisteredUserIdUsingGET(params: AggregateResourceService.FindIncompletedActivityByRegisteredUserIdUsingGETParams): __Observable<Array<ActivityModel>> {
+    return this.findIncompletedActivityByRegisteredUserIdUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<ActivityModel>)
     );
   }
 
   /**
-   * @param registeredUserDTO registeredUserDTO
+   * @param activityId activityId
    * @return OK
    */
-  updateRegisteredUserUsingPUTResponse(registeredUserDTO: RegisteredUserDTO): __Observable<__StrictHttpResponse<RegisteredUserDTO>> {
+  getInstructionVideoByActivityIdUsingGETResponse(activityId: number): __Observable<__StrictHttpResponse<InstructionVideoModel>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = registeredUserDTO;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/instruction-video-by-activityId/${activityId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<InstructionVideoModel>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
+  getInstructionVideoByActivityIdUsingGET(activityId: number): __Observable<InstructionVideoModel> {
+    return this.getInstructionVideoByActivityIdUsingGETResponse(activityId).pipe(
+      __map(_r => _r.body as InstructionVideoModel)
+    );
+  }
+
+  /**
+   * @param params The `AggregateResourceService.GetAllRegisteredUsersUsingGETParams` containing the following parameters:
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  getAllRegisteredUsersUsingGETResponse(params: AggregateResourceService.GetAllRegisteredUsersUsingGETParams): __Observable<__StrictHttpResponse<Array<RegisteredUserModel>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
+    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
+    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
+    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
+    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/registered-users`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<RegisteredUserModel>>;
+      })
+    );
+  }
+  /**
+   * @param params The `AggregateResourceService.GetAllRegisteredUsersUsingGETParams` containing the following parameters:
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  getAllRegisteredUsersUsingGET(params: AggregateResourceService.GetAllRegisteredUsersUsingGETParams): __Observable<Array<RegisteredUserModel>> {
+    return this.getAllRegisteredUsersUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<RegisteredUserModel>)
+    );
+  }
+
+  /**
+   * @param registeredUserModel registeredUserModel
+   * @return OK
+   */
+  createRegisteredUserUsingPOSTResponse(registeredUserModel: RegisteredUserModel): __Observable<__StrictHttpResponse<RegisteredUserModel>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = registeredUserModel;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/registered-users`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<RegisteredUserModel>;
+      })
+    );
+  }
+  /**
+   * @param registeredUserModel registeredUserModel
+   * @return OK
+   */
+  createRegisteredUserUsingPOST(registeredUserModel: RegisteredUserModel): __Observable<RegisteredUserModel> {
+    return this.createRegisteredUserUsingPOSTResponse(registeredUserModel).pipe(
+      __map(_r => _r.body as RegisteredUserModel)
+    );
+  }
+
+  /**
+   * @param registeredUserModel registeredUserModel
+   * @return OK
+   */
+  updateRegisteredUserUsingPUTResponse(registeredUserModel: RegisteredUserModel): __Observable<__StrictHttpResponse<RegisteredUserModel>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = registeredUserModel;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/api/registeredUser`,
+      this.rootUrl + `/api/registered-users`,
       __body,
       {
         headers: __headers,
@@ -476,32 +900,32 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<RegisteredUserDTO>;
+        return _r as __StrictHttpResponse<RegisteredUserModel>;
       })
     );
   }
   /**
-   * @param registeredUserDTO registeredUserDTO
+   * @param registeredUserModel registeredUserModel
    * @return OK
    */
-  updateRegisteredUserUsingPUT(registeredUserDTO: RegisteredUserDTO): __Observable<RegisteredUserDTO> {
-    return this.updateRegisteredUserUsingPUTResponse(registeredUserDTO).pipe(
-      __map(_r => _r.body as RegisteredUserDTO)
+  updateRegisteredUserUsingPUT(registeredUserModel: RegisteredUserModel): __Observable<RegisteredUserModel> {
+    return this.updateRegisteredUserUsingPUTResponse(registeredUserModel).pipe(
+      __map(_r => _r.body as RegisteredUserModel)
     );
   }
 
   /**
-   * @param registeredUserId registeredUserId
+   * @param phoneNumber phoneNumber
    * @return OK
    */
-  getRegisteredUserUsingGETResponse(registeredUserId: number): __Observable<__StrictHttpResponse<RegisteredUserDTO>> {
+  getRegisteredUserByPhoneNumberUsingGETResponse(phoneNumber: number): __Observable<__StrictHttpResponse<RegisteredUserModel>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/registeredUser/${registeredUserId}`,
+      this.rootUrl + `/api/registered-users-by-phonenumber/${phoneNumber}`,
       __body,
       {
         headers: __headers,
@@ -512,62 +936,32 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<RegisteredUserDTO>;
+        return _r as __StrictHttpResponse<RegisteredUserModel>;
       })
     );
   }
   /**
-   * @param registeredUserId registeredUserId
+   * @param phoneNumber phoneNumber
    * @return OK
    */
-  getRegisteredUserUsingGET(registeredUserId: number): __Observable<RegisteredUserDTO> {
-    return this.getRegisteredUserUsingGETResponse(registeredUserId).pipe(
-      __map(_r => _r.body as RegisteredUserDTO)
+  getRegisteredUserByPhoneNumberUsingGET(phoneNumber: number): __Observable<RegisteredUserModel> {
+    return this.getRegisteredUserByPhoneNumberUsingGETResponse(phoneNumber).pipe(
+      __map(_r => _r.body as RegisteredUserModel)
     );
   }
 
   /**
-   * @param params The `AggregateResourceService.GetAllRegisteredUsersUsingGETParams` containing the following parameters:
-   *
-   * - `unpaged`:
-   *
-   * - `sort.unsorted`:
-   *
-   * - `sort.sorted`:
-   *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-   *
-   * - `size`: Size of a page
-   *
-   * - `paged`:
-   *
-   * - `pageSize`:
-   *
-   * - `pageNumber`:
-   *
-   * - `page`: Page number of the requested page
-   *
-   * - `offset`:
-   *
+   * @param id id
    * @return OK
    */
-  getAllRegisteredUsersUsingGETResponse(params: AggregateResourceService.GetAllRegisteredUsersUsingGETParams): __Observable<__StrictHttpResponse<Array<RegisteredUserDTO>>> {
+  getRegisteredUserUsingGETResponse(id: number): __Observable<__StrictHttpResponse<RegisteredUserModel>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
-    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
-    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
-    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
-    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
+
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/registeredUsers`,
+      this.rootUrl + `/api/registered-users/${id}`,
       __body,
       {
         headers: __headers,
@@ -578,38 +972,17 @@ class AggregateResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<RegisteredUserDTO>>;
+        return _r as __StrictHttpResponse<RegisteredUserModel>;
       })
     );
   }
   /**
-   * @param params The `AggregateResourceService.GetAllRegisteredUsersUsingGETParams` containing the following parameters:
-   *
-   * - `unpaged`:
-   *
-   * - `sort.unsorted`:
-   *
-   * - `sort.sorted`:
-   *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-   *
-   * - `size`: Size of a page
-   *
-   * - `paged`:
-   *
-   * - `pageSize`:
-   *
-   * - `pageNumber`:
-   *
-   * - `page`: Page number of the requested page
-   *
-   * - `offset`:
-   *
+   * @param id id
    * @return OK
    */
-  getAllRegisteredUsersUsingGET(params: AggregateResourceService.GetAllRegisteredUsersUsingGETParams): __Observable<Array<RegisteredUserDTO>> {
-    return this.getAllRegisteredUsersUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<RegisteredUserDTO>)
+  getRegisteredUserUsingGET(id: number): __Observable<RegisteredUserModel> {
+    return this.getRegisteredUserUsingGETResponse(id).pipe(
+      __map(_r => _r.body as RegisteredUserModel)
     );
   }
 }
@@ -620,6 +993,72 @@ module AggregateResourceService {
    * Parameters for getAllActivitiesUsingGET
    */
   export interface GetAllActivitiesUsingGETParams {
+    unpaged?: boolean;
+    sortUnsorted?: boolean;
+    sortSorted?: boolean;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+    paged?: boolean;
+    pageSize?: number;
+    pageNumber?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+    offset?: number;
+  }
+
+  /**
+   * Parameters for getActivityByIdUsingGET
+   */
+  export interface GetActivityByIdUsingGETParams {
+
+    /**
+     * activityId
+     */
+    activityId: number;
+    unpaged?: boolean;
+    sortUnsorted?: boolean;
+    sortSorted?: boolean;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+    paged?: boolean;
+    pageSize?: number;
+    pageNumber?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+    offset?: number;
+  }
+
+  /**
+   * Parameters for findCompletedActivityByRegisteredUserPhoneNumberUsingGET
+   */
+  export interface FindCompletedActivityByRegisteredUserPhoneNumberUsingGETParams {
+
+    /**
+     * phoneNumber
+     */
+    phoneNumber: number;
     unpaged?: boolean;
     sortUnsorted?: boolean;
     sortSorted?: boolean;
@@ -678,9 +1117,75 @@ module AggregateResourceService {
   }
 
   /**
-   * Parameters for findInompletedActivityByRegisteredUserIdUsingGET
+   * Parameters for findCompletedActivityByIdUsingGET
    */
-  export interface FindInompletedActivityByRegisteredUserIdUsingGETParams {
+  export interface FindCompletedActivityByIdUsingGETParams {
+
+    /**
+     * completedActivityId
+     */
+    completedActivityId: number;
+    unpaged?: boolean;
+    sortUnsorted?: boolean;
+    sortSorted?: boolean;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+    paged?: boolean;
+    pageSize?: number;
+    pageNumber?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+    offset?: number;
+  }
+
+  /**
+   * Parameters for findIncompletedActivityByRegisteredUserPhoneNumberUsingGET
+   */
+  export interface FindIncompletedActivityByRegisteredUserPhoneNumberUsingGETParams {
+
+    /**
+     * phoneNumber
+     */
+    phoneNumber: number;
+    unpaged?: boolean;
+    sortUnsorted?: boolean;
+    sortSorted?: boolean;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+    paged?: boolean;
+    pageSize?: number;
+    pageNumber?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+    offset?: number;
+  }
+
+  /**
+   * Parameters for findIncompletedActivityByRegisteredUserIdUsingGET
+   */
+  export interface FindIncompletedActivityByRegisteredUserIdUsingGETParams {
 
     /**
      * registeredUserId

@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = '//192.168.43.249:8075/KarmaApp';
+  rootUrl: string = '//35.196.249.196:8075/KarmaApp';
 }
 
 export interface ApiConfigurationInterface {
