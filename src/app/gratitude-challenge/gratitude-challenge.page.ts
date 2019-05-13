@@ -11,7 +11,7 @@ export class GratitudeChallengePage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
+   
   }
   afterVideoPlayed() {
     this.isVideoPlayed=true;

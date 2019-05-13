@@ -3,7 +3,8 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
-import { AggregateResourceService } from './services/aggregate-resource.service';
+import { AggregateCommandResourceService } from './services/aggregate-command-resource.service';
+import { AggregateQueryResourceService } from './services/aggregate-query-resource.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -18,7 +19,8 @@ import { AggregateResourceService } from './services/aggregate-resource.service'
   declarations: [],
   providers: [
     ApiConfiguration,
-    AggregateResourceService
+    AggregateCommandResourceService,
+    AggregateQueryResourceService
   ],
 })
 export class ApiModule {

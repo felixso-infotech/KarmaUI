@@ -4,7 +4,8 @@ import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { AggregateResourceService } from '../api/services';
+//import { AggregateResourceService } from '../api/services';
+import { AggregateQueryResourceService } from '../api/services';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,7 @@ export class HomePage implements OnInit {
   wheelActivities:string[]=[];
   activitySelected : ActivityModel;
 
-  constructor(private router: Router, private activityService: ActivityService,private alertController:AlertController,private service:AggregateResourceService) { }
+  constructor(private router: Router, private activityService: ActivityService,private alertController:AlertController,private service:AggregateQueryResourceService) { }
 
   ngOnChanges() {
     console.log("ngOnChanges");
@@ -43,7 +44,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     console.log("ngOninit");
-    this.service.findIncompletedActivityByRegisteredUserIdUsingGET({"registeredUserId": 1}).subscribe(response=>{
+    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({"registeredUserId": 1}).subscribe(response=>{
       this.activities=response;
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
