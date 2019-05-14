@@ -4,6 +4,7 @@ import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+
 import { AggregateQueryResourceService } from '../api/services';
 
 @Component({
@@ -35,15 +36,12 @@ export class HomePage implements OnInit {
   constructor(private router: Router, private activityService: ActivityService,private alertController:AlertController,private service:AggregateQueryResourceService) { }
 
   ngOnChanges() {
-    console.log("ngOnChanges");
-
-
-    
+    console.log('ngOnChanges');
   }
 
   ngOnInit() {
-    console.log("ngOninit");
-    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({"registeredUserId": 1}).subscribe(response=>{
+    console.log('ngOninit');
+    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId': 1}).subscribe(response=>{
       this.activities=response;
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
@@ -77,10 +75,11 @@ export class HomePage implements OnInit {
 
   loadActivities() {
     setTimeout(() => {
-      if (this.activityService.currentUser.name != "")
+      if (this.activityService.currentUser.name != '') {
         this.router.navigate(['tabs/home/activities']);
-      else
+      } else {
         this.router.navigate(['login']);
+      }
     }, 5000);
     this.router.navigate(['activities']);
   }
@@ -102,7 +101,7 @@ export class HomePage implements OnInit {
           err=>{console.log(err);})
         }
       ); */
-      this.activitySelected=this.activities[Math.floor(Math.random() * this.activities.length)];
+      this.activitySelected = this.activities[Math.floor(Math.random() * this.activities.length)];
   }
 
   afterSpin() {

@@ -14,6 +14,7 @@ export class GratitudeChallengePage implements OnInit {
   constructor(private aggregate: AggregateQueryResourceService) { }
 
   ngOnInit() {
+
      console.log('ngOninit');
      this.aggregate.getInstructionVideoByActivityIdUsingGET(1).subscribe(response=>{
       this.video = response;
@@ -21,6 +22,7 @@ export class GratitudeChallengePage implements OnInit {
     }, error => {
       console.log(error);
     });
+
   }
   afterVideoPlayed() {
     this.isVideoPlayed = true;
