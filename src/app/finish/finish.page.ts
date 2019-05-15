@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { AggregateCommandResourceService } from '../api/services';
+import { CompletedActivityModel } from '../api/models';
 
 
 @Component({
@@ -17,8 +19,26 @@ export class FinishPage implements OnInit {
   public imagePath;
   imgURL: any;
   public message: string;
+  completedActivity: CompletedActivityModel = {
+    activityDescription: "",
+    activityId: 0,
+    activityTitle: "",
+    id:0,
+    proofs: [
+      {
+        activityId: 0,
+        completedActivityId: 0,
+        file: "",
+        fileContentType: "",
+        fileName: "",
+        id: 0
+      }
+    ],
+    registeredUserId:0
+  };
 
-  constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing) { }
+
+  constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing, private service:AggregateCommandResourceService) { }
 
   ngOnInit() {
   }
@@ -94,6 +114,18 @@ export class FinishPage implements OnInit {
       console.log(err);
     });
   }
+
+/*  save(): void {
+    if (this.imgURL != null) {
+      this.completedActivity.proofs = this.imgURL.substring(
+        this.imgURL.indexOf(",") + 1
+      );
+    }
+    console.log("prooofs",this.completedActivity.proofs);
+
+    
+  }*/
+
   share() {
     this.socialSharing.share("Congratulations! You have earned 500 coins. You have sucessfully completed the task of spending time with your teacher. Hope you have increased your gratitude level. Complete the remaining activities of the spin to get a medal...shared via karma", null, this.imgURL, null).then(() => { console.log("shared") })
       .catch(err => { console.log(err); });

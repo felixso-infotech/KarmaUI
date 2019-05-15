@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregateQueryResourceService } from '../api/services';
 import { InstructionVideoModel } from '../api/models';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-gratitude-challenge',
@@ -9,14 +10,20 @@ import { InstructionVideoModel } from '../api/models';
 })
 export class GratitudeChallengePage implements OnInit {
 
-  isVideoPlayed = false;
+  isVideoPlayed = true;
  video: InstructionVideoModel;
-  constructor(private aggregate: AggregateQueryResourceService) { }
+ id: any;
+ sub:any;
+  constructor(private aggregate: AggregateQueryResourceService,private route: ActivatedRoute) { }
 
   ngOnInit() {
-
      console.log('ngOninit');
-     this.aggregate.getInstructionVideoByActivityIdUsingGET(1).subscribe(response=>{
+     this.sub = this.route.params.subscribe(params => {
+      this.id = params['id']; 
+      console.log("id",this.id);
+    });
+
+     this.aggregate.getInstructionVideoByActivityIdUsingGET(this.id).subscribe(response=>{
       this.video = response;
       console.log(response);
     }, error => {

@@ -47,14 +47,16 @@ export class HomePage implements OnInit {
         this.wheelActivities.push(element.title);
       });
       this.activitySelected=this.activities[0];
-      console.log(this.activitySelected);
+      //console.log(this.activitySelected);
     });
   }
 
   async presentAlert() {
+    console.log("activity got",this.activitySelected.title);
+    console.log("activity id",this.activitySelected.id);
     const alert = await this.alertController.create({
       header: 'Congradulations..!',
-      subHeader: 'Activity got: Hands of God',
+      subHeader: 'Activity got:'+this.activitySelected.title,
       message: 'This is an alert message.',
       buttons: [{
         text: 'Spin again',
@@ -64,7 +66,7 @@ export class HomePage implements OnInit {
         text: 'Proceed',
         role: 'okay',
         handler: ()=>{
-          this.router.navigate(['tabs/home/gratitude-challenge/1']);
+          this.router.navigate(['tabs/home/gratitude-challenge/'+this.activitySelected.id]);
         }
       }
       ]
