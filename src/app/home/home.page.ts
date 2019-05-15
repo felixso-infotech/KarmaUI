@@ -3,7 +3,7 @@ import { ActivityModel } from './../api/models/activity-model';
 import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 
 import { AggregateQueryResourceService } from '../api/services';
 
@@ -29,24 +29,26 @@ export class HomePage implements OnInit {
     "The unforgettable help",
     "My pet"
   ]; */
-  activities:ActivityModel[];
-  wheelActivities:string[]=[];
+  activities: ActivityModel[];
+  wheelActivities: string[] = [];
   activitySelected : ActivityModel;
 
-  constructor(private router: Router, private activityService: ActivityService,private alertController:AlertController,private service:AggregateQueryResourceService) { }
+  constructor(private router: Router,
+    private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService) { }
 
+// tslint:disable-next-line: use-life-cycle-interface
   ngOnChanges() {
     console.log('ngOnChanges');
   }
 
   ngOnInit() {
     console.log('ngOninit');
-    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId': 1}).subscribe(response=>{
-      this.activities=response;
+    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId': 1}).subscribe(response => {
+      this.activities = response;
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
       });
-      this.activitySelected=this.activities[0];
+      this.activitySelected = this.activities[0];
       console.log(this.activitySelected);
     });
   }
@@ -63,8 +65,8 @@ export class HomePage implements OnInit {
       {
         text: 'Proceed',
         role: 'okay',
-        handler: ()=>{
-          this.router.navigate(['tabs/home/gratitude-challenge/1']);
+        handler: () => {
+          this.navctrl.navigateForward('tabs/home/gratitude-challenge/' + this.activitySelected.id);
         }
       }
       ]
@@ -75,6 +77,7 @@ export class HomePage implements OnInit {
 
   loadActivities() {
     setTimeout(() => {
+// tslint:disable-next-line: triple-equals
       if (this.activityService.currentUser.name != '') {
         this.router.navigate(['tabs/home/activities']);
       } else {

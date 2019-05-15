@@ -1,6 +1,10 @@
+import { CompletedActivityModel } from './../api/models/completed-activity-model';
+import { ActivityService } from './../activity.service';
+import { ActivityModel } from './../api/models/activity-model';
 import { Component, OnInit } from '@angular/core';
 import { AggregateQueryResourceService } from '../api/services';
 import { InstructionVideoModel } from '../api/models';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-gratitude-challenge',
@@ -11,12 +15,15 @@ export class GratitudeChallengePage implements OnInit {
 
   isVideoPlayed = false;
  video: InstructionVideoModel;
-  constructor(private aggregate: AggregateQueryResourceService) { }
+  id;
+  activityService: ActivityService;
+  constructor(private aggregate: AggregateQueryResourceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
      console.log('ngOninit');
-     this.aggregate.getInstructionVideoByActivityIdUsingGET(1).subscribe(response=>{
+     this.getUrlId();
+     this.aggregate.getInstructionVideoByActivityIdUsingGET(this.id).subscribe(response => {
       this.video = response;
       console.log(response);
     }, error => {
@@ -24,6 +31,12 @@ export class GratitudeChallengePage implements OnInit {
     });
 
   }
+
+  getUrlId(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    }
+ 
+
   afterVideoPlayed() {
     this.isVideoPlayed = true;
   }

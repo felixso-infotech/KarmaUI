@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'finish', loadChildren: './finish/finish.module#FinishPageModule' },
   { path: 'success', loadChildren: './success/success.module#SuccessPageModule' },
-  { path: 'gratitude-challenge', loadChildren: './gratitude-challenge/gratitude-challenge.module#GratitudeChallengePageModule' },
+  { path: 'gratitude-challenge/:id', loadChildren: './gratitude-challenge/gratitude-challenge.module#GratitudeChallengePageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'albums', loadChildren: './albums/albums.module#AlbumsPageModule' }
