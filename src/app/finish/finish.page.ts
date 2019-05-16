@@ -91,6 +91,7 @@ export class FinishPage implements OnInit {
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
       console.log(this.imgURL);
+      
     }, (err) => {
       console.log(err);
     });
@@ -110,22 +111,31 @@ export class FinishPage implements OnInit {
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
       console.log(this.imgURL);
+      this.completedActivity.proofs.push(this.imgURL);
+
+      console.log("prooofs",this.completedActivity.proofs);
+      this.completedActivity.proofs.forEach(element => {
+        console.log(element.activityId);
+        console.log(element.fileName);
+      });
+      this.save();
+
     }, (err) => {
       console.log(err);
     });
   }
 
-/*  save(): void {
+  save() {
     if (this.imgURL != null) {
-      this.completedActivity.proofs = this.imgURL.substring(
-        this.imgURL.indexOf(",") + 1
-      );
+      this.service.createCompletedActivityUsingPOST(this.completedActivity)
+      .subscribe(result => {
+        this.completedActivity = result;
+      }, err => {
+        console.log('Error creating completedActivity');
+      });
     }
-    console.log("prooofs",this.completedActivity.proofs);
-
-    
-  }*/
-
+  }
+  
   share() {
     this.socialSharing.share("Congratulations! You have earned 500 coins. You have sucessfully completed the task of spending time with your teacher. Hope you have increased your gratitude level. Complete the remaining activities of the spin to get a medal...shared via karma", null, this.imgURL, null).then(() => { console.log("shared") })
       .catch(err => { console.log(err); });
