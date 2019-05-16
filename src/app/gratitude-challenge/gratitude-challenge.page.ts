@@ -22,12 +22,12 @@ export class GratitudeChallengePage implements OnInit {
   ngOnInit() {
      console.log('ngOninit');
      this.getUrlId();
-     this.aggregate.getInstructionVideoByActivityIdUsingGET(this.id).subscribe(response => {
+/*      this.aggregate.getInstructionVideoByActivityIdUsingGET(this.id).subscribe(response => {
      this.video = response;
       console.log(response);
     }, error => {
       console.log(error);
-    });
+    }); */
 
   }
 

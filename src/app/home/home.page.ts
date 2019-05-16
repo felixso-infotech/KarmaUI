@@ -49,7 +49,7 @@ export class HomePage implements OnInit {
         this.wheelActivities.push(element.title);
       });
       this.activitySelected=this.activities[0];
-      //console.log(this.activitySelected);
+      console.log(this.activitySelected);
     });
   }
 
