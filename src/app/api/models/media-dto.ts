@@ -2,7 +2,7 @@
 export interface MediaDTO {
   activityId?: number;
   completedActivityId?: number;
-  file?: string;
+  file?: Blob;
   fileContentType?: string;
   fileName?: string;
   id?: number;

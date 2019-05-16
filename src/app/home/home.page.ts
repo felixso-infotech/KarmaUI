@@ -48,8 +48,8 @@ export class HomePage implements OnInit {
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
       });
-      this.activitySelected=this.activities[0];
-      console.log(this.activitySelected);
+      //this.activitySelected=this.activities[0];
+      //console.log(this.activitySelected);
     });
   }
 

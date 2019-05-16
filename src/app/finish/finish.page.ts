@@ -1,3 +1,5 @@
+
+import { LoginPage } from './../login/login.page';
 import { ActivityService } from './../activity.service';
 import { KarmaLrsService } from './../karma-lrs.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,34 +9,21 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AggregateCommandResourceService } from '../api/services';
 import { CompletedActivityModel } from '../api/models';
+import { saveConfig } from '@ionic/core';
 
 
 @Component({
   selector: 'app-finish',
   templateUrl: './finish.page.html',
-  styleUrls: ['./finish.page.scss'],
+  styleUrls: ['./finish.page.scss']
 })
 export class FinishPage implements OnInit {
 
   public imagePath;
   imgURL: any;
   public message: string;
-  completedActivity: CompletedActivityModel = {
-    activityDescription: "",
-    activityId: 0,
-    activityTitle: "",
-    id:0,
-    proofs: [
-      {
-        activityId: 0,
-        completedActivityId: 0,
-        file: "",
-        fileContentType: "",
-        fileName: "",
-        id: 0
-      }
-    ],
-    registeredUserId:0
+  completedActivity: CompletedActivityModel={
+    proofs: []
   };
 
 
@@ -90,8 +79,8 @@ export class FinishPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
+      this.save();
       console.log(this.imgURL);
-      
     }, (err) => {
       console.log(err);
     });
@@ -110,16 +99,8 @@ export class FinishPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
-      console.log(this.imgURL);
-      this.completedActivity.proofs.push(this.imgURL);
-
-      console.log("prooofs",this.completedActivity.proofs);
-      this.completedActivity.proofs.forEach(element => {
-        console.log(element.activityId);
-        console.log(element.fileName);
-      });
       this.save();
-
+      console.log(this.imgURL);
     }, (err) => {
       console.log(err);
     });
@@ -127,6 +108,19 @@ export class FinishPage implements OnInit {
 
   save() {
     if (this.imgURL != null) {
+
+      fetch(this.imgURL).then(data => {
+        data.blob().then(blob => {
+          this.completedActivity.proofs.push({
+            completedActivityId: this.activityService.currentActivity.id,
+            file: blob,
+            fileContentType: blob.type,
+            fileName: 'proof'+this.activityService.currentActivity.fileName+this.activityService.currentUser.email,
+          })
+          console.log("blob", blob);
+        });
+        this.completedActivity.activityTitle=this.activityService.currentActivity.fileName;
+        this.completedActivity.activityId=this.activityService.currentActivity.id;
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
         this.completedActivity = result;
@@ -134,6 +128,7 @@ export class FinishPage implements OnInit {
         console.log('Error creating completedActivity');
       });
     }
+      )};
   }
   
   share() {
