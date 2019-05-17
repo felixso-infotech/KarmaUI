@@ -13,18 +13,15 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 })
 export class GratitudeChallengePage implements OnInit {
 
-  isVideoPlayed = false;
- video: InstructionVideoModel;
-  id;
-  activityService: ActivityService;
-  constructor(private aggregate: AggregateQueryResourceService, private route: ActivatedRoute) { }
+  isVideoPlayed = true;
+  video: InstructionVideoModel;
+  constructor(private aggregateResource: AggregateQueryResourceService, private activatedRoute: ActivatedRoute, private activityService: ActivityService) { }
 
   ngOnInit() {
-
      console.log('ngOninit');
-     this.getUrlId();
-     this.aggregate.getInstructionVideoByActivityIdUsingGET(this.id).subscribe(response => {
-      this.video = response;
+      this.aggregateResource.getInstructionVideoByActivityIdUsingGET(this.getActivityId()).subscribe(response => {
+/*      this.video = response; */
+        this.activityService.currentActivity=response;
       console.log(response);
     }, error => {
       console.log(error);
@@ -32,8 +29,8 @@ export class GratitudeChallengePage implements OnInit {
 
   }
 
-  getUrlId(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
+  getActivityId(): number {
+    return +this.activatedRoute.snapshot.paramMap.get('id');
     }
  
 

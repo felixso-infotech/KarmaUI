@@ -1,10 +1,11 @@
+import { AuthGuardService } from './../security/oauth/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -12,7 +13,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../home/home.module#HomePageModule'
+            loadChildren: '../home/home.module#HomePageModule',
           }
         ]
       },
@@ -45,14 +46,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: 'home',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];
