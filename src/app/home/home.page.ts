@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
       });
-      //this.activitySelected=this.activities[0];
+      this.activitySelected=this.activities[0];
       //console.log(this.activitySelected);
     });
   }
@@ -80,7 +80,7 @@ export class HomePage implements OnInit {
   loadActivities() {
     setTimeout(() => {
 // tslint:disable-next-line: triple-equals
-      if (this.activityService.currentUser.name != '') {
+      if (this.activityService.currentUser.username != '') {
         this.router.navigate(['tabs/home/activities']);
       } else {
         this.router.navigate(['login']);

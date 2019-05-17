@@ -1,3 +1,5 @@
+import { AuthInterceptor } from './security/oauth/oauth-interceptor';
+
 import { KarmaXapiService } from './karma-xapi.service';
 import { KarmaLrsService } from './karma-lrs.service';
 import { KarmaAppService } from './karma-app.service';
@@ -11,15 +13,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { NgxWheelModule } from 'ngx-wheel';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,NgxWheelModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,NgxWheelModule,  OAuthModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,
@@ -28,7 +31,13 @@ import { NgxWheelModule } from 'ngx-wheel';
     KarmaLrsService,
     KarmaXapiService,
     Camera,
-    SocialSharing
+    SocialSharing,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+
+    }
   ],
   bootstrap: [AppComponent]
 })
