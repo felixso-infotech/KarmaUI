@@ -80,7 +80,7 @@ export class HomePage implements OnInit {
   loadActivities() {
     setTimeout(() => {
 // tslint:disable-next-line: triple-equals
-      if (this.activityService.currentUser.name != '') {
+      if (this.activityService.currentUser.username != '') {
         this.router.navigate(['tabs/home/activities']);
       } else {
         this.router.navigate(['login']);

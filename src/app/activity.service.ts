@@ -9,8 +9,9 @@ export class ActivityService {
 
   currentActivity: InstructionVideoModel;
   currentUser: User={
-    name:"",
-    email: ""
+    username:"",
+    email: "",
+    password:""
   };
   
   constructor() { 
