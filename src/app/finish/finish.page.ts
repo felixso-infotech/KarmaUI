@@ -22,6 +22,7 @@ export class FinishPage implements OnInit {
   public imagePath;
   imgURL: any;
   public message: string;
+  fileUrl = null;
   completedActivity: CompletedActivityModel={
     proofs: []
   };
@@ -107,13 +108,20 @@ export class FinishPage implements OnInit {
   }
 
   save() {
-    if (this.imgURL != null) {
+    const freader = new FileReader();
 
+    if (this.imgURL != null) {
       fetch(this.imgURL).then(data => {
         data.blob().then(blob => {
+          freader.readAsDataURL(blob);
+          freader.onload = (ev: any) => {
+            this.fileUrl = ev.target.result;
+            console.log("file url**",this.fileUrl);
+          };
+
           this.completedActivity.proofs.push({
             completedActivityId: this.activityService.currentActivity.id,
-            file: blob,
+            file: this.fileUrl,
             fileContentType: blob.type,
             fileName: 'proof'+this.activityService.currentActivity.fileName+this.activityService.currentUser.email,
           })
