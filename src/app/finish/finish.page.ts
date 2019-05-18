@@ -80,7 +80,7 @@ export class FinishPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
-      this.save();
+      this.save(this.imgURL);
       console.log(this.imgURL);
     }, (err) => {
       console.log(err);
@@ -100,38 +100,37 @@ export class FinishPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
-      this.save();
-      console.log(this.imgURL);
+      this.save(this.imgURL);
+      //console.log(this.imgURL);
     }, (err) => {
       console.log(err);
     });
   }
 
-  save() {
-    const freader = new FileReader();
-
+  save(imgURL) {
     if (this.imgURL != null) {
+      console.log("activity id",this.activityService.currentActivity.id);
+      console.log("activity file name",this.activityService.currentActivity.fileName);
+      
       fetch(this.imgURL).then(data => {
         data.blob().then(blob => {
-          freader.readAsDataURL(blob);
-          freader.onload = (ev: any) => {
-            this.fileUrl = ev.target.result;
-            console.log("file url**",this.fileUrl);
-          };
-
           this.completedActivity.proofs.push({
             completedActivityId: this.activityService.currentActivity.id,
-            file: this.fileUrl,
+            file: this.imgURL,
             fileContentType: blob.type,
             fileName: 'proof'+this.activityService.currentActivity.fileName+this.activityService.currentUser.email,
+         
           })
-          console.log("blob", blob);
+          console.log("file",this.completedActivity.proofs.length);
+         
         });
         this.completedActivity.activityTitle=this.activityService.currentActivity.fileName;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
-        this.completedActivity = result;
+       // this.completedActivity = result;
+       console.log("completed activity saved ", result);
+           
       }, err => {
         console.log('Error creating completedActivity');
       });
