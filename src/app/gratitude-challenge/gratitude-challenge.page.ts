@@ -19,7 +19,7 @@ export class GratitudeChallengePage implements OnInit {
 
   ngOnInit() {
      console.log('ngOninit');
-      this.aggregateResource.getInstructionVideoByActivityIdUsingGET(this.getActivityId()).subscribe(response => {
+      this.aggregateResource.getActivityByIdUsingGET({activityId:this.getActivityId()}).subscribe(response => {
 /*      this.video = response; */
         this.activityService.currentActivity=response;
       console.log(response);

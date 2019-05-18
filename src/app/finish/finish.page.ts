@@ -115,11 +115,11 @@ export class FinishPage implements OnInit {
             completedActivityId: this.activityService.currentActivity.id,
             file: blob,
             fileContentType: blob.type,
-            fileName: 'proof'+this.activityService.currentActivity.fileName+this.activityService.currentUser.email,
+            fileName: 'proof'+this.activityService.currentActivity.title+this.activityService.currentUser.email,
           })
           console.log("blob", blob);
         });
-        this.completedActivity.activityTitle=this.activityService.currentActivity.fileName;
+        this.completedActivity.activityTitle=this.activityService.currentActivity.title;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
