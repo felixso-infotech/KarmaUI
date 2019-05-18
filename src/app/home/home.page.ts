@@ -1,5 +1,4 @@
 import { ActivityModel } from './../api/models/activity-model';
-
 import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,13 +13,13 @@ import { AggregateQueryResourceService } from '../api/services';
 })
 export class HomePage implements OnInit {
   colors = [
-    "#f1a11f",
-    "#c44538",
-    "#1fa48a",
-    "#425569",
-    "#20a48a",
-    "#3185bd",
-    "#d66012"
+    '#f1a11f',
+    '#c44538',
+    '#1fa48a',
+    '#425569',
+    '#20a48a',
+    '#3185bd',
+    '#d66012'
   ];
   //10, 9, 6 ,2
 /*   prizes = [
@@ -34,6 +33,7 @@ export class HomePage implements OnInit {
   activitySelected : ActivityModel;
 
   constructor(private router: Router,
+// tslint:disable-next-line: max-line-length
     private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService) { }
 
 // tslint:disable-next-line: use-life-cycle-interface

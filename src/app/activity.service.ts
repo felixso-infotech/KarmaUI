@@ -1,3 +1,4 @@
+import { ActivityModel } from './api/models/activity-model';
 import { InstructionVideoModel } from './api/models/instruction-video-model';
 import { User } from './user';
 import { Injectable } from '@angular/core';
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class ActivityService {
 
-  currentActivity: InstructionVideoModel;
+  currentActivity: ActivityModel;
   currentUser: User={
     username:"",
     email: "",

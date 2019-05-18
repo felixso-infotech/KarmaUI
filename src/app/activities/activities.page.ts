@@ -15,7 +15,7 @@ export class ActivitiesPage implements OnInit {
 
   constructor(private router:Router,private service:KarmaXapiService, private activityService:ActivityService) { }
 
-  activities:any;
+  activities: any;
 
   ngOnInit() {
     //this.activities=this.service.getMockActivities();
