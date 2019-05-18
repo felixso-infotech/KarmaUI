@@ -1,3 +1,4 @@
+import { ActivityModel } from './../api/models/activity-model';
 
 import { LoginPage } from './../login/login.page';
 import { ActivityService } from './../activity.service';
@@ -22,23 +23,25 @@ export class FinishPage implements OnInit {
   public imagePath;
   imgURL: any;
   public message: string;
-  completedActivity: CompletedActivityModel={
+  completedActivity: CompletedActivityModel = {
     proofs: []
   };
 
 
-  constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing, private service:AggregateCommandResourceService) { }
+// tslint:disable-next-line: max-line-length
+  constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing, private service: AggregateCommandResourceService){ }
 
   ngOnInit() {
   }
 
   preview(files) {
-    if (files.length === 0)
+    if (files.length === 0) {
       return;
+    }
 
     var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
+      this.message = 'Only images are supported.';
       return;
     }
 
@@ -51,8 +54,8 @@ export class FinishPage implements OnInit {
   }
 
   sendStatements() {
-    console.log("finish  user:" + this.activityService.currentUser);
-    console.log("finish  user:" + this.activityService.currentActivity);
+    console.log('finish  user:' + this.activityService.currentUser);
+    console.log('finish  user:' + this.activityService.currentActivity);
 
     this.lrsService.postStatement(this.activityService.currentUser, this.activityService.currentActivity);
     this.router.navigate(['success']);
@@ -74,7 +77,7 @@ export class FinishPage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE
     }
 
-    console.log("in method open camera, {}", options);
+    console.log('in method open camera, {}', options);
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
@@ -94,7 +97,7 @@ export class FinishPage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
-    console.log("in method open gallery, {}", options);
+    console.log('in method open gallery, {}', options);
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
@@ -115,12 +118,12 @@ export class FinishPage implements OnInit {
             completedActivityId: this.activityService.currentActivity.id,
             file: blob,
             fileContentType: blob.type,
-            fileName: 'proof'+this.activityService.currentActivity.fileName+this.activityService.currentUser.email,
+            fileName: 'proof' + this.activityService.currentActivity.fileName + this.activityService.currentUser.email,
           })
-          console.log("blob", blob);
+          console.log('blob', blob);
         });
-        this.completedActivity.activityTitle=this.activityService.currentActivity.fileName;
-        this.completedActivity.activityId=this.activityService.currentActivity.id;
+        this.completedActivity.activityTitle = this.activityService.currentActivity.fileName;
+        this.completedActivity.activityId = this.activityService.currentActivity.id;
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
         this.completedActivity = result;
@@ -128,11 +131,11 @@ export class FinishPage implements OnInit {
         console.log('Error creating completedActivity');
       });
     }
-      )};
+      )}
   }
   
   share() {
-    this.socialSharing.share("Congratulations! You have earned 500 coins. You have sucessfully completed the task of spending time with your teacher. Hope you have increased your gratitude level. Complete the remaining activities of the spin to get a medal...shared via karma", null, this.imgURL, null).then(() => { console.log("shared") })
+    this.socialSharing.share(this.activityService.currentActivity.successMsg, null, this.imgURL, null).then(() => { console.log('shared')})
       .catch(err => { console.log(err); });
   }
 }
