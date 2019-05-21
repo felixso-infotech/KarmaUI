@@ -1,3 +1,5 @@
+import { UsersPage } from './../users/users.page';
+import { UserDTO } from './../api/models/user-dto';
 import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -15,7 +17,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 export class LoginPage implements OnInit {
 
   user: User;
-  constructor(private activityService:ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService) { }
+  constructor(private activityService: ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService) { }
 
   ngOnInit() {
     this.user=this.activityService.currentUser;
@@ -27,7 +29,7 @@ export class LoginPage implements OnInit {
     console.log('in login' + this.user.username + ' password is ' + this.user.password);
     this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(this.user.username, this.user.password, new HttpHeaders()).then(() => {
       const claims = this.oauthService.getIdentityClaims();
-      if (claims) { console.log(claims); }
+      if (claims) { console.log('>>>>>>>>>>>>>>>>>>>>>>',claims); }
       if (this.oauthService.hasValidAccessToken()) {
         /* this.presentToast('Logged in successfully'); */
         this.navCtrl.navigateRoot('tabs/home');

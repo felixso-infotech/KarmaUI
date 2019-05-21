@@ -1,6 +1,13 @@
+import { User } from './../user';
+import { ActivityService } from './../activity.service';
+
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { AggregateQueryResourceService } from '../api/services';
+import { RegisteredUserModel } from '../api/models';
 
 @Component({
   selector: 'app-profile',
@@ -8,11 +15,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
-  constructor(private alertController: AlertController, private router:Router) { }
+user: RegisteredUserModel;
+claims;
+  constructor(private alertController: AlertController, private router: Router, private activityService: ActivityService, private oauthService: OAuthService, private aggregateQueryService: AggregateQueryResourceService) { }
 
   ngOnInit() {
+// tslint:disable-next-line: label-position
+    //this.loggedUser();
+    this.oauthService.loadUserProfile().then((user: any) => {
+      this.aggregateQueryService.getRegisteredUserUsingGET(user.sub).subscribe(res => {
+      this.user = res;
+      }, err => {
+        console.log('error occured while taking the user', err);
+      })
+      console.log(user);
+    }).catch((err: HttpErrorResponse) => {
+      //this.presentToast(err.error.error_description);
+    });
+
   }
+
 
   async presentAlert() {
     console.log("alert");

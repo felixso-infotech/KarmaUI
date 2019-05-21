@@ -1,5 +1,3 @@
-import { ActivityModel } from './../api/models/activity-model';
-
 import { LoginPage } from './../login/login.page';
 import { ActivityService } from './../activity.service';
 import { KarmaLrsService } from './../karma-lrs.service';
@@ -9,8 +7,8 @@ import { ToastController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AggregateCommandResourceService } from '../api/services';
-import { CompletedActivityModel } from '../api/models';
 import { saveConfig } from '@ionic/core';
+import { CompletedActivityModel } from '../api/models';
 
 
 @Component({

@@ -9,10 +9,12 @@ import { AlertController } from '@ionic/angular';
 })
 export class SuccessPage implements AfterViewInit {
   public alert;
+  message;
   
   constructor(public alertController: AlertController, public activityService: ActivityService){}
 
   async ngAfterViewInit() {
+    this.message=this.activityService.currentActivity.successMessage;
     this.alert = await this.alertController.create({
       message: this.activityService.currentActivity.successMessage,
       buttons: [{
