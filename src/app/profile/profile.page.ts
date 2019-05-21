@@ -1,6 +1,7 @@
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-profile',
@@ -9,9 +10,20 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(private alertController: AlertController, private router:Router) { }
+  username: string;
+  email: string;
+  userId: string;
+
+  constructor(private alertController: AlertController, private router:Router,private oauthService: OAuthService) { }
 
   ngOnInit() {
+    let claim;
+    if ((claim = this.oauthService.getIdentityClaims()) != null) {
+      console.log("user", claim);
+      this.username = claim.preferred_username;
+      this.userId = claim.sub;
+      this.email = claim.email;
+    }
   }
 
   async presentAlert() {

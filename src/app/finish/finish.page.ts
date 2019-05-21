@@ -112,25 +112,25 @@ export class FinishPage implements OnInit {
   save() {
     if (this.imgURL != null) {
       console.log("activity id",this.activityService.currentActivity.id);
-      console.log("image url",this.imgURL);
+      //console.log("image url",this.imgURL);
       fetch(this.imgURL).then(data => {
         data.blob().then(blob => {
           this.completedActivity.proofs.push({
             completedActivityId: this.activityService.currentActivity.id,
             file: this.imgURL,
             fileContentType: blob.type,
-
-            fileName: 'proof'+this.activityService.currentActivity.title+this.activityService.currentUser.email,
+            fileName: 'proof'+ this.activityService.currentActivity.title+this.activityService.currentUser.email,
           })
           console.log('blob', blob);
         });
         this.completedActivity.activityTitle=this.activityService.currentActivity.title;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
+      //  this.completedActivity.registeredUserId=this.activityService.currentActivity.id;
+
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
-       // this.completedActivity = result;
-       console.log("completed activity saved ", result);
-           
+        this.completedActivity = result;
+       console.log("completed activity saved ", result);   
       }, err => {
         console.log('Error creating completedActivity');
       });
@@ -139,7 +139,8 @@ export class FinishPage implements OnInit {
   }
   
   share() {
-    this.socialSharing.share(this.activityService.currentActivity.successMsg, null, this.imgURL, null).then(() => { console.log('shared')})
+// tslint:disable-next-line: max-line-length
+    this.socialSharing.share(this.activityService.currentActivity.successMessage, null, this.imgURL, null).then(() => { console.log('shared')})
       .catch(err => { console.log(err); });
   }
 }

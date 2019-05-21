@@ -36,10 +36,7 @@ class AggregateCommandResourceService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __headers.append('Content-Type', 'multipart/form-data');
-    let __formData = new FormData();
-    __body = __formData;
-   if(completedActivityModel !== null && typeof completedActivityModel !== "undefined") { __formData.append('completedActivityModel', JSON.stringify(completedActivityModel));}
+    __body = completedActivityModel;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/command/completed-activities`,

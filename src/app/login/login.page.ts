@@ -27,7 +27,8 @@ export class LoginPage implements OnInit {
     console.log('in login' + this.user.username + ' password is ' + this.user.password);
     this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(this.user.username, this.user.password, new HttpHeaders()).then(() => {
       const claims = this.oauthService.getIdentityClaims();
-      if (claims) { console.log(claims); }
+      if (claims) { console.log(claims);
+      }
       if (this.oauthService.hasValidAccessToken()) {
         /* this.presentToast('Logged in successfully'); */
         this.navCtrl.navigateRoot('tabs/home');
