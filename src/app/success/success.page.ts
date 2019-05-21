@@ -1,3 +1,4 @@
+import { ActivityService } from './../activity.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
@@ -8,12 +9,12 @@ import { AlertController } from '@ionic/angular';
 })
 export class SuccessPage implements AfterViewInit {
   public alert;
-
-  constructor(public alertController: AlertController){}
+  
+  constructor(public alertController: AlertController, public activityService: ActivityService){}
 
   async ngAfterViewInit() {
     this.alert = await this.alertController.create({
-      message: '<h1>Congradulation</h1><p>May God Bless You Both</p>',
+      message: this.activityService.currentActivity.successMessage,
       buttons: [{
         text: 'OK',
         cssClass: 'alertButton'

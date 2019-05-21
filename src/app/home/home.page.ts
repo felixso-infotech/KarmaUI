@@ -54,8 +54,8 @@ export class HomePage implements OnInit {
   }
 
   async presentAlert() {
-    console.log("activity got",this.activitySelected.title);
-    console.log("activity id",this.activitySelected.id);
+    console.log('activity got',this.activitySelected.title);
+    console.log('activity id',this.activitySelected.id);
     const alert = await this.alertController.create({
       header: 'Congradulations..!',
       subHeader: 'Activity got:'+this.activitySelected.title,
