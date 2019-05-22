@@ -43,7 +43,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     console.log('ngOninit');
-    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId': 1}).subscribe(response => {
+    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId': 3}).subscribe(response => {
       this.activities = response;
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);

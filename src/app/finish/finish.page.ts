@@ -101,7 +101,7 @@ export class FinishPage implements OnInit {
       // If it's base64 (DATA_URL):
       this.imgURL = 'data:image/jpeg;base64,' + imageData;
       this.save();
-      console.log(this.imgURL);
+      //console.log(this.imgURL);
     }, (err) => {
       console.log(err);
     });
@@ -109,12 +109,13 @@ export class FinishPage implements OnInit {
 
   save() {
     if (this.imgURL != null) {
-
+      console.log("activity id",this.activityService.currentActivity.id);
+      //console.log("image url",this.imgURL);
       fetch(this.imgURL).then(data => {
         data.blob().then(blob => {
           this.completedActivity.proofs.push({
             completedActivityId: this.activityService.currentActivity.id,
-            file: blob,
+            file: this.imgURL,
             fileContentType: blob.type,
             fileName: 'proof'+ this.activityService.currentActivity.title+this.activityService.currentUser.email,
           })
@@ -122,9 +123,12 @@ export class FinishPage implements OnInit {
         });
         this.completedActivity.activityTitle=this.activityService.currentActivity.title;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
+      //  this.completedActivity.registeredUserId=this.activityService.currentActivity.id;
+
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
         this.completedActivity = result;
+       console.log("completed activity saved ", result);   
       }, err => {
         console.log('Error creating completedActivity');
       });

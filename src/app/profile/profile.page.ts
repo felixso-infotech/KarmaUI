@@ -23,7 +23,7 @@ claims;
 // tslint:disable-next-line: label-position
     //this.loggedUser();
     this.oauthService.loadUserProfile().then((user: any) => {
-      this.aggregateQueryService.getRegisteredUserUsingGET(user.sub).subscribe(res => {
+      this.aggregateQueryService.getRegisteredUse(user.sub).subscribe(res => {
       this.user = res;
       }, err => {
         console.log('error occured while taking the user', err);
