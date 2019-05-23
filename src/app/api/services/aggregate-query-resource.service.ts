@@ -27,6 +27,7 @@ class AggregateQueryResourceService extends __BaseService {
   static readonly findIncompletedActivityByPhoneNumberByQueryUsingGETPath = '/api/query/incompleted-activity-by-phone-number/{phoneNumber}';
   static readonly findIncompletedActivityByRegisteredUserIdByQueryUsingGETPath = '/api/query/incompleted-activity-by-registered-user/{registeredUserId}';
   static readonly getInstructionVideoByActivityIdUsingGETPath = '/api/query/instruction-video-by-activityId/{activityId}';
+  static readonly getRegisteredUserByUserIdUsingGETPath = '/api/query/registered-user-by-activityId/{userId}';
   static readonly getAllRegisteredUsersUsingGETPath = '/api/query/registered-users';
   static readonly getRegisteredUserByPhoneNumberUsingGETPath = '/api/query/registered-users-by-phonenumber/{phoneNumber}';
   static readonly getRegisteredUserUsingGETPath = '/api/query/registered-users/{id}';
@@ -710,6 +711,42 @@ class AggregateQueryResourceService extends __BaseService {
   getInstructionVideoByActivityIdUsingGET(activityId: number): __Observable<InstructionVideoModel> {
     return this.getInstructionVideoByActivityIdUsingGETResponse(activityId).pipe(
       __map(_r => _r.body as InstructionVideoModel)
+    );
+  }
+
+  /**
+   * @param userId userId
+   * @return OK
+   */
+  getRegisteredUserByUserIdUsingGETResponse(userId: string): __Observable<__StrictHttpResponse<RegisteredUserModel>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/registered-user-by-activityId/${userId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<RegisteredUserModel>;
+      })
+    );
+  }
+  /**
+   * @param userId userId
+   * @return OK
+   */
+  getRegisteredUserByUserIdUsingGET(userId: string): __Observable<RegisteredUserModel> {
+    return this.getRegisteredUserByUserIdUsingGETResponse(userId).pipe(
+      __map(_r => _r.body as RegisteredUserModel)
     );
   }
 

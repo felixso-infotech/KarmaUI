@@ -15,16 +15,18 @@ import { RegisteredUserModel } from '../api/models';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-user: RegisteredUserModel;
+public user: RegisteredUserModel;
 claims;
+// tslint:disable-next-line: max-line-length
   constructor(private alertController: AlertController, private router: Router, private activityService: ActivityService, private oauthService: OAuthService, private aggregateQueryService: AggregateQueryResourceService) { }
 
   ngOnInit() {
 // tslint:disable-next-line: label-position
-    //this.loggedUser();
+    // this.loggedUser();
     this.oauthService.loadUserProfile().then((user: any) => {
-      this.aggregateQueryService.getRegisteredUse(user.sub).subscribe(res => {
+      this.aggregateQueryService.getRegisteredUserByUserIdUsingGET(user.preferred_username).subscribe(res => {
       this.user = res;
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.user);
       }, err => {
         console.log('error occured while taking the user', err);
       })
@@ -37,7 +39,7 @@ claims;
 
 
   async presentAlert() {
-    console.log("alert");
+    console.log('alert');
     const alert = await this.alertController.create({
       header: 'Warning',
       //subHeader: 'Are you want to log-out?',
