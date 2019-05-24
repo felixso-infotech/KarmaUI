@@ -8,6 +8,8 @@ import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { AggregateCommandResourceService } from '../api/services';
+import { RegisteredUserModel } from '../api/models';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,11 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 export class LoginPage implements OnInit {
 
   user: User;
-  constructor(private activityService: ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService) { }
+  registeredUser: RegisteredUserModel={
+  };
+
+ 
+  constructor(private activityService: ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService, private commandService:AggregateCommandResourceService) { }
 
   ngOnInit() {
     this.user=this.activityService.currentUser;
@@ -31,12 +37,17 @@ export class LoginPage implements OnInit {
       const claims = this.oauthService.getIdentityClaims();
       if (claims) { console.log(claims);
       }
+
       if (this.oauthService.hasValidAccessToken()) {
-        /* this.presentToast('Logged in successfully'); */
+        console.log("logged in successfullyyyy");
+        this.registeredUser.userId=this.user.username; 
+        this.commandService.createRegisteredUserUsingPOST(this.registeredUser);
         this.navCtrl.navigateRoot('tabs/home');
       }
     }).catch((err: HttpErrorResponse) => {
+      console.log("no valid token");
       //this.presentToast(err.error.error_description);
     });
   }
   }
+  
