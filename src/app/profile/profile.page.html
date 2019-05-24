@@ -33,7 +33,7 @@
 
                     <ion-row>
                       <ion-col>
-                        <ion-label text-center id="name">{{user}}</ion-label>
+                        <ion-label text-center id="name">{{user.firstName}}</ion-label>
                       </ion-col>
                     </ion-row>
                     <ion-row>
@@ -55,7 +55,7 @@
                      <ion-row>
                        <ion-col text-center class="flex-box">
                           <ion-icon src="/assets/coins.svg" id="coin-icon" ></ion-icon>
-                          <ion-label id="coin-value" class="cl-yellow">10856</ion-label>
+                          <ion-label id="coin-value" class="cl-yellow">{{user.noOfCoins}}</ion-label>
                        </ion-col>
                      </ion-row>
                 </ion-grid>
@@ -71,7 +71,7 @@
                             <ion-item lines="none" text-center >
                                 <ion-label class="trophy-value cl-blue flex-box">
                                     <ion-icon name="trophy" class="trophy-icon cl-yellow"></ion-icon>
-                                    8
+                                    <p>{{user.noOfGoldMedals}}</p>
                                 </ion-label>
                             </ion-item>
                           </ion-col>
@@ -80,7 +80,7 @@
                                 
                                   <ion-label class="trophy-value cl-blue flex-box">
                                       <ion-icon name="trophy" class="trophy-icon cl-grey"></ion-icon>
-                                      1
+                                     <p>{{user.noOfSilverMedals}}</p>
                                   </ion-label>  
                               </ion-item>
                           </ion-col>
@@ -89,7 +89,7 @@
                                     
                                     <ion-label item-end class="trophy-value cl-blue flex-box">
                                         <ion-icon item-start name="trophy" class="trophy-icon cl-gold"></ion-icon>
-                                        1
+                                        <p>{{user.noOfBronzeMedals}}</p>
                                     </ion-label>  
                                 </ion-item>
                                 </ion-col>

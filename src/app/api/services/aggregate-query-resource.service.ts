@@ -27,7 +27,7 @@ class AggregateQueryResourceService extends __BaseService {
   static readonly findIncompletedActivityByPhoneNumberByQueryUsingGETPath = '/api/query/incompleted-activity-by-phone-number/{phoneNumber}';
   static readonly findIncompletedActivityByRegisteredUserIdByQueryUsingGETPath = '/api/query/incompleted-activity-by-registered-user/{registeredUserId}';
   static readonly getInstructionVideoByActivityIdUsingGETPath = '/api/query/instruction-video-by-activityId/{activityId}';
-  static readonly getRegisteredUserByUserIdUsingGETPath = '/api/query/registered-user-by-activityId/{userId}';
+  static readonly getRegisteredUserByUserIdUsingGETPath = '/api/query/registered-user-by-userId/{userId}';
   static readonly getAllRegisteredUsersUsingGETPath = '/api/query/registered-users';
   static readonly getRegisteredUserByPhoneNumberUsingGETPath = '/api/query/registered-users-by-phonenumber/{phoneNumber}';
   static readonly getRegisteredUserUsingGETPath = '/api/query/registered-users/{id}';
@@ -725,7 +725,7 @@ class AggregateQueryResourceService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/registered-user-by-activityId/${userId}`,
+      this.rootUrl + `/api/query/registered-user-by-userId/${userId}`,
       __body,
       {
         headers: __headers,
