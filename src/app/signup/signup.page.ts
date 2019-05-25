@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
+import { User } from '../user';
+import { ActivityService } from '../activity.service';
 
 
 @Component({
@@ -10,7 +12,7 @@ import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
 })
 export class SignUpPage implements OnInit {
 
-  constructor(private navCtrl: NavController, private toastController: ToastController) {
+  constructor(private navCtrl: NavController, private toastController: ToastController,private activityService: ActivityService) {
     this.kcAdminClient = new KeycloakAdminClient();
     this.kcAdminClient.setConfig({
         baseUrl: 'http://35.196.86.249:8080/auth'
@@ -24,6 +26,7 @@ export class SignUpPage implements OnInit {
   kcAdminClient: KeycloakAdminClient;
   phone: number;
   agreement: boolean;
+  user: User;
 
   configureKeycloakAdmin() {
     this.kcAdminClient.auth({
@@ -52,6 +55,8 @@ export class SignUpPage implements OnInit {
       attributes: map
 
     }).then(res => {
+      
+      this.user.newUser=true;
       this.navCtrl.navigateForward('/login');
     }, err => {
       console.log(err);
@@ -78,5 +83,7 @@ export class SignUpPage implements OnInit {
 
   ngOnInit() {
     this.agreement = false;
+    this.user=this.activityService.currentUser;
+    
   }
 }

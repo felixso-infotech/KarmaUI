@@ -38,10 +38,18 @@ export class LoginPage implements OnInit {
       if (claims) { console.log(claims);
       }
 
-      if (this.oauthService.hasValidAccessToken()) {
+      if (this.oauthService.hasValidAccessToken()&&(this.user.newUser==true)) {
         console.log("logged in successfullyyyy");
         this.registeredUser.userId=this.user.username; 
-        this.commandService.createRegisteredUserUsingPOST(this.registeredUser);
+        this.commandService.createRegisteredUserUsingPOST(this.registeredUser)
+        .subscribe(result => {
+          this.registeredUser = result;
+          this.user.newUser==false;
+         console.log("registeredUser saved ", result);   
+        }, err => {
+          console.log('Error creating registeredUser');
+        });
+
         this.navCtrl.navigateRoot('tabs/home');
       }
     }).catch((err: HttpErrorResponse) => {

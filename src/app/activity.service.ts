@@ -11,7 +11,8 @@ export class ActivityService {
   currentUser: User = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+    newUser: ''
   };
   
   constructor() { 
