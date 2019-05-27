@@ -123,7 +123,7 @@ export class FinishPage implements OnInit {
         });
         this.completedActivity.activityTitle=this.activityService.currentActivity.title;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
-      //  this.completedActivity.registeredUserId=this.activityService.currentActivity.id;
+        this.completedActivity.registeredUserId=this.activityService.currentActivity.id;
 
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
