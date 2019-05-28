@@ -47,6 +47,7 @@ export class LoginPage implements OnInit {
           this.registeredUser = result;
           this.user.newUser==false;
           console.log("result",result.registeredUserId);
+          console.log("resu test",result.userId);
         }, err => {
           console.log('Error creating registeredUser');
         });
