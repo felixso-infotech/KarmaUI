@@ -55,6 +55,7 @@ export class SignUpPage implements OnInit {
       attributes: map
 
     }).then(res => {
+      console.log("new user in signup befor",this.user.newUser);
       
       this.user.newUser=true;
       this.navCtrl.navigateForward('/login');

@@ -2,6 +2,7 @@ export class User {
 username:string;
 email: string;
 password: string;
-newUser: any;
+newUser: boolean;
+id:number;
 
 }

@@ -12,7 +12,8 @@ export class ActivityService {
     username: '',
     email: '',
     password: '',
-    newUser: ''
+    newUser:false,
+    id: 0
   };
   
   constructor() { 

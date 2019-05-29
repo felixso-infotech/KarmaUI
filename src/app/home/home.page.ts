@@ -1,10 +1,11 @@
 import { ActivityModel } from './../api/models/activity-model';
 import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 
 import { AggregateQueryResourceService } from '../api/services';
+import { User } from '../user';
 
 @Component({
   selector: 'app-home',
@@ -31,10 +32,11 @@ export class HomePage implements OnInit {
   activities: ActivityModel[];
   wheelActivities: string[] = [];
   activitySelected : ActivityModel;
-
+  user: User;
+  
   constructor(private router: Router,
 // tslint:disable-next-line: max-line-length
-    private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService) { }
+    private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService,private activatedRoute: ActivatedRoute) { }
 
 // tslint:disable-next-line: use-life-cycle-interface
   ngOnChanges() {
@@ -43,7 +45,9 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     console.log('ngOninit');
-    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId': 3}).subscribe(response => {
+    this.user=this.activityService.currentUser;
+    console.log("id in home*******",this.user.id);
+    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId':this.user.id}).subscribe(response => {
       this.activities = response;
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
@@ -112,5 +116,9 @@ export class HomePage implements OnInit {
   afterSpin() {
     this.presentAlert();
   }
+ /* getRegisterUserId(): number {
+    return +this.activatedRoute.snapshot.paramMap.get('id');
+    }*/
+
 }
 

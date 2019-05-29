@@ -10,7 +10,6 @@ import { AggregateCommandResourceService } from '../api/services';
 import { saveConfig } from '@ionic/core';
 import { CompletedActivityModel } from '../api/models';
 
-
 @Component({
   selector: 'app-finish',
   templateUrl: './finish.page.html',
@@ -21,6 +20,7 @@ export class FinishPage implements OnInit {
   public imagePath;
   imgURL: any;
   public message: string;
+
   completedActivity: CompletedActivityModel = {
     proofs: []
   };
@@ -30,6 +30,7 @@ export class FinishPage implements OnInit {
   constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing, private service: AggregateCommandResourceService){ }
 
   ngOnInit() {
+    console.log("current user id in home*******", this.activityService.currentUser.id);
   }
 
   preview(files) {
@@ -123,12 +124,14 @@ export class FinishPage implements OnInit {
         });
         this.completedActivity.activityTitle=this.activityService.currentActivity.title;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
-        this.completedActivity.registeredUserId=this.activityService.currentActivity.id;
+        this.completedActivity.registeredUserId=this.activityService.currentUser.id;
 
       this.service.createCompletedActivityUsingPOST(this.completedActivity)
       .subscribe(result => {
         this.completedActivity = result;
-       console.log("completed activity saved ", result);   
+       console.log("completed activity saved ", result);  
+       console.log("completed activity user id ", result.registeredUserId);  
+       
       }, err => {
         console.log('Error creating completedActivity');
       });

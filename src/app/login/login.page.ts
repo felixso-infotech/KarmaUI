@@ -7,8 +7,7 @@ import { Router } from '@angular/router';
 import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
-import { AggregateCommandResourceService } from '../api/services';
+import { AggregateCommandResourceService, AggregateQueryResourceService } from '../api/services';
 import { RegisteredUserModel } from '../api/models';
 
 @Component({
@@ -23,7 +22,7 @@ export class LoginPage implements OnInit {
   };
 
  
-  constructor(private activityService: ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService, private commandService:AggregateCommandResourceService) { }
+  constructor(private activityService: ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService, private commandService:AggregateCommandResourceService,private queryService: AggregateQueryResourceService) { }
 
   ngOnInit() {
     this.user=this.activityService.currentUser;
@@ -40,24 +39,31 @@ export class LoginPage implements OnInit {
 
       if (this.oauthService.hasValidAccessToken()){
         console.log("logged in successfullyyyy");
-        if(this.user.newUser==true){
-        this.registeredUser.userId=this.user.username;
-        this.commandService.createRegisteredUserUsingPOST(this.registeredUser)
-        .subscribe(result => {
-          this.registeredUser = result;
-          this.user.newUser==false;
-          console.log("result",result.registeredUserId);
-          console.log("resu test",result.userId);
-        }, err => {
-          console.log('Error creating registeredUser');
-        });
-      }
-      console.log("reg user",this.registeredUser.registeredUserId);
-        this.navCtrl.navigateRoot('tabs/home');
+        if(this.user.newUser===true){
+          this.saveNewUser();
+        }
+      this.queryService.getRegisteredUserByUserIdUsingGET(this.user.username)
+      .subscribe(result => {
+       this.user.id=result.registeredUserId;
+       this.navCtrl.navigateRoot('tabs/home');
+      }, err => {
+        console.log('fetched registeredUser');
+      });
+
+      // this.navCtrl.navigateRoot('tabs/home');
       }
     }).catch((err: HttpErrorResponse) => {
       console.log("no valid token");
       //this.presentToast(err.error.error_description);
+    });
+  }
+  saveNewUser(){
+      this.registeredUser.userId=this.user.username;
+      this.commandService.createRegisteredUserUsingPOST(this.registeredUser)
+      .subscribe(result => {
+      this.registeredUser = result;
+    }, err => {
+      console.log('Error creating registeredUser');
     });
   }
   }
