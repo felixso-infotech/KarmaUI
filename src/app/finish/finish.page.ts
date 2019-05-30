@@ -9,6 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AggregateCommandResourceService } from '../api/services';
 import { saveConfig } from '@ionic/core';
 import { CompletedActivityModel } from '../api/models';
+import { fileURLToPath } from 'url';
 
 @Component({
   selector: 'app-finish',
@@ -20,7 +21,7 @@ export class FinishPage implements OnInit {
   public imagePath;
   imgURL: any;
   public message: string;
-
+  public image: string;
   completedActivity: CompletedActivityModel = {
     proofs: []
   };
@@ -80,9 +81,9 @@ export class FinishPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.imgURL = 'data:image/jpeg;base64,' + imageData;
+      this.image = imageData;
       this.save();
-      console.log(this.imgURL);
+     // console.log(this.imgURL);
     }, (err) => {
       console.log(err);
     });
@@ -100,28 +101,24 @@ export class FinishPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.imgURL = 'data:image/jpeg;base64,' + imageData;
+      this.image = imageData;
       this.save();
-      //console.log(this.imgURL);
+    //  console.log(this.imgURL);
     }, (err) => {
       console.log(err);
     });
   }
 
-  save() {
-    if (this.imgURL != null) {
-      console.log("activity id",this.activityService.currentActivity.id);
-      //console.log("image url",this.imgURL);
-      fetch(this.imgURL).then(data => {
-        data.blob().then(blob => {
+  save() {  
+    if (this.image != null) {
+      fetch(this.image).then(data => {
           this.completedActivity.proofs.push({
             completedActivityId: this.activityService.currentActivity.id,
-            file: this.imgURL,
-            fileContentType: blob.type,
-            fileName: 'proof'+ this.activityService.currentActivity.title+this.activityService.currentUser.email,
+            file: this.image,
+            fileContentType: this.image,
+            //fileName: this.imgURL.data.fileName,
+          //  fileName: 'proof'+ this.activityService.currentActivity.title+this.activityService.currentUser.email,
           })
-          console.log('blob', blob);
-        });
         this.completedActivity.activityTitle=this.activityService.currentActivity.title;
         this.completedActivity.activityId=this.activityService.currentActivity.id;
         this.completedActivity.registeredUserId=this.activityService.currentUser.id;
