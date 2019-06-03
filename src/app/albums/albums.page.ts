@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MediaModel } from '../api/models';
+import { AggregateQueryResourceService } from '../api/services';
+import { User } from '../user';
+import { ActivityService } from '../activity.service';
 
 @Component({
   selector: 'app-albums',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlbumsPage implements OnInit {
 
-  constructor() { }
+  constructor(private service:AggregateQueryResourceService,private activityService: ActivityService) { }
 
+  media: MediaModel[];
+  user: User;
   ngOnInit() {
+    this.user=this.activityService.currentUser;
+    console.log("id in album*******",this.user.id);
+    this.service.findAllCompletedActivityMediasByRegisteredUserIdUsingGET({'registeredUserId':this.user.id}).subscribe(response => {
+      this.media = response;
+      console.log("****response",response);
+      console.log("****",this.media);
+  });
+   
   }
-
 }

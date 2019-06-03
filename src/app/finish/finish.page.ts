@@ -4,7 +4,7 @@ import { KarmaLrsService } from './../karma-lrs.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AggregateCommandResourceService } from '../api/services';
 import { saveConfig } from '@ionic/core';
@@ -34,25 +34,6 @@ export class FinishPage implements OnInit {
     console.log("current user id in home*******", this.activityService.currentUser.id);
   }
 
-  preview(files) {
-    if (files.length === 0) {
-      return;
-    }
-
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = 'Only images are supported.';
-      return;
-    }
-
-    var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.imgURL = reader.result;
-    }
-  }
-
   sendStatements() {
     console.log('finish  user:' + this.activityService.currentUser);
     console.log('finish  user:' + this.activityService.currentActivity);
@@ -75,13 +56,14 @@ export class FinishPage implements OnInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    }
+     }
 
     console.log('in method open camera, {}', options);
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.image = imageData;
+      this.imgURL = imageData;
+      this.image=this.imgURL;
       this.save();
      // console.log(this.imgURL);
     }, (err) => {
@@ -101,7 +83,11 @@ export class FinishPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.image = imageData;
+      this.imgURL = imageData;
+      this.image=this.imgURL;
+      console.log("****imgurll filename",this.imgURL.fileName);
+      
+      console.log("****imgurll content type",this.imgURL.fileContentType);     
       this.save();
     //  console.log(this.imgURL);
     }, (err) => {
@@ -114,8 +100,8 @@ export class FinishPage implements OnInit {
       fetch(this.image).then(data => {
           this.completedActivity.proofs.push({
             completedActivityId: this.activityService.currentActivity.id,
-            file: this.image,
-            fileContentType: this.image,
+              file: this.image,
+             //fileContentType: this.,
             //fileName: this.imgURL.data.fileName,
           //  fileName: 'proof'+ this.activityService.currentActivity.title+this.activityService.currentUser.email,
           })
