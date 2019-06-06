@@ -11,8 +11,8 @@
   <ion-grid>
     <ion-card>
     <ion-row>
-        <ion-col size="4">
-            <ion-img *ngFor="let image of media" src="data:image/png;base64,{{image.file}}"></ion-img>
+        <ion-col col-6 col-md-4 col-xl-3 *ngFor="let image of media">
+            <ion-img src="data:image/png;base64,{{image.file}}"></ion-img>
           </ion-col>
     </ion-row>
     </ion-card>

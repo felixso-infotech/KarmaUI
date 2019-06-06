@@ -18,6 +18,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { NgxWheelModule } from 'ngx-wheel';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +33,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     KarmaLrsService,
     KarmaXapiService,
     Camera,
+    ImagePicker,
+    Base64,
     SocialSharing,
     {
       provide: HTTP_INTERCEPTORS,

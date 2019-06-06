@@ -10,6 +10,8 @@ import { AggregateCommandResourceService } from '../api/services';
 import { saveConfig } from '@ionic/core';
 import { CompletedActivityModel } from '../api/models';
 import { fileURLToPath } from 'url';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
   selector: 'app-finish',
@@ -18,17 +20,18 @@ import { fileURLToPath } from 'url';
 })
 export class FinishPage implements OnInit {
 
-  public imagePath;
+  public imagePath:string;
   imgURL: any;
   public message: string;
   public image: string;
+  imageResponse: any;
   completedActivity: CompletedActivityModel = {
     proofs: []
   };
 
 
 // tslint:disable-next-line: max-line-length
-  constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing, private service: AggregateCommandResourceService){ }
+  constructor(private lrsService: KarmaLrsService, private activityService: ActivityService, private router: Router, public toastController: ToastController, private camera: Camera, private socialSharing: SocialSharing, private service: AggregateCommandResourceService,private imagePicker: ImagePicker,private base64: Base64){ }
 
   ngOnInit() {
     console.log("current user id in home*******", this.activityService.currentUser.id);
@@ -59,7 +62,7 @@ export class FinishPage implements OnInit {
      }
 
     console.log('in method open camera, {}', options);
-    this.camera.getPicture(options).then((imageData) => {
+    this.imagePicker.getPictures(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.imgURL = imageData;
@@ -77,23 +80,31 @@ export class FinishPage implements OnInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
     }
     console.log('in method open gallery, {}', options);
-    this.camera.getPicture(options).then((imageData) => {
+    this.imageResponse = [];
+    this.imagePicker.getPictures(options).then((imageData) => {
+     // this.imgURL = imageData;
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.imgURL = imageData;
-      this.image=this.imgURL;
-      console.log("****imgurll filename",this.imgURL.fileName);
-      
-      console.log("****imgurll content type",this.imgURL.fileContentType);     
-      this.save();
-    //  console.log(this.imgURL);
-    }, (err) => {
+      for (var i = 0; i <= imageData.length; i++) {
+        console.log("****imageData**",imageData[i]);
+        this.imagePath=imageData[i];
+        this.base64.encodeFile(this.imagePath).then((base64File: string) => {
+         // console.log(base64File);
+          console.log("type",base64File.split(",")[1]);
+          this.image=base64File.split(",")[1];
+           this.imgURL = this.image;
+          console.log("****image**",this.image);
+        });
+        this.save();
+      }
+     },(err) => {
       console.log(err);
     });
   }
+  
 
   save() {  
     if (this.image != null) {

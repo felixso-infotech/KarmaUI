@@ -1,7 +1,7 @@
 import { User } from './../user';
 import { ActivityService } from './../activity.service';
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -52,9 +52,13 @@ claims;
         text: 'Yes',
         role: 'okay',
         handler: ()=>{
-          (<any>window).AccountKitPlugin.logout();
-          this.router.navigate(['tabs/profile']);
+         // (<any>window).AccountKitPlugin.logout();
+        // this.menuCtrl.close();
+        if (this.oauthService.hasValidAccessToken()){
+        this.oauthService.logOut(false);
+          this.router.navigate(['login']);
         }
+      }
       }]
     });
 
