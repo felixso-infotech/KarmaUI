@@ -6,6 +6,7 @@ import { AlertController, NavController } from '@ionic/angular';
 
 import { AggregateQueryResourceService } from '../api/services';
 import { User } from '../user';
+import { InstructionVideoModel } from '../api/models';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,8 @@ export class HomePage implements OnInit {
   wheelActivities: string[] = [];
   activitySelected : ActivityModel;
   user: User;
+  instructionVideo: InstructionVideoModel;
+  videoUrl: string;
   
   constructor(private router: Router,
 // tslint:disable-next-line: max-line-length
@@ -53,13 +56,11 @@ export class HomePage implements OnInit {
         this.wheelActivities.push(element.title);
       });
       this.activitySelected=this.activities[0];
-      //console.log(this.activitySelected);
+      console.log("selected activity id",this.activitySelected);
     });
   }
 
   async presentAlert() {
-    console.log('activity got',this.activitySelected.title);
-    console.log('activity id',this.activitySelected.id);
     const alert = await this.alertController.create({
       header: 'Congradulations..!',
       subHeader: 'Activity got:'+this.activitySelected.title,
@@ -72,12 +73,20 @@ export class HomePage implements OnInit {
         text: 'Proceed',
         role: 'okay',
         handler: () => {
+         /* this.service.getInstructionVideoByActivityIdUsingGET(this.activitySelected.id)
+          .subscribe(result =>{
+            this.instructionVideo = result;
+            this.activityService.currentActivityVideoUrl='http://35.196.249.196:8075/KarmaApp/instruction-video/'+result.fileName+'.'+result.fileContentType;
+            this.navctrl.navigateForward('tabs/home/gratitude-challenge/' + this.activitySelected.id);
+          }, err => {
+            console.log('Error retriving instruction video');
+          });*/
           this.navctrl.navigateForward('tabs/home/gratitude-challenge/' + this.activitySelected.id);
         }
-      }
+       }
       ]
     });
-
+    
     await alert.present();
   }
 

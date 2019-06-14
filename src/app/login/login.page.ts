@@ -26,6 +26,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.user=this.activityService.currentUser;
+    console.log(this.activityService.currentUser);
     if (this.oauthService.hasValidAccessToken()) {
       this.navCtrl.navigateRoot('/tabs');
   }
@@ -50,6 +51,7 @@ export class LoginPage implements OnInit {
         console.log('fetched registeredUser');
       });
 
+      console.log("*****logform user",this.activityService.currentUser);
       // this.navCtrl.navigateRoot('tabs/home');
       }
     }).catch((err: HttpErrorResponse) => {
@@ -57,6 +59,7 @@ export class LoginPage implements OnInit {
       //this.presentToast(err.error.error_description);
     });
   }
+
   saveNewUser(){
       this.registeredUser.userId=this.user.username;
       this.commandService.createRegisteredUserUsingPOST(this.registeredUser)

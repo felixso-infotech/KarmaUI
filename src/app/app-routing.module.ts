@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'albums', loadChildren: './albums/albums.module#AlbumsPageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'tabs',    canActivate: [AuthGuardService], loadChildren: './tabs/tabs.module#TabsPageModule' }
-
 ];
 @NgModule({
   imports: [

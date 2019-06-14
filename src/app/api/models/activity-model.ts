@@ -9,4 +9,5 @@ export interface ActivityModel {
   successMessage?: string;
   title?: string;
   url?: string;
+  videoUrl?: string;
 }

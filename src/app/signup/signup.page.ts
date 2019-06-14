@@ -85,6 +85,6 @@ export class SignUpPage implements OnInit {
   ngOnInit() {
     this.agreement = false;
     this.user=this.activityService.currentUser;
-    
+    console.log("*****user in signup ngoninit",this.activityService.currentUser);
   }
 }
