@@ -20,6 +20,7 @@ import { NgxWheelModule } from 'ngx-wheel';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,8 @@ import { Base64 } from '@ionic-native/base64/ngx';
       useClass: AuthInterceptor,
       multi: true
 
-    }
+    },
+    InAppBrowser
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="loginService.user">
     <ion-title>Recommended activities</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -36,8 +36,11 @@
   </ngx-mobile-wheel>
 </div>
   </div> 
-  <ion-text color="primary" mode="ios" class="ion-text-center">
+  <ion-text *ngIf="!activities && loginService.user"color="primary" mode="ios" class="ion-text-center">
     <p>Touch the wheel to randomly pick a task</p>
     <p>{{activitySelected?.title}}</p>
   </ion-text>
+  <div class="ion-padding" *ngIf="!loginService.user">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content> 

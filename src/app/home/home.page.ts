@@ -7,6 +7,7 @@ import { AlertController, NavController } from '@ionic/angular';
 import { AggregateQueryResourceService } from '../api/services';
 import { User } from '../user';
 import { InstructionVideoModel } from '../api/models';
+import { LoginService } from '../security/login.service';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,7 @@ export class HomePage implements OnInit {
   
   constructor(private router: Router,
 // tslint:disable-next-line: max-line-length
-    private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService,private activatedRoute: ActivatedRoute) { }
+    private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService,private activatedRoute: ActivatedRoute,private loginService:LoginService) { }
 
 // tslint:disable-next-line: use-life-cycle-interface
   ngOnChanges() {
@@ -58,6 +59,26 @@ export class HomePage implements OnInit {
       this.activitySelected=this.activities[0];
       console.log("selected activity id",this.activitySelected);
     });
+  }
+
+  ionViewWillEnter() {
+    console.log("home page-ionViewWillEnter");
+  }
+
+  ionViewDidEnter() {
+    console.log("home ionViewDidEnter");
+  }
+
+  ionViewWillLeave() {
+    console.log("home ionViewWilLeave");
+  }
+
+  ionViewDidLeave() {
+    console.log("home ionViewDidLeave");
+  }
+
+  ngOnDestroy() {
+    console.log("home ngOnDestroy");
   }
 
   async presentAlert() {

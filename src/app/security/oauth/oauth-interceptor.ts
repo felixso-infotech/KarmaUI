@@ -20,6 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const oauthService = this.injector.get(OAuthService);
         if (oauthService.hasValidAccessToken()) {
+            console.log("has valid access token");
             request = request.clone({
                 setHeaders: {
                     Authorization: oauthService.authorizationHeader()

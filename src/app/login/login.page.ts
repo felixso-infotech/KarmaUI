@@ -1,14 +1,7 @@
-import { UsersPage } from './../users/users.page';
-import { UserDTO } from './../api/models/user-dto';
-import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { NavController } from '@ionic/angular';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { Router } from '@angular/router';
-import { ActivityService } from './../activity.service';
+import { LoginService } from '../security/login.service';
 import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
-import { AggregateCommandResourceService, AggregateQueryResourceService } from '../api/services';
-import { RegisteredUserModel } from '../api/models';
+import { NavController, Platform } from '@ionic/angular';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-login',
@@ -17,57 +10,76 @@ import { RegisteredUserModel } from '../api/models';
 })
 export class LoginPage implements OnInit {
 
-  user: User;
-  registeredUser: RegisteredUserModel={
-  };
+  private isMobile: boolean;
 
- 
-  constructor(private activityService: ActivityService,private navCtrl: NavController, private router: Router, private oauthService: OAuthService, private commandService:AggregateCommandResourceService,private queryService: AggregateQueryResourceService) { }
+  constructor(private navCntrl: NavController, private oauthService: OAuthService, private loginService: LoginService, private platform: Platform) { }
 
   ngOnInit() {
-    this.user=this.activityService.currentUser;
-    console.log(this.activityService.currentUser);
-    if (this.oauthService.hasValidAccessToken()) {
-      this.navCtrl.navigateRoot('/tabs');
+    if (this.platform.is("mobileweb") || this.platform.is("pwa") || this.platform.is("desktop")) {
+      this.isMobile = false;
+    }
+    else {
+      this.isMobile = true;
+    }
+    if (this.isMobile) {
+      this.appLogin();
+    }
+    else {
+      this.webLogin();
+    }
+  }
+
+  webLogin() {
+    this.oauthService.loadDiscoveryDocumentAndLogin().then(success => {
+      console.log("authentication completed", success, this.oauthService.hasValidAccessToken());
+      if (this.oauthService.hasValidAccessToken()) {
+        this.oauthService.loadUserProfile().then(profile => {
+          console.log(profile);
+          this.loginService.user = profile;
+        });
+      }
+    },
+      error => {
+        console.log("authentication not completed", error);
+      });
+  }
+  appLogin() {
+    console.log("platform is mobile");
+    this.loginService.appLogin().then(success => {
+      console.log("oauth success object", success);
+      const idToken = success.id_token;
+      const accessToken = success.access_token;
+      const keyValuePair = `#id_token=${encodeURIComponent(idToken)}&access_token=${encodeURIComponent(accessToken)}`;
+      console.log("kayValuePair",keyValuePair);
+      this.oauthService.loadDiscoveryDocumentAndTryLogin({
+        customHashFragment: keyValuePair,
+        disableOAuth2StateCheck: true
+      }).then(response=>{
+        console.log("load discovery document",response);
+        if(response) {
+          const claims: any = this.oauthService.getIdentityClaims();
+          this.oauthService.loadUserProfile().then(user=>{
+            this.loginService.user=user;
+          });
+          console.log("claims",claims);
+        }
+      });
+      this.navCntrl.navigateRoot("/tabs");
+/*       this.oauthService.tryLogin({
+        customHashFragment: keyValuePair,
+        disableOAuth2StateCheck: true
+      }).then(success => {
+        console.log("success when calling trylogin", success);
+      },
+        error => {
+          console.log("error when calling trylogin", error);
+        }); */
+      // this.translate.use(account.langKey);
+      //return cb(claims);
+    }, (error) => {
+      ///*  */ return fail(error);
+      console.log("in configureOauth", error);
+
+    });
   }
 }
-  logForm() {
-    console.log('in login' + this.user.username + ' password is ' + this.user.password);
-    this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(this.user.username, this.user.password, new HttpHeaders()).then(() => {
-      const claims = this.oauthService.getIdentityClaims();
-      if (claims) { console.log(claims);
-      }
-
-      if (this.oauthService.hasValidAccessToken()){
-        console.log("logged in successfullyyyy");
-        if(this.user.newUser===true){
-          this.saveNewUser();
-        }
-      this.queryService.getRegisteredUserByUserIdUsingGET(this.user.username)
-      .subscribe(result => {
-       this.user.id=result.registeredUserId;
-       this.navCtrl.navigateRoot('tabs/home');
-      }, err => {
-        console.log('fetched registeredUser');
-      });
-
-      console.log("*****logform user",this.activityService.currentUser);
-      // this.navCtrl.navigateRoot('tabs/home');
-      }
-    }).catch((err: HttpErrorResponse) => {
-      console.log("no valid token");
-      //this.presentToast(err.error.error_description);
-    });
-  }
-
-  saveNewUser(){
-      this.registeredUser.userId=this.user.username;
-      this.commandService.createRegisteredUserUsingPOST(this.registeredUser)
-      .subscribe(result => {
-      this.registeredUser = result;
-    }, err => {
-      console.log('Error creating registeredUser');
-    });
-  }
-  }
-  
