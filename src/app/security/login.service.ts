@@ -1,3 +1,4 @@
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Platform } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Injectable } from '@angular/core';
@@ -9,9 +10,12 @@ import { InAppBrowser, InAppBrowserObject, InAppBrowserEvent } from '@ionic-nati
 export class LoginService {
 
   public user:any;
-  constructor(private oauthService: OAuthService, private platform: Platform, private iab: InAppBrowser) { }
+  constructor(private oauthService: OAuthService, 
+    private platform: Platform, 
+    private iab: InAppBrowser, 
+    private nativeStorage: NativeStorage) { }
 
-  appLogin(): Promise<any> {
+  doAppLogin(): Promise<any> {
     return this.oauthService.createAndSaveNonce().then(nonce => {
       let state: string = Math.floor(Math.random() * 1000000000).toString();
       let url = "";
@@ -76,12 +80,26 @@ export class LoginService {
   }
 
   logout() {
-    if (this.platform.is('pwa')) {
+    if (this.platform.is("desktop")||this.platform.is("pwa")||this.platform.is("mobileweb")) {
       // do global logout when using browser/*  */
       this.oauthService.logOut();
     } else {
       // don't redirect to global logout in app
       this.oauthService.logOut(true);
+
+      this.nativeStorage.setItem('keyValuePair',null).then(()=>{
+        console.log("keyValuePair removed");
+      },
+      error=>{
+        console.log("error while removing keyValuePair",error);
+      });
+
+      this.nativeStorage.setItem('user',null).then(()=>{
+        console.log("user removed");
+      },
+      error=>{
+        console.log("error while removing user",error);
+      });
     }
   }
 }

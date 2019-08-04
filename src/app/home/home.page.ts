@@ -40,7 +40,12 @@ export class HomePage implements OnInit {
   
   constructor(private router: Router,
 // tslint:disable-next-line: max-line-length
-    private navctrl: NavController, private activityService: ActivityService, private alertController:AlertController, private service:AggregateQueryResourceService,private activatedRoute: ActivatedRoute,private loginService:LoginService) { }
+    private navctrl: NavController, 
+    private activityService: ActivityService, 
+    private alertController:AlertController, 
+    private service:AggregateQueryResourceService,
+    private activatedRoute: ActivatedRoute,
+    private loginService:LoginService) { }
 
 // tslint:disable-next-line: use-life-cycle-interface
   ngOnChanges() {
@@ -51,18 +56,21 @@ export class HomePage implements OnInit {
     console.log('ngOninit');
     this.user=this.activityService.currentUser;
     console.log("id in home*******",this.user.id);
+  }
+
+  ionViewWillEnter() {
+    console.log("home page-ionViewWillEnter");
     this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId':this.user.id}).subscribe(response => {
       this.activities = response;
+      this.wheelActivities=[];
       this.activities.forEach(element => {
         this.wheelActivities.push(element.title);
       });
       this.activitySelected=this.activities[0];
       console.log("selected activity id",this.activitySelected);
     });
-  }
 
-  ionViewWillEnter() {
-    console.log("home page-ionViewWillEnter");
+    console.log("user in home page",this.loginService.user);
   }
 
   ionViewDidEnter() {

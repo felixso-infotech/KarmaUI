@@ -1,3 +1,4 @@
+import { LoginService } from './../security/login.service';
 import { User } from './../user';
 import { ActivityService } from './../activity.service';
 
@@ -18,12 +19,15 @@ export class ProfilePage implements OnInit {
 public user: RegisteredUserModel;
 claims;
 // tslint:disable-next-line: max-line-length
-  constructor(private alertController: AlertController, private router: Router, private activityService: ActivityService, private oauthService: OAuthService, private aggregateQueryService: AggregateQueryResourceService) { }
+  constructor(private alertController: AlertController, 
+    private router: Router, 
+    private oauthService: OAuthService,
+    private loginService: LoginService) { }
 
   ngOnInit() {
 // tslint:disable-next-line: label-position
     // this.loggedUser();
-    this.oauthService.loadUserProfile().then((user: any) => {
+/*     this.oauthService.loadUserProfile().then((user: any) => {
       this.aggregateQueryService.getRegisteredUserByUserIdUsingGET(user.preferred_username).subscribe(res => {
       this.user = res;
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.user);
@@ -31,9 +35,11 @@ claims;
         console.log('error occured while taking the user', err);
       })
       console.log(user);
-    }).catch((err: HttpErrorResponse) => {
+    }).catch((err: HttpErrorResponse) => { */
       //this.presentToast(err.error.error_description);
-    });
+    /* }); */
+    this.user=this.loginService.user;
+    console.log("user in profile",this.user,this.loginService.user);
 
   }
 
@@ -55,7 +61,7 @@ claims;
          // (<any>window).AccountKitPlugin.logout();
         // this.menuCtrl.close();
         if (this.oauthService.hasValidAccessToken()){
-        this.oauthService.logOut(false);
+        this.loginService.logout();
           this.router.navigate(['login']);
         }
       }

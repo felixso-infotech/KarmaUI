@@ -1,3 +1,4 @@
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { LoginService } from './security/login.service';
 import { authConfig } from './security/security.config';
 import { Component } from '@angular/core';
@@ -18,7 +19,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private oauthService: OAuthService,
     private loginService: LoginService,
-    private navCntrl: NavController
+    private navCntrl: NavController,
+    private nativeStorage: NativeStorage
   ) {
     this.initializeApp();
   }
@@ -35,7 +37,7 @@ export class AppComponent {
     console.log(this.platform);
     this.oauthService.configure(authConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    if (this.platform.is("desktop")||this.platform.is("pwa")||this.platform.is("mobileweb")) {
+    if (this.platform.is("desktop") || this.platform.is("pwa") || this.platform.is("mobileweb")) {
       this.oauthService.loadDiscoveryDocumentAndLogin().then(success => {
         console.log("authentication completed", success, this.oauthService.hasValidAccessToken());
         if (this.oauthService.hasValidAccessToken()) {
@@ -49,9 +51,44 @@ export class AppComponent {
           console.log("authentication not completed", error);
         });
     }
-    else{
-      if(!this.oauthService.hasValidAccessToken()) {
-        this.navCntrl.navigateRoot('/login');
+    else {
+      if (!this.oauthService.hasValidAccessToken()) {
+        this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile
+        this.nativeStorage.getItem('keyValuePair')
+          .then(
+            keyValuePair => {
+              console.log("keyValuePair", keyValuePair);
+
+              if (keyValuePair == null || keyValuePair == undefined) {
+                this.navCntrl.navigateRoot('/login');
+              }
+              else {
+                this.nativeStorage.getItem('user').
+                then((user) => {
+                  console.log("user fetched successsfully",user);
+                  this.loginService.user = user;
+                },
+                  error => {
+                    console.log("error when fetching user ", error);
+                });
+                this.oauthService.loadDiscoveryDocumentAndTryLogin({
+                  customHashFragment: keyValuePair,
+                  disableOAuth2StateCheck: true
+                }).then(response => {
+                  console.log("load discovery document", response);
+                  if (response) {
+                    const claims: any = this.oauthService.getIdentityClaims();
+                    this.oauthService.loadUserProfile().then(user => {
+                    });
+                  }
+                });
+              }
+            },
+            error => {
+              console.error("Error when getting keyValuePair", error);
+              this.navCntrl.navigateRoot('/login');
+            }
+          );
       }
     }
 
