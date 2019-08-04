@@ -1,0 +1,1 @@
+{"version":3,"file":"api-configuration.js","sourceRoot":"","sources":["../../../../../src/app/api/api-configuration.ts"],"names":[],"mappings":";AAAA,oBAAoB;AACpB,OAAO,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAE3C;;GAEG;AAIH;IAHA;QAIE,YAAO,GAAW,uBAAuB,CAAC;IAC5C,CAAC;IAFY,gBAAgB;QAH5B,UAAU,CAAC;YACV,UAAU,EAAE,MAAM;SACnB,CAAC;OACW,gBAAgB,CAE5B;IAAD,uBAAC;CAAA,AAFD,IAEC;SAFY,gBAAgB"}

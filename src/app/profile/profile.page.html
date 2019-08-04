@@ -55,7 +55,7 @@
                      <ion-row>
                        <ion-col text-center class="flex-box">
                           <ion-icon src="/assets/coins.svg" id="coin-icon" ></ion-icon>
-                          <ion-label id="coin-value" class="cl-yellow">{{user.noOfCoins}}</ion-label>
+                          <ion-label id="coin-value" class="cl-yellow">{{loginService.user.noOfCoins}}</ion-label>
                        </ion-col>
                      </ion-row>
                 </ion-grid>
@@ -71,7 +71,7 @@
                             <ion-item lines="none" text-center >
                                 <ion-label class="trophy-value cl-blue flex-box">
                                     <ion-icon name="trophy" class="trophy-icon cl-yellow"></ion-icon>
-                                    <p>{{user.noOfGoldMedals}}</p>
+                                    <p>{{loginService.noOfGoldMedals}}</p>
                                 </ion-label>
                             </ion-item>
                           </ion-col>
@@ -80,7 +80,7 @@
                                 
                                   <ion-label class="trophy-value cl-blue flex-box">
                                       <ion-icon name="trophy" class="trophy-icon cl-grey"></ion-icon>
-                                     <p>{{user.noOfSilverMedals}}</p>
+                                     <p>{{loginService.noOfSilverMedals}}</p>
                                   </ion-label>  
                               </ion-item>
                           </ion-col>
@@ -89,7 +89,7 @@
                                     
                                     <ion-label item-end class="trophy-value cl-blue flex-box">
                                         <ion-icon item-start name="trophy" class="trophy-icon cl-gold"></ion-icon>
-                                        <p>{{user.noOfBronzeMedals}}</p>
+                                        <p>{{loginService.noOfBronzeMedals}}</p>
                                     </ion-label>  
                                 </ion-item>
                                 </ion-col>

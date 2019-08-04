@@ -15,7 +15,7 @@ export const authConfig: AuthConfig = {
 
     // set the scope for the permissions the client should request
     // The first three are defined by OIDC. The 4th is a usecase-specific one
-    scope: 'openid profile email',
+    scope: 'openid profile email phone',
 
     dummyClientSecret: '5f6dc31d-8834-44a2-b590-59ccf90aacdc',
     tokenEndpoint: 'http://35.196.86.249:8080/auth/realms/karma/protocol/openid-connect/token',

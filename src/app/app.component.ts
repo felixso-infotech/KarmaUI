@@ -1,3 +1,6 @@
+import { ActivityService } from './activity.service';
+import { RegisteredUserModel } from './api/models/registered-user-model';
+import { Oauth2User } from './user';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { LoginService } from './security/login.service';
 import { authConfig } from './security/security.config';
@@ -7,12 +10,16 @@ import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OAuthService, JwksValidationHandler, OAuthEvent } from 'angular-oauth2-oidc';
+import { AggregateQueryResourceService, AggregateCommandResourceService } from './api/services';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  
+  user:Oauth2User;
+  
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -20,7 +27,10 @@ export class AppComponent {
     private oauthService: OAuthService,
     private loginService: LoginService,
     private navCntrl: NavController,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private queryService: AggregateQueryResourceService,
+    private commandService:AggregateCommandResourceService,
+    private activityService: ActivityService
   ) {
     this.initializeApp();
   }
@@ -41,9 +51,11 @@ export class AppComponent {
       this.oauthService.loadDiscoveryDocumentAndLogin().then(success => {
         console.log("authentication completed", success, this.oauthService.hasValidAccessToken());
         if (this.oauthService.hasValidAccessToken()) {
-          this.oauthService.loadUserProfile().then(profile => {
+          this.oauthService.loadUserProfile().then(profile=> {
             console.log(profile);
-            this.loginService.user = profile;
+            this.loginService.user=<RegisteredUserModel>profile;
+            this.loginService.user.userId=(<Oauth2User>profile).preferred_username;
+            this.updateLocalUsers();
           });
         }
       },
@@ -53,7 +65,6 @@ export class AppComponent {
     }
     else {
       if (!this.oauthService.hasValidAccessToken()) {
-        this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile
         this.nativeStorage.getItem('keyValuePair')
           .then(
             keyValuePair => {
@@ -67,6 +78,7 @@ export class AppComponent {
                 then((user) => {
                   console.log("user fetched successsfully",user);
                   this.loginService.user = user;
+                  this.activityService.loadActivities();
                 },
                   error => {
                     console.log("error when fetching user ", error);
@@ -76,11 +88,6 @@ export class AppComponent {
                   disableOAuth2StateCheck: true
                 }).then(response => {
                   console.log("load discovery document", response);
-                  if (response) {
-                    const claims: any = this.oauthService.getIdentityClaims();
-                    this.oauthService.loadUserProfile().then(user => {
-                    });
-                  }
                 });
               }
             },
@@ -103,6 +110,27 @@ export class AppComponent {
             console.log("oauth events", idToken);
 
           }
+      }
+    });
+  }
+
+  updateLocalUsers() {
+    this.queryService.getRegisteredUserByUserIdUsingGET(this.loginService.user.userId)
+    .subscribe(result => {
+      console.log("user got from backend",result);
+      this.loginService.user.registeredUserId=result.registeredUserId;
+      this.activityService.loadActivities();
+    }, err => {
+      console.log('fetched registeredUser');
+      if(err.status == 500) {
+        this.commandService.createRegisteredUserUsingPOST(this.loginService.user).subscribe(response=>{
+          console.log("new user saved successfully",response);
+          this.loginService.user.registeredUserId=response.registeredUserId;
+          this.activityService.loadActivities();
+        },
+        error=>{
+          console.log("something went wrong when saving the user",error);
+        })
       }
     });
   }

@@ -1,3 +1,5 @@
+import { RegisteredUserModel } from './../api/models/registered-user-model';
+import { Oauth2User } from './../user';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Platform } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -9,7 +11,8 @@ import { InAppBrowser, InAppBrowserObject, InAppBrowserEvent } from '@ionic-nati
 })
 export class LoginService {
 
-  public user:any;
+  public user:RegisteredUserModel;
+
   constructor(private oauthService: OAuthService, 
     private platform: Platform, 
     private iab: InAppBrowser, 

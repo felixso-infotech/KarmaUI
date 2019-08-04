@@ -35,12 +35,12 @@
       <div><img *ngIf="imgURL" [src]="imgURL"></div>
       <div *ngIf="!imgURL"><div class="placeholder">Image will be appeared here</div></div>
       <ion-item>
-          <ion-button [disabled]="!imgURL" routerLink="/success" (click)="presentToast()" size="large" slot="end" fill="outline" margin-bottom icon-only padding clear>
+          <ion-button [disabled]="!imgURL" (click)="share()" size="large" slot="end" fill="outline" margin-bottom icon-only padding clear>
+              <ion-icon name="share-alt" size="large"></ion-icon>
+          </ion-button>
+          <ion-button [disabled]="!imgURL && !image" (click)="save()" size="large" slot="end" fill="outline" margin-bottom icon-only padding clear>
               <ion-icon name="arrow-forward" size="large"></ion-icon>
           </ion-button>
-          <ion-button [disabled]="!imgURL" (click)="share()" size="large" slot="end" fill="outline" margin-bottom icon-only padding clear>
-            <ion-icon name="share-alt" size="large"></ion-icon>
-        </ion-button>
         </ion-item>
 
     

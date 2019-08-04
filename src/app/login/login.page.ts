@@ -1,8 +1,12 @@
+import { ActivityService } from './../activity.service';
+import { RegisteredUserModel } from './../api/models/registered-user-model';
+import { Oauth2User } from './../user';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { LoginService } from '../security/login.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { AggregateQueryResourceService, AggregateCommandResourceService } from '../api/services';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +21,10 @@ export class LoginPage implements OnInit {
     private oauthService: OAuthService,
     private loginService: LoginService,
     private platform: Platform,
-    private nativeStorage: NativeStorage) { }
+    private nativeStorage: NativeStorage,
+    private queryService: AggregateQueryResourceService,
+    private commandService:AggregateCommandResourceService,
+    private activityService: ActivityService) { }
 
   ngOnInit() {
     if (this.platform.is("mobileweb") || this.platform.is("pwa") || this.platform.is("desktop")) {
@@ -40,7 +47,8 @@ export class LoginPage implements OnInit {
       if (this.oauthService.hasValidAccessToken()) {
         this.oauthService.loadUserProfile().then(profile => {
           console.log(profile);
-          this.loginService.user = profile;
+          console.log("identity clainms ",this.oauthService.getIdentityClaims());
+          this.loginService.user = <Oauth2User>profile;
         });
       }
     },
@@ -63,16 +71,12 @@ export class LoginPage implements OnInit {
         console.log("load discovery document", response);
         if (response) {
           const claims: any = this.oauthService.getIdentityClaims();
-          this.oauthService.loadUserProfile().then(user => {
-            this.loginService.user = user;
-
-            this.nativeStorage.setItem('user', user).
-              then(() => {
-                console.log("user saved successsfully", user);
-              },
-                error => {
-                  console.log("error when saving user ", error);
-              });
+          this.oauthService.loadUserProfile().then(profile => {
+            console.log("identity clainms ",this.oauthService.getIdentityClaims());
+           
+            this.loginService.user=<RegisteredUserModel>profile;
+            this.loginService.user.userId=(<Oauth2User>profile).preferred_username;
+            this.updateLocalUsers();
 
             this.nativeStorage.setItem('keyValuePair', keyValuePair).then(() => {
               console.log("keyValuePair saved");
@@ -103,4 +107,37 @@ export class LoginPage implements OnInit {
 
     });
   }
+  updateLocalUsers() {
+    this.queryService.getRegisteredUserByUserIdUsingGET(this.loginService.user.userId)
+    .subscribe(result => {
+      console.log("user got from backend",result);
+      this.loginService.user.registeredUserId=result.registeredUserId;
+      this.activityService.loadActivities();
+      this.saveUserLocally();
+
+    }, err => {
+      console.log('fetched registeredUser');
+      if(err.status == 500) {
+        this.commandService.createRegisteredUserUsingPOST(this.loginService.user).subscribe(response=>{
+          console.log("new user saved successfully",response);
+          this.loginService.user.registeredUserId=response.registeredUserId;
+          this.activityService.loadActivities();
+          this.saveUserLocally();
+        },
+        error=>{
+          console.log("something went wrong when saving the user",error);
+        })
+      }
+    });
+  }
+  saveUserLocally(){
+    this.nativeStorage.setItem('user', this.loginService.user).
+    then(() => {
+      console.log("user saved successsfully in native storage", this.loginService.user);
+    },
+      error => {
+        console.log("error when saving user locally", error);
+    });
+  }
+
 }

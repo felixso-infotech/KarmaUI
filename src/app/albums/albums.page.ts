@@ -1,7 +1,8 @@
+import { LoginService } from './../security/login.service';
 import { Component, OnInit } from '@angular/core';
 import { MediaModel } from '../api/models';
 import { AggregateQueryResourceService } from '../api/services';
-import { User } from '../user';
+import { Oauth2User } from '../user';
 import { ActivityService } from '../activity.service';
 
 @Component({
@@ -11,14 +12,11 @@ import { ActivityService } from '../activity.service';
 })
 export class AlbumsPage implements OnInit {
 
-  constructor(private service:AggregateQueryResourceService,private activityService: ActivityService) { }
+  constructor(private service:AggregateQueryResourceService,private activityService: ActivityService, private loginService:LoginService) { }
 
   media: MediaModel[];
-  user: User;
   ngOnInit() {
-    this.user=this.activityService.currentUser;
-    console.log("id in album*******",this.user.id);
-    this.service.findAllCompletedActivityMediasByRegisteredUserIdUsingGET({'registeredUserId':this.user.id}).subscribe(response => {
+    this.service.findAllCompletedActivityMediasByRegisteredUserIdUsingGET({'registeredUserId':this.loginService.user.registeredUserId}).subscribe(response => {
       this.media = response;
       console.log("****response",response);
       console.log("****",this.media);

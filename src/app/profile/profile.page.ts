@@ -1,5 +1,5 @@
 import { LoginService } from './../security/login.service';
-import { User } from './../user';
+import { Oauth2User } from './../user';
 import { ActivityService } from './../activity.service';
 
 import { AlertController, MenuController } from '@ionic/angular';

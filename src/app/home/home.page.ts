@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 
 import { AggregateQueryResourceService } from '../api/services';
-import { User } from '../user';
+import { Oauth2User } from '../user';
 import { InstructionVideoModel } from '../api/models';
 import { LoginService } from '../security/login.service';
 
@@ -32,9 +32,7 @@ export class HomePage implements OnInit {
     "My pet"
   ]; */
   activities: ActivityModel[];
-  wheelActivities: string[] = [];
   activitySelected : ActivityModel;
-  user: User;
   instructionVideo: InstructionVideoModel;
   videoUrl: string;
   
@@ -54,21 +52,12 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     console.log('ngOninit');
-    this.user=this.activityService.currentUser;
-    console.log("id in home*******",this.user.id);
+    console.log("id in home*******",this.loginService.user);
   }
 
   ionViewWillEnter() {
-    console.log("home page-ionViewWillEnter");
-    this.service.findIncompletedActivityByRegisteredUserIdByQueryUsingGET({'registeredUserId':this.user.id}).subscribe(response => {
-      this.activities = response;
-      this.wheelActivities=[];
-      this.activities.forEach(element => {
-        this.wheelActivities.push(element.title);
-      });
-      this.activitySelected=this.activities[0];
-      console.log("selected activity id",this.activitySelected);
-    });
+    console.log("home page-ionViewWillEnter",this.loginService.user);
+
 
     console.log("user in home page",this.loginService.user);
   }
@@ -92,14 +81,11 @@ export class HomePage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Congradulations..!',
-      subHeader: 'Activity got:'+this.activitySelected.title,
-      message: 'This is an alert message.',
-      buttons: [{
-        text: 'Spin again',
-        role: 'cancel'
-      },
+      subHeader: 'Activity got:'+  this.activityService.currentActivity.title,
+      message: 'Click launch to play '+this.activityService.currentActivity.title,
+      buttons: [
       {
-        text: 'Proceed',
+        text: 'Launch',
         role: 'okay',
         handler: () => {
          /* this.service.getInstructionVideoByActivityIdUsingGET(this.activitySelected.id)
@@ -110,7 +96,9 @@ export class HomePage implements OnInit {
           }, err => {
             console.log('Error retriving instruction video');
           });*/
-          this.navctrl.navigateForward('tabs/home/gratitude-challenge/' + this.activitySelected.id);
+          //this.activityService.currentActivity=this.activitySelected;
+          this.activityService.launchActivity();
+          this.navctrl.navigateForward("finish");
         }
        }
       ]
@@ -122,7 +110,7 @@ export class HomePage implements OnInit {
   loadActivities() {
     setTimeout(() => {
 // tslint:disable-next-line: triple-equals
-      if (this.activityService.currentUser.username != '') {
+      if (this.loginService.user.userId != '') {
         this.router.navigate(['tabs/home/activities']);
       } else {
         this.router.navigate(['login']);
@@ -148,7 +136,8 @@ export class HomePage implements OnInit {
           err=>{console.log(err);})
         }
       ); */
-      this.activitySelected = this.activities[Math.floor(Math.random() * this.activities.length)];
+      this.activitySelected = this.activities[Math.floor(Math.random() * this.activities.length)];     
+      
   }
 
   afterSpin() {

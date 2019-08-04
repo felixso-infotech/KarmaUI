@@ -12,8 +12,8 @@ const routes: Routes = [
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'albums', loadChildren: './albums/albums.module#AlbumsPageModule' },
-  { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },  { path: 'welcome-slides', loadChildren: './welcome-slides/welcome-slides.module#WelcomeSlidesPageModule' }
+  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
+  { path: 'welcome-slides', loadChildren: './welcome-slides/welcome-slides.module#WelcomeSlidesPageModule' }
 
 ];
 @NgModule({

@@ -1,7 +1,6 @@
 import { AuthInterceptor } from './security/oauth/oauth-interceptor';
 
 import { KarmaXapiService } from './karma-xapi.service';
-import { KarmaLrsService } from './karma-lrs.service';
 import { KarmaAppService } from './karma-app.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,7 +31,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     KarmaAppService,
-    KarmaLrsService,
     KarmaXapiService,
     Camera,
     ImagePicker,

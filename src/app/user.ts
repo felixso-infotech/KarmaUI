@@ -1,8 +1,6 @@
-export class User {
-username:string;
+export class Oauth2User {
+preferred_username:string;
 email: string;
-password: string;
-newUser: boolean;
 id:number;
 
 }
