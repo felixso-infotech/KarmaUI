@@ -8,10 +8,13 @@
 </ion-header>
 
 <ion-content>
+  <div class="loading" *ngIf="!media">
+      <ion-spinner></ion-spinner>
+  </div>
   <ion-grid>
     <ion-card>
     <ion-row>
-        <ion-col col-6 col-md-4 col-xl-3 *ngFor="let image of media">
+        <ion-col size-sm="6" size-md="4" size-xl="3" size=6 *ngFor="let image of media">
             <ion-img src="data:image/png;base64,{{image.file}}"></ion-img>
           </ion-col>
     </ion-row>

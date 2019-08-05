@@ -1,3 +1,4 @@
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ActivityService } from './../activity.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
@@ -11,7 +12,7 @@ export class SuccessPage implements AfterViewInit {
   public alert;
   message;
   
-  constructor(public alertController: AlertController, public activityService: ActivityService){}
+  constructor(public alertController: AlertController, public activityService: ActivityService, private socialSharing: SocialSharing){}
 
   async ngAfterViewInit() {
     this.message=this.activityService.currentActivity.successMessage;
@@ -26,5 +27,10 @@ export class SuccessPage implements AfterViewInit {
     this.alert.present();
   }
 
+  share() {
+    // tslint:disable-next-line: max-line-length
+    this.socialSharing.share(this.activityService.currentActivity.successMessage, null, null).then(() => { console.log('shared') })
+      .catch(err => { console.log(err); });
+  }
 }
 

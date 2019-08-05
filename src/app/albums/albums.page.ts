@@ -15,12 +15,29 @@ export class AlbumsPage implements OnInit {
   constructor(private service:AggregateQueryResourceService,private activityService: ActivityService, private loginService:LoginService) { }
 
   media: MediaModel[];
+
   ngOnInit() {
+    console.log("in albums ngoninit");
     this.service.findAllCompletedActivityMediasByRegisteredUserIdUsingGET({'registeredUserId':this.loginService.user.registeredUserId}).subscribe(response => {
       this.media = response;
       console.log("****response",response);
       console.log("****",this.media);
+  },
+  error=>{
+    console.log("Error while retrieving media",error);
   });
    
+  }
+
+  ionViewWillEnter() {
+    console.log("in ionViewWillEnter");
+    this.service.findAllCompletedActivityMediasByRegisteredUserIdUsingGET({'registeredUserId':this.loginService.user.registeredUserId}).subscribe(response => {
+      this.media = response;
+      console.log("****response",response);
+      console.log("****",this.media);
+  },
+  error=>{
+    console.log("Error while retrieving media",error);
+  });
   }
 }

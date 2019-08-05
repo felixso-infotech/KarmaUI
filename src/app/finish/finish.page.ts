@@ -3,7 +3,7 @@ import { LoginPage } from './../login/login.page';
 import { ActivityService } from './../activity.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AggregateCommandResourceService } from '../api/services';
@@ -40,7 +40,8 @@ export class FinishPage implements OnInit {
     private service: AggregateCommandResourceService, private imagePicker: ImagePicker,
     private base64: Base64,
     private loginService: LoginService,
-    private sanitizer:DomSanitizer) { }
+    private sanitizer:DomSanitizer,
+    private navctrl: NavController) { }
 
   ngOnInit() {
   }
@@ -130,11 +131,20 @@ export class FinishPage implements OnInit {
           console.log("completed activity saved ", result);
           console.log("completed activity user id ", result.registeredUserId);
           this.activityService.loadActivities();
-
+          this.navctrl.navigateForward("success");
         }, err => {
           console.log('Error creating completedActivity',err);
+          this.presentToast();
         });
     }
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'File size is too large',
+      duration: 2000
+    });
+    toast.present();
   }
 
   share() {
