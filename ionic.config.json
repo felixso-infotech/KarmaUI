@@ -1,7 +1,0 @@
-{
-  "name": "KarmaUI",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
