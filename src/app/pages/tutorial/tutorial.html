@@ -1,0 +1,56 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color='primary' (click)="startApp()" [hidden]="!showSkip">Skip</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="false">
+    <ion-slide>
+      <img src="assets/img/illustrations/smiley_-_happy.png" class="slide-image" />
+      <h2 class="slide-title">
+        Welcome to
+        <b> Karma</b>
+      </h2>
+      <p>
+        Have you forgotten to learn things to become an ideal
+        <b>human being?</b> Don't worry. You are at the right place.
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/illustrations/super_man.png" class="slide-image" />
+      <h2 class="slide-title">Create the role model</h2>
+      <p> Start your journey by creating a
+        <b>role model</b> with desired characteristics that you wish to have in a real human being.</p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/illustrations/complete_task_1.png" class="slide-image" />
+      <h2 class="slide-title">User specific tasks</h2>
+      <p> Karma's user specific tasks slowly nurture you as a human being like your
+        <b>role model</b> 
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/illustrations/team_work.png" class="slide-image" />
+      <h2 class="slide-title">Open eyes to the outer world</h2>
+      <p>Tasks which need
+        <b> collaboration</b> with others in real life makes karma unique. The impacts of your actions are more in your real life.
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/illustrations/like.png" class="slide-image" />
+      <h2 class="slide-title">Ready to go?</h2>
+      <p>Now lets see how comments and likes help you sharpen yourself as a real human being</p>
+      <ion-button fill="clear" (click)="startApp()">
+        Continue
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
