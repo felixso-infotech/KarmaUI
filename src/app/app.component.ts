@@ -18,7 +18,7 @@ import { UserData } from './providers/user-data';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
-  appPages = [
+/*   appPages = [
     {
       title: 'Schedule',
       url: '/app/tabs/schedule',
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/about',
       icon: 'information-circle'
     }
-  ];
+  ]; */
   loggedIn = false;
 
   constructor(
