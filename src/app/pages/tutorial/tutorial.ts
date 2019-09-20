@@ -24,7 +24,7 @@ export class TutorialPage {
   startApp() {
     console.log("saved tutorials");
     this.router
-      .navigateByUrl('tutorial')
+      .navigateByUrl('app')
       .then(() => this.storage.set('ion_did_tutorial', true));
   }
 
