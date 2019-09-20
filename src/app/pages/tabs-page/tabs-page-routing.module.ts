@@ -59,10 +59,24 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/schedule',
+        redirectTo: 'tabs/schedule',
         pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+          }
+        ]
       }
     ]
+  },
+  {
+    path: '',
+    redirectTo: 'tabs/home',
+    pathMatch: 'full'
   }
 ];
 

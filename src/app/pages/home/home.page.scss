@@ -1,0 +1,19 @@
+  ion-slides{
+    overflow-y: hidden;
+  }
+  .slide-zoom {
+		// height:200px;
+		height: 100%;
+		// overflow:hidden;
+  }
+  ion-card{
+    display: flex;
+    flex-direction: column;
+    width: 100vh !important;
+    margin: 0 !important;
+  }
+  ion-content {
+
+    //background-image: url('../../../assets/img/footer_lodyas.png');
+    --background:  url('../../../assets/img/footer_lodyas.png');
+  }

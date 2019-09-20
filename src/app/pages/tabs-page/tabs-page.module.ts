@@ -11,18 +11,20 @@ import { ScheduleModule } from '../schedule/schedule.module';
 import { SessionDetailModule } from '../session-detail/session-detail.module';
 import { SpeakerDetailModule } from '../speaker-detail/speaker-detail.module';
 import { SpeakerListModule } from '../speaker-list/speaker-list.module';
+import { HomePageModule } from '../home/home.module';
 
 @NgModule({
   imports: [
-    AboutModule,
     CommonModule,
     IonicModule,
+    TabsPageRoutingModule,
+    HomePageModule,
+    AboutModule,
     MapModule,
     ScheduleModule,
     SessionDetailModule,
     SpeakerDetailModule,
-    SpeakerListModule,
-    TabsPageRoutingModule
+    SpeakerListModule
   ],
   declarations: [
     TabsPage,

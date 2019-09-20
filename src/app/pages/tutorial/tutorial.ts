@@ -22,6 +22,7 @@ export class TutorialPage {
   ) {}
 
   startApp() {
+    console.log("saved tutorials");
     this.router
       .navigateByUrl('tutorial')
       .then(() => this.storage.set('ion_did_tutorial', true));
@@ -36,7 +37,7 @@ export class TutorialPage {
   ionViewWillEnter() {
     this.storage.get('ion_did_tutorial').then(res => {
       if (res === true) {
-        this.router.navigateByUrl('/app/tabs/schedule');
+        this.router.navigateByUrl('/app/tabs/home');
       }
     });
 

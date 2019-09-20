@@ -13,7 +13,7 @@ const routes: Routes = [
     canLoad: [CheckTutorial]
   },
   {
-    path: 'tabs',
+    path: 'app',
     loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m=>m.TabsModule)
   }
 ];
