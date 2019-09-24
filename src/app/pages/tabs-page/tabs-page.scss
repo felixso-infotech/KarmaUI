@@ -1,7 +1,14 @@
 .tabbar {
   justify-content: center;
 }
+ion-tab-bar {
+  height: 60px!important;
+}
 
 .tab-button {
   max-width: 200px;
 }
+ion-tabs {
+  --background: transparent;
+}
+ 

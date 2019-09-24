@@ -13,7 +13,7 @@ export class HomePage implements OnInit {
     initialSlide: 0,
     speed: 300,
     spaceBetween: 0,
-    height: window.screen.height
+    height: window.screen.height-60
   };
 
   transformation: any;

@@ -1,22 +1,43 @@
 <ion-app>
   <ion-content fullscreen>
-    <ion-slides [options]='options'>
+    <ion-slides>
       <ion-slide>
-        
-          <img src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg" />
+        <ion-slides [options]='options'>
+          <ion-slide class="dark-slide">
+            <div style="background: url('https://images.unsplash.com/photo-1541233349642-6e425fe6190e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');" class="image-slide">
 
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1541233349642-6e425fe6190e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
+              <div class="description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, suscipit quia amet, distinctio perspiciatis dicta veritatis maxime ad aliquid nihil recusandae asperiores impedit nesciunt a dolor, aut iste veniam modi.
+              </div>
+              <div class="comment">
+                <p>view all 55 comments</p>
+              </div>
+
+          </ion-slide>
+
+          <ion-slide class="dark-slide">
+              <div style="background: url('https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg');" class="image-slide">
+
+              </div>
+            <img
+              src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg" />
+
+          </ion-slide>
+
+          <ion-slide>
+            <img
+              src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg" />
+
+          </ion-slide>
+
+        </ion-slides>
       </ion-slide>
-
       <ion-slide>
-        <img src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg" />
-
-    </ion-slide>
-
-    <ion-slide>
-      <img src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg" />
-
-  </ion-slide>
-
-      </ion-slides>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia ipsa, a nisi, id natus ut deleniti cupiditate reprehenderit consequatur quibusdam ab porro cumque quas in, assumenda iure numquam maxime magni!
+      </ion-slide>
+    </ion-slides>
   </ion-content>
 </ion-app>

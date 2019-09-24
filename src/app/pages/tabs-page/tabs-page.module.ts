@@ -15,8 +15,8 @@ import { HomePageModule } from '../home/home.module';
 
 @NgModule({
   imports: [
-    CommonModule,
     IonicModule,
+    CommonModule,
     TabsPageRoutingModule,
     HomePageModule,
     AboutModule,

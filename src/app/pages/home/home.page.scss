@@ -1,19 +1,44 @@
-  ion-slides{
-    overflow-y: hidden;
-  }
-  .slide-zoom {
-		// height:200px;
-		height: 100%;
-		// overflow:hidden;
-  }
-  ion-card{
-    display: flex;
-    flex-direction: column;
-    width: 100vh !important;
-    margin: 0 !important;
+
+  .dark-slide {
+    
+    background-color: black;
   }
   ion-content {
-
+    margin: 0px;
+    padding: 0px;
     //background-image: url('../../../assets/img/footer_lodyas.png');
-    --background:  url('../../../assets/img/footer_lodyas.png');
+  }
+  .image-slide {
+    
+    width: 100vw;
+    height: 100%;
+  
+    -webkit-filter: blur(15px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+    position: absolute;
+    z-index: -99999999999999999;
+    top: 0px;
+    background-color: black;
+    opacity: 0.4;;
+  }
+  img {
+    position: relative;
+    bottom: 7vh!important;
+  }
+  .description {
+    position: absolute;
+    bottom: 110px;
+    color: white;
+    font-size: 90%;
+    padding: 10px;
+  }
+  .comment {
+    position: absolute;
+    bottom: 80px;
+    color: white;
+    text-align: left!important;
+    font-size: 70%;
   }
