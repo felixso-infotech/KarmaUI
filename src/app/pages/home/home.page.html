@@ -1,5 +1,4 @@
-<ion-app>
-  <ion-content fullscreen>
+<ion-content fullscreen>
     <ion-slides>
       <ion-slide>
         <ion-slides [options]='options'>
@@ -7,13 +6,26 @@
             <div style="background: url('https://images.unsplash.com/photo-1541233349642-6e425fe6190e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');" class="image-slide">
 
             </div>
+            <div class="posted-user">
+              <ion-avatar></ion-avatar>
+              <ion-label>Sunil.<span>now</span></ion-label>
+            </div>
+            <div class="like">
+              <ion-icon color='primary' size='large' name='heart-empty'></ion-icon>
+              <p>22k</p>
+            </div>
+            <div class="comment">
+              <ion-icon color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
+              <p>226</p>
+            </div>
+            <div class="share">
+              <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
+              <p>445</p>
+            </div>
             <img
               src="https://images.unsplash.com/photo-1541233349642-6e425fe6190e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
               <div class="description">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, suscipit quia amet, distinctio perspiciatis dicta veritatis maxime ad aliquid nihil recusandae asperiores impedit nesciunt a dolor, aut iste veniam modi.
-              </div>
-              <div class="comment">
-                <p>view all 55 comments</p>
               </div>
 
           </ion-slide>
@@ -40,4 +52,3 @@
       </ion-slide>
     </ion-slides>
   </ion-content>
-</ion-app>

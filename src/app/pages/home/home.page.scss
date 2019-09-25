@@ -34,11 +34,31 @@
     color: white;
     font-size: 90%;
     padding: 10px;
+
+    font-family: 'livvic-semi-bold','nunito-sans-semi-bold', 'SourceSansPro-semi-bold', sans-serif;
+  }
+  
+  .comment,.like,.share {
+    position: absolute;
+    color: white;
+    z-index: 9999999999999999999999999;
+  }
+  .like {
+    
+    top:50px;
+    right:5px;
   }
   .comment {
-    position: absolute;
-    bottom: 80px;
-    color: white;
-    text-align: left!important;
-    font-size: 70%;
+    top:120px;
+    right:5px;
+  }
+  .share {
+    top:190px;
+    right:5px;
+  }
+  .comment p,.like p,.share p {
+    margin: 0px;
+    font-size: 60%;
+    font-family: 'livvic-bold','nunito-sans-bold', 'SourceSansPro-bold', sans-serif;
+    
   }
