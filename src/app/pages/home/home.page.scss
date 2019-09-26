@@ -24,10 +24,10 @@
     background-color: black;
     opacity: 0.4;;
   }
-  img {
+img.posted-image {
     position: relative;
     bottom: 7vh!important;
-  }
+  } 
   .description {
     position: absolute;
     bottom: 110px;
@@ -38,7 +38,7 @@
     font-family: 'livvic-semi-bold','nunito-sans-semi-bold', 'SourceSansPro-semi-bold', sans-serif;
   }
   
-  .comment,.like,.share {
+  .comment,.like,.share,.posted-user {
     position: absolute;
     color: white;
     z-index: 9999999999999999999999999;
@@ -61,4 +61,31 @@
     font-size: 60%;
     font-family: 'livvic-bold','nunito-sans-bold', 'SourceSansPro-bold', sans-serif;
     
+  }
+  .posted-user{
+    top: 0PX;
+    left:5px;
+    padding: 0px;
+    color: white;    
+  }
+  ion-item {
+    --color: #fff;
+    --background: rgba(0, 0, 0, 0);
+  }
+  ion-item p {
+    margin: 0px;
+    font-size: 60%;
+  }
+  span.dot {
+    font-size: 50px;
+    margin: 0px 5px;
+  }
+  span.time {
+    font-size: 75%;
+    margin: 0px 10px;
+  }
+  ion-label {
+    margin: 0px;
+    padding: 0px;
+    transform: translateY(-20%);
   }

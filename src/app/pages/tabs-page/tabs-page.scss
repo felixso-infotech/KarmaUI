@@ -3,12 +3,10 @@
 }
 ion-tab-bar {
   height: 60px!important;
+  --background: rgba(0, 0, 0, 1);
 }
 
 .tab-button {
   max-width: 200px;
-}
-ion-tabs {
-  --background: transparent;
 }
  
