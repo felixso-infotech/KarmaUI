@@ -11,6 +11,8 @@ import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
 
+import { timer } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit {
     }
   ]; */
   loggedIn = false;
+  isSplashShowing= true;
 
   constructor(
     private events: Events,
@@ -80,8 +83,11 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByHexString('#e06841');
       this.splashScreen.hide();
+      timer(3000).subscribe(()=>{
+        this.isSplashShowing=false;
+      })
     });
   }
 
