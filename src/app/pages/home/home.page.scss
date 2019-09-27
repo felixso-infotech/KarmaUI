@@ -11,7 +11,7 @@
   .image-slide {
     
     width: 100vw;
-    height: 100%;
+    height: 100vh;
   
     -webkit-filter: blur(15px);
     -moz-filter: blur(15px);
@@ -22,18 +22,19 @@
     z-index: -99999999999999999;
     top: 0px;
     background-color: black;
-    opacity: 0.4;;
+    opacity: 0.84;;
   }
 img.posted-image {
     position: relative;
-    bottom: 7vh!important;
+    bottom: 7%!important;
   } 
   .description {
     position: absolute;
-    bottom: 110px;
+    bottom: 50px;
     color: white;
     font-size: 90%;
     padding: 10px;
+    overflow-y: clip;
 
     font-family: 'livvic-semi-bold','nunito-sans-semi-bold', 'SourceSansPro-semi-bold', sans-serif;
   }
