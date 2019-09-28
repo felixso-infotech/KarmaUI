@@ -35,4 +35,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     console.log("home page initialized");
   }
+  loveThisFeed() {
+    console.log("Liked this feed");
+  }
 }
