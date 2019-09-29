@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommittedActivity } from '../../interfaces/committed-activity';
 import { from } from 'rxjs';
+import { MockDataService } from '../../providers/mock-data.service';
 
 @Component({
   selector: 'home',
@@ -21,10 +22,17 @@ export class HomePage implements OnInit {
   transformation: any;
 
   completedActivities: CommittedActivity[];
-  constructor() { }
+  constructor(public mockService: MockDataService) { }
 
   ngOnInit() {
     console.log("home page initialized");
+  }
+  ionViewDidEnter() {
+    this.mockService.getCompletedActivities().subscribe(data=>{
+      console.log(data);
+      this.completedActivities= data;
+    })
+    
   }
   loveThisFeed() {
     console.log("Liked this feed");

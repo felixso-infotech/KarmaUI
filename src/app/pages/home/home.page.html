@@ -2,39 +2,44 @@
     <ion-slides>
       <ion-slide>
         <ion-slides [options]='slideOptions' (ionSlideDoubleTap)="loveThisFeed()">
-          <ion-slide class="dark-slide">
-            <div style="background: url('https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80') center center/cover no-repeat fixed #000;" class="image-slide">
+          <ion-slide class="dark-slide" *ngFor="let activity of completedActivities">
+            <div [ngStyle]="{'background': 'url('+ activity.postedImage +') center center/cover no-repeat fixed #000'}" class="image-slide">
 
             </div>
             <div class="posted-user">
               <ion-item>
-              <ion-avatar slot='start'>
-                <img src="../../../assets/img/Artboard 2_users.svg">
+              <ion-avatar>
+                <img [src]="activity.postedUser.profilePic">
               </ion-avatar>              
-              <ion-label>Sunil kumar<span class="time"><span class="dot">.</span>1 minute</span></ion-label>
+              <ion-label>{{activity.postedUser.name}}<span class="time"><span class="dot">.</span>{{activity.timeElapsed}}</span></ion-label>
             </ion-item>
             </div>
+            <div class="activity-name">
+              {{'completed '+activity.activityTitle}}
+            </div>
+            <div class="options">
             <div class="like">
               <ion-icon color='primary' size='large' name='heart-empty'></ion-icon>
-              <p>22k</p>
+              <p>{{activity.noOfLoves}}</p>
             </div>
             <div class="comment">
               <ion-icon color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
-              <p>226</p>
+              <p>{{activity.noOfComments}}</p>
             </div>
             <div class="share">
               <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
-              <p>445</p>
+              <p>{{activity.noOfShares}}</p>
             </div>
+          </div>
 <!--              <img
               src="https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="posted-image"/> -->
               <div class="description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, suscipit quia amet, distinctio perspiciatis dicta veritatis maxime ad aliquid nihil recusandae asperiores impedit nesciunt a dolor, aut iste veniam modi.
+                {{'completed #'+activity.activityTitle+'. '+activity.description}}  
               </div>
 
           </ion-slide>
 
-          <ion-slide class="dark-slide">
+ <!--          <ion-slide class="dark-slide">
               <div style="background: url('https://images.unsplash.com/photo-1569527570451-fa841811dc8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=692&q=80') center center/cover no-repeat fixed #000;" class="image-slide">
 
               </div>
@@ -58,8 +63,8 @@
                   <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
                   <p>45</p>
                 </div>
-<!--              <img
-              src="https://images.unsplash.com/photo-1569527570451-fa841811dc8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=692&q=80" class="posted-image" />  -->
+             <img
+              src="https://images.unsplash.com/photo-1569527570451-fa841811dc8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=692&q=80" class="posted-image" />  
               <div class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem quae veritatis eos ab inventore aperiam, nobis officia repellat aliquid quidem earum quos saepe minima quod maiores asperiores quisquam!</div>
           </ion-slide>
 
@@ -87,10 +92,10 @@
                   <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
                   <p>5</p>
                 </div>
-<!--             <img
-              src="https://images.unsplash.com/photo-1569531955316-e353abac4ff4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="posted-image"/> -->
+            <img
+              src="https://images.unsplash.com/photo-1569531955316-e353abac4ff4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="posted-image"/>
               <div class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis rerum eveniet facilis ratione obcaecati corrupti eaque.</div>
-          </ion-slide>
+          </ion-slide> -->
 
         </ion-slides>
       </ion-slide>

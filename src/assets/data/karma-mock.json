@@ -40,7 +40,7 @@
             "postedUser": {
                 "id": 3,
                 "name": "Kirby Mandry",
-                "profilePic": "http://dummyimage.com/694x819.jpg/ff4444/ffffff"
+                "profilePic": "https://images.unsplash.com/photo-1567324216289-97cc4134f626?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80"
             },
             "timeElapsed": "4 hours",
             "postedImage": "https://images.unsplash.com/photo-1569527403995-5ee6a8815eca?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
@@ -145,10 +145,10 @@
             "postedUser": {
                 "id": 10,
                 "name": "Erv Danielis",
-                "profilePic": "https://unsplash.com/photos/BLDRgLoTRug"
+                "profilePic": "https://images.unsplash.com/photo-1567704971014-a42cbd8acf38?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
             },
             "timeElapsed": "1 year",
-            "postedImage": ""
+            "postedImage": "https://images.unsplash.com/photo-1569527570451-fa841811dc8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=692&q=80"
         }
     ],
 "comments" : [{
