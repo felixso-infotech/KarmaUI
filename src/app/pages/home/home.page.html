@@ -1,7 +1,7 @@
 <ion-content fullscreen>
     <ion-slides>
       <ion-slide>
-        <ion-slides [options]='slideOptions' (ionSlideDoubleTap)="loveThisFeed()">
+        <ion-slides #slides [options]='slideOptions' (ionSlideDoubleTap)="loveThisFeedWithDoubleTap()">
           <ion-slide class="dark-slide" *ngFor="let activity of completedActivities">
             <div [ngStyle]="{'background': 'url('+ activity.postedImage +') center center/cover no-repeat fixed #000'}" class="image-slide">
 
@@ -14,12 +14,16 @@
               <ion-label>{{activity.postedUser.name}}<span class="time"><span class="dot">.</span>{{activity.timeElapsed}}</span></ion-label>
             </ion-item>
             </div>
-            <div class="activity-name">
+            <div class="activity-name" *ngIf="!isLiking">
               {{'completed '+activity.activityTitle}}
+            </div>
+            <div class="love" *ngIf="isLiking">
+              <img src="./../../../assets/img/heart.png">
             </div>
             <div class="options">
             <div class="like">
-              <ion-icon color='primary' size='large' name='heart-empty'></ion-icon>
+              <ion-icon color='primary' size='large' name='heart-empty' (click)="loveThisFeed()" *ngIf="!activity.isLiked"></ion-icon>
+              <ion-icon color='primary' size='large' name='heart' (click)="unLoveThisFeed()" *ngIf="activity.isLiked"></ion-icon>
               <p>{{activity.noOfLoves}}</p>
             </div>
             <div class="comment">

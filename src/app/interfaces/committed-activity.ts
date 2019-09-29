@@ -8,5 +8,6 @@ export interface CommittedActivity {
     noOfComments: String,
     noOfShares: String,
     timeElapsed: String,
-    postedImage: String
+    postedImage: String,
+    isLiked: Boolean
 }

@@ -13,7 +13,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1537193282496-388b58cc6ee3?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
             },
             "timeElapsed": "now",
-            "postedImage": "https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80",
+            "isLiked": false
         },
         {
             "id": 2,
@@ -28,8 +29,9 @@
                 "profilePic": "https://images.unsplash.com/photo-1562612618-76db0faf7c40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=401&q=80"
             },
             "timeElapsed": "5 minutes",
-            "postedImage": "https://images.unsplash.com/photo-1569670380685-4582bf29a24a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=322&q=80"
-        },
+            "postedImage": "https://images.unsplash.com/photo-1569670380685-4582bf29a24a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=322&q=80",
+            "isLiked": false
+          },
         {
             "id": 3,
             "activityTitle": "dolor morbi",
@@ -43,7 +45,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1567324216289-97cc4134f626?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80"
             },
             "timeElapsed": "4 hours",
-            "postedImage": "https://images.unsplash.com/photo-1569527403995-5ee6a8815eca?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569527403995-5ee6a8815eca?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+            "isLiked": false
         },
         {
             "id": 4,
@@ -58,7 +61,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1553629842-816e52ba1f8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
             },
             "timeElapsed": "2 days",
-            "postedImage": "https://images.unsplash.com/photo-1569685781322-df81ec322429?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=755&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569685781322-df81ec322429?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=755&q=80",
+            "isLiked": false
         },
         {
             "id": 5,
@@ -73,7 +77,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1569441785818-135e265ee961?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
             },
             "timeElapsed": "3 days",
-            "postedImage": "https://images.unsplash.com/photo-1569742914678-cd2fea796c6c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569742914678-cd2fea796c6c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80",
+            "isLiked": false
         },
         {
             "id": 6,
@@ -88,7 +93,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1569431246228-e79fab123fb0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
             },
             "timeElapsed": "2 weeks",
-            "postedImage": "https://images.unsplash.com/photo-1569705891240-4c4c15f0e3c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569705891240-4c4c15f0e3c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+            "isLiked": false
         },
         {
             "id": 7,
@@ -103,7 +109,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1569526108195-1f976a62f795?ixlib=rb-1.2.1&auto=format&fit=crop&w=303&q=80"
             },
             "timeElapsed": "4 weeks",
-            "postedImage": "https://images.unsplash.com/photo-1569684946693-fcfc642fb187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569684946693-fcfc642fb187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+            "isLiked": false
         },
         {
             "id": 8,
@@ -118,7 +125,8 @@
                 "profilePic": "https://images.unsplash.com/flagged/photo-1556744427-ef507c6783a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=401&q=80"
             },
             "timeElapsed": "1 month",
-            "postedImage": "https://images.unsplash.com/photo-1569679614023-954ea5bf2592?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569679614023-954ea5bf2592?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+            "isLiked": false
         },
         {
             "id": 9,
@@ -133,13 +141,14 @@
                 "profilePic": "https://images.unsplash.com/photo-1508215302842-8a015a452a20?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
             },
             "timeElapsed": "5 month",
-            "postedImage": "https://images.unsplash.com/photo-1569613494155-daf525394d7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569613494155-daf525394d7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "isLiked": false
         },
         {
             "id": 10,
             "activityTitle": "ligula",
             "description": "vestibulum ante ipsum primis in faucibus orci",
-            "noOfLoves": "7k",
+            "noOfLoves": 77,
             "noOfComments": "8k",
             "noOfShares": "1k",
             "postedUser": {
@@ -148,7 +157,8 @@
                 "profilePic": "https://images.unsplash.com/photo-1567704971014-a42cbd8acf38?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
             },
             "timeElapsed": "1 year",
-            "postedImage": "https://images.unsplash.com/photo-1569527570451-fa841811dc8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=692&q=80"
+            "postedImage": "https://images.unsplash.com/photo-1569527570451-fa841811dc8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=692&q=80",
+            "isLiked": false
         }
     ],
 "comments" : [{
