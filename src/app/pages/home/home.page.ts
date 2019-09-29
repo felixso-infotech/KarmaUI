@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommittedActivity } from '../../interfaces/committed-activity';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'home',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  options = {
+  slideOptions = {
     direction: 'vertical',
     slidesPerView: 1,
     initialSlide: 0,
@@ -18,18 +20,7 @@ export class HomePage implements OnInit {
 
   transformation: any;
 
-/*   myOption = {
-    onSlideChangeStart: (swiper) => {
-      if (swiper.activeIndex > swiper.previousIndex) { //go forward
-        this.transformation = swiper.translate;
-        console.log(this.transformation);
-      }
-      else if (swiper.activeIndex < swiper.previousIndex) { //go backward
-        console.log(swiper);
-      }
-    }
-  } */
-
+  completedActivities: CommittedActivity[];
   constructor() { }
 
   ngOnInit() {
