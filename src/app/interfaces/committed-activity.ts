@@ -1,6 +1,7 @@
 import { User } from "./user";
 
 export interface CommittedActivity {
+    id: number,
     postedUser: User,
     activityTitle: String,
     description: String,

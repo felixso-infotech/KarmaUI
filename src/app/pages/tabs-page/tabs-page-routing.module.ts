@@ -58,6 +58,42 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'messages',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../messages/messages.module').then(m => m.MessagesPageModule)
+          }
+        ]
+      },
+      {
+        path: 'karma',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../karma/karma.module').then(m => m.KarmaPageModule)
+          }
+        ]
+      },
+      {
+        path: 'create-activity',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../create-activity/create-activity.module').then(m => m.CreateActivityPageModule)
+          }
+        ]
+      },
+      {
+        path: 'profile',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: 'tabs/schedule',
         pathMatch: 'full'

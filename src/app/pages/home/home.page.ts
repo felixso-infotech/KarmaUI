@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommittedActivity } from '../../interfaces/committed-activity';
 import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
+import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 
 @Component({
   selector: 'home',
@@ -24,9 +25,11 @@ export class HomePage implements OnInit {
 
   transformation: any;
 
+  currentComments=null;
   completedActivities: CommittedActivity[];
   isLiking: Boolean= false;
-  constructor(public mockService: MockDataService) { }
+
+  constructor(public mockService: MockDataService, public modalController: ModalController) { }
 
   ngOnInit() {
     console.log("home page initialized");
@@ -66,5 +69,26 @@ export class HomePage implements OnInit {
           this.completedActivities[index].noOfLoves=""+(+this.completedActivities[index].noOfLoves-1);
         
       });
+  }
+  async showComments() {
+    this.slides.getActiveIndex().then(index=>{
+      this.mockService.currentCommittedActivity=this.completedActivities[index];
+      console.log("ready to display the comments",this.completedActivities[index])
+    });/* 
+    const modal = await this.modalController.create({
+      component: 'CommentsComponent'
+    }).then(modal=>{
+      this.currentComments=modal;
+      modal.present();
+    }); */
+    
+  }
+
+  closeComments() {
+    this.modalController.dismiss().then(()=>{
+      console.log("modal closed");
+    }).catch(error=>{
+      console.log(error);
+    });
   }
 }

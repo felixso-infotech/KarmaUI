@@ -1,3 +1,4 @@
+
 <ion-content fullscreen>
     <ion-slides>
       <ion-slide>
@@ -27,7 +28,7 @@
               <p>{{activity.noOfLoves}}</p>
             </div>
             <div class="comment">
-              <ion-icon color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
+              <ion-icon (click)="showComments()" color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
               <p>{{activity.noOfComments}}</p>
             </div>
             <div class="share">
@@ -104,7 +105,7 @@
         </ion-slides>
       </ion-slide>
       <ion-slide>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia ipsa, a nisi, id natus ut deleniti cupiditate reprehenderit consequatur quibusdam ab porro cumque quas in, assumenda iure numquam maxime magni!
+        Users completed challenges and profile information will be displayed here
       </ion-slide>
     </ion-slides>
   </ion-content>

@@ -15,7 +15,11 @@ const routes: Routes = [
   {
     path: 'app',
     loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m=>m.TabsModule)
-  }
+  },
+  { path: 'messages', loadChildren: './pages/messages/messages.module#MessagesPageModule' },
+  { path: 'karma', loadChildren: './pages/karma/karma.module#KarmaPageModule' },
+  { path: 'create-activity', loadChildren: './pages/create-activity/create-activity.module#CreateActivityPageModule' },
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' }
 ];
 
 @NgModule({

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MockDataService } from '../../providers/mock-data.service';
+import { Comment } from '../../interfaces/comment';
 
 @Component({
   selector: 'comments',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommentsComponent implements OnInit {
 
-  constructor() { }
+  comments: Comment[];
 
-  ngOnInit() {}
+  constructor(public mockService: MockDataService) { }
 
+  ngOnInit() { }
+
+  ionViewDidEnter() {
+    this.mockService.getCommentsByCommittedActivityId().
+      subscribe((data: any[])=>{
+        this.comments=data;
+        console.log("comments", this.comments);
+      });
+  }
 }

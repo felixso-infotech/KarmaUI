@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
+import { CommentsRepliesModule } from '../../comments-replies/comments-replies.module';
+import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 
 const routes: Routes = [
   {
@@ -19,8 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CommentsRepliesModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  entryComponents: [CommentsComponent]
 })
 export class HomePageModule {}
