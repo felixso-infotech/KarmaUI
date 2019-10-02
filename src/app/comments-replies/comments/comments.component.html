@@ -1,1 +1,46 @@
-<p>it works</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Comments</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeComments()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-list>
+      <ion-row *ngFor="let comment of comments">
+
+        <ion-col>
+          <ion-item>
+            <ion-avatar src=""></ion-avatar>
+          </ion-item>
+          <ion-item>
+            {{comment.message}}
+          </ion-item>
+          <ion-row class="ion-no-padding ion-justify-content-center">
+            <ion-col size="4" class="ion-text-left">
+              <ion-button fill="clear" size="small" color="primary" (click)="goToSpeakerTwitter(speaker)">
+                <ion-icon name="logo-twitter" slot="start"></ion-icon>
+                Tweet
+              </ion-button>
+            </ion-col>
+            <ion-col size="4" class="ion-text-center">
+              <ion-button fill="clear" size="small" color="primary" (click)="openSpeakerShare(speaker)">
+                <ion-icon name="share-alt" slot="start"></ion-icon>
+                Share
+              </ion-button>
+            </ion-col>
+            <ion-col size="4" lass="ion-text-right">
+              <ion-button fill="clear" size="small" color="primary" (click)="openContact(speaker)">
+                <ion-icon name="chatboxes" slot="start"></ion-icon>
+                Contact
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+    </ion-list>
+  </ion-grid>
+</ion-content>

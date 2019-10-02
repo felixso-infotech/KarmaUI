@@ -73,15 +73,15 @@ export class HomePage implements OnInit {
   async showComments() {
     this.slides.getActiveIndex().then(index=>{
       this.mockService.currentCommittedActivity=this.completedActivities[index];
-      console.log("ready to display the comments",this.completedActivities[index])
-    });/* 
-    const modal = await this.modalController.create({
-      component: 'CommentsComponent'
-    }).then(modal=>{
-      this.currentComments=modal;
-      modal.present();
-    }); */
-    
+      console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
+      const modal = this.modalController.create({
+        component: CommentsComponent,
+        cssClass: "modal"
+      }).then(modal=>{
+        this.currentComments=modal;
+        modal.present();
+      }); 
+    }); 
   }
 
   closeComments() {
