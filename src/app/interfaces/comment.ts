@@ -6,5 +6,6 @@ export interface Comment {
     timeElapsed: String,
     committedActivityId: number,
     noOfLikes: String,
-    noOfRe0plies: String 
+    noOfRe0plies: String,
+    isLiked: Boolean 
 }

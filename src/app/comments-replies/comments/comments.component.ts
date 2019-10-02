@@ -27,4 +27,18 @@ export class CommentsComponent implements OnInit {
   closeComments() {
     this.modalController.dismiss();
   }
+
+  loveThisComment(index: number) {
+          console.log("index of comment",index);
+          console.log("selected comment",this.comments[index]);
+          this.comments[index].noOfLikes=""+(+this.comments[index].noOfLikes+1);
+          this.comments[index].isLiked=true;
+        
+  }
+   unLoveThisFeed(index: number) {
+    console.log("index of comment",index);
+    console.log("selected comment",this.comments[index]);
+    this.comments[index].noOfLikes=""+(+this.comments[index].noOfLikes-1);
+    this.comments[index].isLiked=false;
+  } 
 }

@@ -9,32 +9,25 @@
 <ion-content>
   <ion-grid>
     <ion-list>
-      <ion-row *ngFor="let comment of comments">
+      <ion-row *ngFor="let comment of comments; let i=index">
 
         <ion-col>
-          <ion-item>
-            <ion-avatar src=""></ion-avatar>
+      <ion-item>
+            <ion-avatar>
+              <ion-img [src]="comment.postedUser.profilePic"></ion-img>
+            </ion-avatar>
+            <ion-label>{{comment.postedUser.name}}<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
+            <ion-icon name="heart-empty" *ngIf="!comment.isLiked" slot="end" (click)="loveThisComment(i)" color="primary"></ion-icon>
+            <ion-icon name="heart" *ngIf="comment.isLiked" slot="end" color="primary" (click)="unLoveThisComment(i)"></ion-icon>
           </ion-item>
           <ion-item>
             {{comment.message}}
           </ion-item>
           <ion-row class="ion-no-padding ion-justify-content-center">
-            <ion-col size="4" class="ion-text-left">
-              <ion-button fill="clear" size="small" color="primary" (click)="goToSpeakerTwitter(speaker)">
-                <ion-icon name="logo-twitter" slot="start"></ion-icon>
-                Tweet
-              </ion-button>
-            </ion-col>
-            <ion-col size="4" class="ion-text-center">
-              <ion-button fill="clear" size="small" color="primary" (click)="openSpeakerShare(speaker)">
-                <ion-icon name="share-alt" slot="start"></ion-icon>
-                Share
-              </ion-button>
-            </ion-col>
             <ion-col size="4" lass="ion-text-right">
-              <ion-button fill="clear" size="small" color="primary" (click)="openContact(speaker)">
-                <ion-icon name="chatboxes" slot="start"></ion-icon>
-                Contact
+              <ion-button fill="clear" size="small" color="primary" (click)="openContact()" *ngIf="comment.noOfReplies>0">
+                <ion-icon name="reply" slot="start"></ion-icon>
+                {{comment.noOfReplies+' replies'}}
               </ion-button>
             </ion-col>
           </ion-row>
