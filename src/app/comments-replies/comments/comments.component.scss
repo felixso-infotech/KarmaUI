@@ -18,3 +18,26 @@ span.dot {
   ion-button {
       text-transform: lowercase;
   }
+  ion-content, ion-list, ion-grid,ion-row, ion-col {
+      --background: #fff;
+      background-color: #fff;
+  }
+  .comment-box, ion-item {
+    background-color: #f8eeea;
+  }
+  ion-item {
+      --color: #161515;
+      --background: #f8eeea;
+      font-size: 80%;
+  }
+  .comment-box {      
+      padding: 10px;
+      border-radius: 10px;
+  }
+  .post-comment {
+      --background: #fff;
+      position: fixed;
+      bottom: 0px;
+      z-index: 999;
+      width: 100%;
+  }
