@@ -4,6 +4,8 @@ import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
+import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService } from '../../api/services';
+import { CommittedActivityAggregate } from '../../api/models';
 
 @Component({
   selector: 'home',
@@ -28,11 +30,21 @@ export class HomePage implements OnInit {
   currentComments=null;
   completedActivities: CommittedActivity[];
   isLiking: Boolean= false;
+  committedActivityAggregate: CommittedActivityAggregate[]=[{}];
 
-  constructor(public mockService: MockDataService, public modalController: ModalController) { }
+  constructor(
+    public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService
+    ,public mockService: MockDataService, public modalController: ModalController) { }
 
   ngOnInit() {
     console.log("home page initialized");
+    console.log("*********11");
+    console.log("*********",this.committedActivityAggregate);
+    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET({status: "DONE",
+      unpaged: true,
+      sortUnsorted: true,
+      sortSorted: true}).subscribe((result)=>{this.committedActivityAggregate=result;
+        console.log("*********13",this.committedActivityAggregate);});
   }
   ionViewDidEnter() {
     this.mockService.getCompletedActivities().subscribe(data=>{
