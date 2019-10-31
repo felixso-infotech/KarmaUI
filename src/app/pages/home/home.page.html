@@ -4,13 +4,13 @@
       <ion-slide>
         <ion-slides #slides [options]='slideOptions' (ionSlideDoubleTap)="loveThisFeedWithDoubleTap()">
           <ion-slide class="dark-slide" *ngFor="let activity of committedActivityAggregate">
-            <div [ngStyle]="{'background': 'url(data:'+activity.profilePictureContentType+';base64,'+activity.imageString +') center center/cover no-repeat fixed #000'}" class="image-slide">
-
+            <div [ngStyle]="{'background': 'url('+ getSanitazedUrl(activity.imageStringContentType,activity.imageString)+') center center/cover no-repeat fixed #000'}" class="image-slide">
+              
             </div>
             <div class="posted-user">
               <ion-item>
               <ion-avatar>
-                <img [src]="'data:'+activity?.profilePictureContentType+';base64,'+activity?.profilePicture">
+                <img [src]="'data:'+activity.profilePictureContentType+';base64,'+activity.profilePicture | safeHtml"/>
               </ion-avatar>              
               <ion-label>{{activity.firstName}}<span class="time"><span class="dot">.</span>{{activity.timeElapsed}}</span></ion-label>
             </ion-item>
