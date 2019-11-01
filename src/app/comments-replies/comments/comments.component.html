@@ -16,7 +16,7 @@
       <ion-row *ngFor="let comment of comments; let i=index">
 
         <ion-col>
-          <div class="comment-box">
+          <div class="comment-box" (click)="showReplies()">
       <ion-item>
             <ion-avatar>
               <ion-img [src]="comment.postedUser.profilePic"></ion-img>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'replies',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RepliesComponent implements OnInit {
 
-  constructor() { }
+  constructor(public modalController: ModalController) { }
 
   ngOnInit() {}
-
+  
+  closeReplies() {
+    this.modalController.dismiss();
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MockDataService } from '../../providers/mock-data.service';
 import { Comment } from '../../interfaces/comment';
 import { ModalController } from '@ionic/angular';
+import { RepliesComponent } from '../replies/replies.component';
 
 @Component({
   selector: 'comments',
@@ -41,4 +42,14 @@ export class CommentsComponent implements OnInit {
     this.comments[index].noOfLikes=""+(+this.comments[index].noOfLikes-1);
     this.comments[index].isLiked=false;
   } 
+
+  showReplies() {
+    console.log("showing replies");
+    const modal = this.modalController.create({
+      component: RepliesComponent,
+      cssClass: "modal"
+    }).then(modal=>{
+      modal.present();
+    }); 
+  }
 }
