@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
 import { CommentsRepliesModule } from '../../comments-replies/comments-replies.module';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommentsRepliesModule
   ],
-  declarations: [HomePage],
+  declarations: [HomePage,SafeHtmlPipe],
   entryComponents: [CommentsComponent]
 })
 export class HomePageModule {}

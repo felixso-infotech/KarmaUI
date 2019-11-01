@@ -4,6 +4,9 @@ import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
+import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService } from '../../api/services';
+import { CommittedActivityAggregate } from '../../api/models';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'home',
@@ -28,11 +31,21 @@ export class HomePage implements OnInit {
   currentComments=null;
   completedActivities: CommittedActivity[];
   isLiking: Boolean= false;
+  committedActivityAggregate: CommittedActivityAggregate[]=[{}];
 
-  constructor(public mockService: MockDataService, public modalController: ModalController) { }
+  constructor(
+    public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService
+    ,public mockService: MockDataService, public modalController: ModalController,public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     console.log("home page initialized");
+    console.log("*********11");
+    console.log("*********",this.committedActivityAggregate);
+    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET({status: "DONE",
+      unpaged: true,
+      sortUnsorted: true,
+      sortSorted: true}).subscribe((result)=>{this.committedActivityAggregate=result;
+        console.log("*********13",this.committedActivityAggregate[1].imageStringContentType);});
   }
   ionViewDidEnter() {
     this.mockService.getCompletedActivities().subscribe(data=>{
@@ -90,5 +103,15 @@ export class HomePage implements OnInit {
     }).catch(error=>{
       console.log(error);
     });
+  }
+
+  public getSanitazedUrl(part1: string,part2: string){
+
+   console.log("&&&&&&&&&&&&&&&&&&&&&&&&& I am in");
+   let url="data:"+part1+";base64,"+part2;
+    console.log("++++++"+url);
+    console.log("sanitized url",this.domSanitizer.bypassSecurityTrustResourceUrl(url));
+
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
