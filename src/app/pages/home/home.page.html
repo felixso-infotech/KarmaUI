@@ -2,8 +2,9 @@
     <ion-slides>
       <ion-slide>
         <ion-slides #slides [options]='slideOptions' (ionSlideDoubleTap)="loveThisFeedWithDoubleTap()">
-          <ion-slide class="dark-slide" *ngFor="let activity of committedActivityAggregate">
-            <div [ngStyle]="{'background': 'url('+ getSanitazedUrl(activity.imageStringContentType,activity.imageString)+') center center/cover no-repeat fixed #000'}" class="image-slide">
+          <ion-slide class="dark-slide" *ngFor="let activity of committedActivityAggregate; let i=index">
+            
+            <div *ngIf="activity.imageString!=null" [ngStyle]="{'background' : 'url('+backgroundImageUrls[i]+') center center/cover no-repeat fixed #000'}" class="image-slide">
               
             </div>
             <div class="posted-user">
