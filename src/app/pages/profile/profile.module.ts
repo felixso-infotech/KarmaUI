@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
 import { UserAccountModule } from '../../user-account/user-account.module';
-import { UserInfoComponent } from '../../user-account/user-info/user-info.component';
+import { CommittedActivitiesModule } from '../../committed-activities/committed-activities.module';
 
 const routes: Routes = [
   {
@@ -22,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     UserAccountModule,
+    CommittedActivitiesModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ProfilePage]

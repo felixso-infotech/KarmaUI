@@ -1,0 +1,24 @@
+<div>
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="COMPLETED" checked>
+      <ion-label>Completed</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="INPROGRESS">
+      <ion-label>inprogress</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="TODO">
+      <ion-label>Do later</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-row class="activities">
+    <ion-col>
+      <ion-img src="https://images.unsplash.com/photo-1571167587556-0829afad1ce3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"></ion-img>
+    </ion-col>
+    <ion-col>
+      <ion-img src='https://images.unsplash.com/photo-1560362240-8a17b34bd352?ixlib=rb-1.2.1&auto=format&fit=crop&w=312&q=80'></ion-img>
+    </ion-col>
+    <ion-col>
+      <ion-img src='https://images.unsplash.com/photo-1572980039412-647b2a5a55d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=751&q=80'></ion-img>
+    </ion-col>
+  </ion-row>
+</div>
