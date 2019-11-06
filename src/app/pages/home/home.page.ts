@@ -91,7 +91,8 @@ export class HomePage implements OnInit {
       console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
       const modal = this.modalController.create({
         component: CommentsComponent,
-        cssClass: "modal"
+        cssClass: "modal",
+        componentProps: {commitedActivityId:1}
       }).then(modal=>{
         this.currentComments=modal;
         modal.present();

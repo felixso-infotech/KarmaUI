@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
 import { AccountResourceService } from './services/account-resource.service';
+import { GatewayAggregateCommandResourceService } from './services/gateway-aggregate-command-resource.service';
 import { GatewayAggregateQueryResourceService } from './services/gateway-aggregate-query-resource.service';
 import { UserResourceService } from './services/user-resource.service';
 
@@ -21,6 +22,7 @@ import { UserResourceService } from './services/user-resource.service';
   providers: [
     ApiConfiguration,
     AccountResourceService,
+    GatewayAggregateCommandResourceService,
     GatewayAggregateQueryResourceService,
     UserResourceService
   ],
