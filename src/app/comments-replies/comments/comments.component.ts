@@ -3,6 +3,8 @@ import { MockDataService } from '../../providers/mock-data.service';
 import { Comment } from '../../interfaces/comment';
 import { ModalController } from '@ionic/angular';
 import { RepliesComponent } from '../replies/replies.component';
+import { CommentDTO } from '../../api/models';
+import { GatewayAggregateCommandResourceService } from '../../api/services';
 
 @Component({
   selector: 'comments',
@@ -11,11 +13,16 @@ import { RepliesComponent } from '../replies/replies.component';
 })
 export class CommentsComponent implements OnInit {
 
+  commitedActivityId;  //data from modal componentProps
+
+  commentDTO:CommentDTO={};
+
   comments: Comment[];
 
-  constructor(public mockService: MockDataService, public modalController:ModalController) { }
+  constructor(public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public mockService: MockDataService, public modalController:ModalController) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+   }
 
   ionViewDidEnter() {
     this.mockService.getCommentsByCommittedActivityId().
@@ -51,5 +58,27 @@ export class CommentsComponent implements OnInit {
     }).then(modal=>{
       modal.present();
     }); 
+  }
+
+  doComment(){
+    this.commentDTO.commitedActivityId=this.commitedActivityId;
+    this.commentDTO.userId="1";
+    this.commentDTO.dateAndTime=this.getCurrentTime();
+    this.gatewayAggregateCommandResourceService.saveCommentUsingPOST(this.commentDTO).subscribe((result)=>
+    {console.log("&&&&Result&&&&&",result)});
+  }
+ 
+  getCurrentTime():string{
+    let currentTime=new Date();
+    let offset=currentTime.getTimezoneOffset();
+    var hours=(Math.floor(offset / 60)).toString().replace("-","");
+    var minutes=(offset % 60).toString().replace("-","");
+
+    if(offset<0){
+      return (currentTime.toISOString()).split("Z")[0]+"+"+hours+"."+minutes;
+    }
+    else{
+       return (currentTime.toISOString()).split("Z")[0]+"-"+hours+"."+minutes;
+    }  
   }
 }
