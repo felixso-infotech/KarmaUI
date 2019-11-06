@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'messages', loadChildren: './pages/messages/messages.module#MessagesPageModule' },
   { path: 'karma', loadChildren: './pages/karma/karma.module#KarmaPageModule' },
   { path: 'create-activity', loadChildren: './pages/create-activity/create-activity.module#CreateActivityPageModule' },
-  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' }
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' }
 ];
 
 @NgModule({
