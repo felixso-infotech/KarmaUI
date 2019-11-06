@@ -1,0 +1,35 @@
+div.user-info {
+    text-align: center;
+    padding: 10px;
+    background-image: url('https://images.unsplash.com/photo-1571263491148-bb080fa77569?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=819&q=80');
+}
+img {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin-top: 20px;
+}
+ion-text {
+    display: inline-block;
+    font-size: 75%;
+}
+ion-text ion-icon {
+    font-size: 150%;
+}
+div.account-name {
+    padding: 10px;
+}
+.account-name {
+    color: white;
+}
+ion-row {
+    background-color: rgba(0, 0, 0, 0.377);
+    border-radius: 10px;
+}
+.block-text {
+    color: wheat;
+    line-height: 1px;
+    border-radius: 20%;
+    width: auto;
+    padding: 10px;
+}
