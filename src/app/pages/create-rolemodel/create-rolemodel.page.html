@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>select desired characters for your rolemodel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngFor="let rowOfCharacters of charactersArray; let i=index">
+    <ion-col *ngFor="let character of rowOfCharacters; let j=index" size="6">
+      <ion-card>
+        <ion-img [src]="character.imageUrl"></ion-img>
+        <ion-card-header>
+          <ion-card-title>{{character.name}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{character.description}}
+        </ion-card-content>
+        <ion-checkbox slot="end" [(ngModel)]="character.isSelected"></ion-checkbox>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-button size="large"  expand="full" (click)="createRolemodel()">create rolemodel</ion-button>
+</ion-content>
