@@ -24,7 +24,7 @@ export class TutorialPage {
   startApp() {
     console.log("saved tutorials");
     this.router
-      .navigateByUrl('app')
+      .navigateByUrl('create-rolemodel')
       .then(() => this.storage.set('ion_did_tutorial', true));
   }
 

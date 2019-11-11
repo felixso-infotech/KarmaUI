@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePage } from './profile.page';
-import { UserAccountModule } from '../../user-account/user-account.module';
-import { CommittedActivitiesModule } from '../../committed-activities/committed-activities.module';
+import { CreateRolemodelPage } from './create-rolemodel.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage
+    component: CreateRolemodelPage
   }
 ];
 
@@ -21,10 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    UserAccountModule,
-    CommittedActivitiesModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfilePage]
+  declarations: [CreateRolemodelPage]
 })
-export class ProfilePageModule {}
+export class CreateRolemodelPageModule {}

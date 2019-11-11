@@ -1,0 +1,60 @@
+div.profile-info {
+    text-align: center;
+    padding: 10px;
+    height: 55%;
+    min-height: 250px;
+    position: relative;
+    background-image: url('https://images.unsplash.com/photo-1571263491148-bb080fa77569?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=819&q=80');
+}
+div.profile-info img {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.658);
+}
+.user-info {
+    position: absolute;
+    top: 64%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+ion-text {
+    display: inline-block;
+    font-size: 75%;
+}
+ion-text ion-icon {
+    font-size: 150%;
+    color: var(--ion-color-primary);
+}
+div.account-name {
+    padding: 10px;
+}
+.account-name {
+    color: var(--ion-color-primary);
+    margin: 0px;
+}
+.account-name h1 {
+    margin: 0px;
+}
+ion-row {
+    background-color: rgba(0, 0, 0, 0.534);
+    border-radius: 10px;
+}
+.block-text {
+    color: wheat;
+    line-height: 1px;
+    border-radius: 20%;
+    width: auto;
+    padding: 10px;
+}
+ion-col ion-text p {
+    color: var(--ion-color-primary);
+}
+ion-col ion-text h1 {
+    color: rgba(255, 255, 255, 0.774);
+}
+.edit-profile-button {
+    margin: 20px;
+}
