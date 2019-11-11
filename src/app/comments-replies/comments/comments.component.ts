@@ -63,7 +63,9 @@ export class CommentsComponent implements OnInit {
   doComment(){
     this.commentDTO.commitedActivityId=this.commitedActivityId;
     this.commentDTO.userId="1";
-    this.commentDTO.dateAndTime=this.getCurrentTime();
+    let dateTime=this.getCurrentTime();
+    this.commentDTO.dateAndTime=dateTime;
+    console.log("----"+this.commentDTO.dateAndTime);
     this.gatewayAggregateCommandResourceService.saveCommentUsingPOST(this.commentDTO).subscribe((result)=>
     {console.log("&&&&Result&&&&&",result)});
   }
@@ -73,12 +75,13 @@ export class CommentsComponent implements OnInit {
     let offset=currentTime.getTimezoneOffset();
     var hours=(Math.floor(offset / 60)).toString().replace("-","");
     var minutes=(offset % 60).toString().replace("-","");
+    console.log("+++++++  "+(currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes);
 
     if(offset<0){
-      return (currentTime.toISOString()).split("Z")[0]+"+"+hours+"."+minutes;
+      return (currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes;
     }
     else{
-       return (currentTime.toISOString()).split("Z")[0]+"-"+hours+"."+minutes;
+       return (currentTime.toISOString()).split("Z")[0]+"-0"+hours+":"+minutes;
     }  
   }
 }
