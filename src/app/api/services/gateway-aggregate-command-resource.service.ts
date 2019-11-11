@@ -10,8 +10,8 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { ActivityAggregate } from '../models/activity-aggregate';
 import { CommittedActivityDTO } from '../models/committed-activity-dto';
 import { RegisteredUserDTO } from '../models/registered-user-dto';
-import { LoveDTO } from '../models/love-dto';
 import { CommentDTO } from '../models/comment-dto';
+import { LoveDTO } from '../models/love-dto';
 import { ReplyDTO } from '../models/reply-dto';
 import { DeleteLoveModel } from '../models/delete-love-model';
 
@@ -26,8 +26,8 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   static readonly createCommittedActivityUsingPOSTPath = '/api/command/create-committed-activity';
   static readonly createRegisteredUserUsingPOSTPath = '/api/command/create-registered-user';
   static readonly deleteRegisteredUserUsingDELETEPath = '/api/command/delete-registered-user/{id}';
-  static readonly loveCommittedActivityUsingPOSTPath = '/api/command/love-committedactivity';
   static readonly saveCommentUsingPOSTPath = '/api/command/save-comment';
+  static readonly loveCommittedActivityUsingPOSTPath = '/api/command/save-love';
   static readonly saveReplyUsingPOSTPath = '/api/command/save-reply';
   static readonly unloveCommittedActivityUsingDELETEPath = '/api/command/unlove-committedactivity';
   static readonly updateActivityUsingPUTPath = '/api/command/update-activity';
@@ -184,42 +184,6 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   }
 
   /**
-   * @param loveDTO loveDTO
-   * @return OK
-   */
-  loveCommittedActivityUsingPOSTResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<LoveDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = loveDTO;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/command/love-committedactivity`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<LoveDTO>;
-      })
-    );
-  }
-  /**
-   * @param loveDTO loveDTO
-   * @return OK
-   */
-  loveCommittedActivityUsingPOST(loveDTO: LoveDTO): __Observable<LoveDTO> {
-    return this.loveCommittedActivityUsingPOSTResponse(loveDTO).pipe(
-      __map(_r => _r.body as LoveDTO)
-    );
-  }
-
-  /**
    * @param commentDTO commentDTO
    * @return OK
    */
@@ -252,6 +216,42 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   saveCommentUsingPOST(commentDTO: CommentDTO): __Observable<CommentDTO> {
     return this.saveCommentUsingPOSTResponse(commentDTO).pipe(
       __map(_r => _r.body as CommentDTO)
+    );
+  }
+
+  /**
+   * @param loveDTO loveDTO
+   * @return OK
+   */
+  loveCommittedActivityUsingPOSTResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<LoveDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = loveDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/save-love`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<LoveDTO>;
+      })
+    );
+  }
+  /**
+   * @param loveDTO loveDTO
+   * @return OK
+   */
+  loveCommittedActivityUsingPOST(loveDTO: LoveDTO): __Observable<LoveDTO> {
+    return this.loveCommittedActivityUsingPOSTResponse(loveDTO).pipe(
+      __map(_r => _r.body as LoveDTO)
     );
   }
 

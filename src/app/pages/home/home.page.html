@@ -18,12 +18,26 @@
             <div class="activity-name" *ngIf="!isLiking">
               {{'completed '+activity.title}}
             </div>
-            <div class="love" *ngIf="isLiking">
-              <img src="./../../../assets/img/heart.png">
+            <!-- <div class="love" *ngIf="isLiked; else heartFilled" (click)="isLiked()">
+              <ion-icon name="heart"></ion-icon>
             </div>
+            <ng-template #heartFilled>
+              <div>
+              <ion-icon name="heart-empty"></ion-icon>
+              </div>
+            </ng-template> -->
+
             <div class="options">
             <div class="like">
-              <ion-icon color='primary' size='large' name='heart-empty' (click)="loveThisFeed()" *ngIf="!activity.isLiked"></ion-icon>
+              <div  *ngIf="activity.liked; else heartFilled">
+              <ion-icon color='primary' size='large' name='heart' (click)="doLoveCommittedActivity(i,activity.committedActivityId,activity.userId)"></ion-icon>
+              </div>
+              <ng-template #heartFilled>
+                <div>
+                <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveCommittedActivity(i,activity.committedActivityId,activity.userId)"></ion-icon>
+                </div>
+              </ng-template>
+
               <!--<ion-icon color='primary' size='large' name='heart' (click)="unLoveThisFeed()"></ion-icon>-->
               <p>{{activity.noOfLoves}}</p>
             </div>

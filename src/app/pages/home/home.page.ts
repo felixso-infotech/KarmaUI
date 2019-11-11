@@ -4,8 +4,8 @@ import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
-import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService } from '../../api/services';
-import { CommittedActivityAggregate } from '../../api/models';
+import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
+import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -34,19 +34,20 @@ export class HomePage implements OnInit {
   committedActivityAggregate: CommittedActivityAggregate[]=[{}];
   backgroundImageUrls: String[]=[];
 
+  loveDTO:LoveDTO={};
+
   constructor(
-    public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService
-    ,public mockService: MockDataService, public modalController: ModalController,public domSanitizer: DomSanitizer) { }
+    public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService,
+    public gatewayAggregateCommandResource: GatewayAggregateCommandResourceService,
+    public mockService: MockDataService, public modalController: ModalController,public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     console.log("home page initialized");
     console.log("*********11");
     console.log("*********",this.committedActivityAggregate);
-    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET({status: "DONE",
-      unpaged: true,
-      sortUnsorted: true,
-      sortSorted: true}).subscribe((result)=>{this.committedActivityAggregate=result;
+    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET("DONE").subscribe((result)=>{this.committedActivityAggregate=result;
         this.createActivityBackgroundImageUrls(result);
+        console.log("-------",result);
         console.log("*********13",this.committedActivityAggregate[1].imageStringContentType);});
   }
   ionViewDidEnter() {
@@ -145,5 +146,44 @@ export class HomePage implements OnInit {
     committedActivities.forEach(data=>{
       this.backgroundImageUrls.push(this.getBlobUrl(data.imageString,data.imageStringContentType));
     })
+  }
+
+  doLoveCommittedActivity(i:number,committedActivityId:number,userId:string){
+    
+    if(this.committedActivityAggregate[i].liked==false){
+      this.committedActivityAggregate[i].liked=true;
+      this.committedActivityAggregate[i].noOfLoves=this.committedActivityAggregate[i].noOfLoves+1;
+    }
+    else{
+      this.committedActivityAggregate[i].liked=false;
+      this.committedActivityAggregate[i].noOfLoves=this.committedActivityAggregate[i].noOfLoves-1;
+    }
+    
+    this.loveDTO.commitedActivityId=committedActivityId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    //user id is taken from database
+    this.loveDTO.userId="Sharai";
+
+    this.gatewayAggregateCommandResource.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+      (result)=>{
+        console.log("****loveDTO Result****",result)
+      }
+    )
+    
+  }
+
+  getCurrentTime():string{
+    let currentTime=new Date();
+    let offset=currentTime.getTimezoneOffset();
+    var hours=(Math.floor(offset / 60)).toString().replace("-","");
+    var minutes=(offset % 60).toString().replace("-","");
+    console.log("+++++++  "+(currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes);
+
+    if(offset<0){
+      return (currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes;
+    }
+    else{
+       return (currentTime.toISOString()).split("Z")[0]+"-0"+hours+":"+minutes;
+    }  
   }
 }

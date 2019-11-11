@@ -6,6 +6,7 @@ export interface RegisteredUserAggregate {
   firstName?: string;
   id?: number;
   lastName?: string;
+  noOfCompletedTasks?: number;
   profilePicture?: string;
   profilePictureContentType?: string;
   userId?: string;

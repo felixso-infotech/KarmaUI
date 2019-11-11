@@ -1,5 +1,7 @@
 export { ActivityAggregate } from './models/activity-aggregate';
 export { ActivityDTO } from './models/activity-dto';
+export { AuthInfoVM } from './models/auth-info-vm';
+export { ChallengeDTO } from './models/challenge-dto';
 export { CommentDTO } from './models/comment-dto';
 export { CommittedActivityAggregate } from './models/committed-activity-aggregate';
 export { CommittedActivityDTO } from './models/committed-activity-dto';
