@@ -3,8 +3,8 @@ import { MockDataService } from '../../providers/mock-data.service';
 import { Comment } from '../../interfaces/comment';
 import { ModalController } from '@ionic/angular';
 import { RepliesComponent } from '../replies/replies.component';
-import { CommentDTO } from '../../api/models';
-import { GatewayAggregateCommandResourceService } from '../../api/services';
+import { CommentDTO, LoveDTO } from '../../api/models';
+import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceService } from '../../api/services';
 
 @Component({
   selector: 'comments',
@@ -19,9 +19,17 @@ export class CommentsComponent implements OnInit {
 
   comments: Comment[];
 
-  constructor(public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public mockService: MockDataService, public modalController:ModalController) { }
+  isLiked:boolean=false;//for testing
+
+  commentDTOs: CommentDTO[]=[];
+
+  loveDTO:LoveDTO={};
+
+  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,
+     public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public mockService: MockDataService, public modalController:ModalController) { }
 
   ngOnInit() {
+    //this.gatewayAggregateQueryResourceService.getAllComments();
    }
 
   ionViewDidEnter() {
@@ -83,5 +91,37 @@ export class CommentsComponent implements OnInit {
     else{
        return (currentTime.toISOString()).split("Z")[0]+"-0"+hours+":"+minutes;
     }  
+  }
+
+  doLoveComment(i:number,commentId:number){
+    console.log("index***",i);
+    console.log("CommentId*****",commentId);
+    if(this.isLiked==false){
+      this.isLiked=true;
+    }
+    else{
+      this.isLiked=false;
+    }
+
+   /*  if(this.commentDTOs[i].isLiked==false){
+      this.commentDTOs[i].isLiked=true;
+      this.commentDTOs[i].noOfLoves=this.commentDTOs[i].noOfLoves+1;
+    }
+    else{
+      this.commentDTOs[i].isLiked=false;
+      this.commentDTOs[i].noOfLoves=this.commentDTOs[i].noOfLoves-1;
+    }
+    
+    this.loveDTO.commentId=commentId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    //user id is taken from database
+    this.loveDTO.userId="Sharai";
+
+     this.gatewayAggregateCommandResourceService.loveCommentUsingPost(this.loveDTO).subscribe(
+      (result)=>{
+        console.log("****loveDTO Result****",result)
+      }
+    );  */
+    
   }
 }

@@ -29,10 +29,10 @@
 
             <div class="options">
             <div class="like">
-              <div  *ngIf="activity.liked; else heartFilled">
+              <div  *ngIf="activity.liked; else notLiked">
               <ion-icon color='primary' size='large' name='heart' (click)="doLoveCommittedActivity(i,activity.committedActivityId,activity.userId)"></ion-icon>
               </div>
-              <ng-template #heartFilled>
+              <ng-template #notLiked>
                 <div>
                 <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveCommittedActivity(i,activity.committedActivityId,activity.userId)"></ion-icon>
                 </div>

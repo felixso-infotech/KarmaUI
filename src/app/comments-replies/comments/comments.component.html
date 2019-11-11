@@ -22,8 +22,19 @@
               <ion-img [src]="comment.postedUser.profilePic"></ion-img>
             </ion-avatar>
             <ion-label>{{comment.postedUser.name}}<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
-            <ion-icon name="heart-empty" *ngIf="!comment.isLiked" slot="end" (click)="loveThisComment(i)" color="primary"></ion-icon>
-            <ion-icon name="heart" *ngIf="comment.isLiked" slot="end" color="primary" (click)="unLoveThisComment(i)"></ion-icon>
+
+            <div  *ngIf="isLiked; else notLiked">
+                <ion-icon color='primary' size='large' name='heart' (click)="doLoveComment(i,comment.commentId)"></ion-icon>
+                </div>
+                <ng-template #notLiked>
+                  <div>
+                  <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveComment(i,comment.commentId)"></ion-icon>
+                  </div>
+                </ng-template>
+
+            <!-- <ion-icon name="heart-empty" *ngIf="!comment.isLiked" slot="end" (click)="loveThisComment(i)" color="primary"></ion-icon>
+            <ion-icon name="heart" *ngIf="comment.isLiked" slot="end" color="primary" (click)="unLoveThisComment(i)"></ion-icon> -->
+          
           </ion-item>
           <ion-item>
             {{comment.message}}
