@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
   currentComments=null;
   completedActivities: CommittedActivity[];
   isLiking: Boolean= false;
-  committedActivityAggregate: CommittedActivityAggregate[]=[{}];
+  committedActivityAggregate: CommittedActivityAggregate[]=[];
   backgroundImageUrls: String[]=[];
 
   loveDTO:LoveDTO={};
@@ -86,14 +86,15 @@ export class HomePage implements OnInit {
         
       });
   }
-  async showComments() {
+  async showComments(committedActivityId:number) {
+    console.log("**********",committedActivityId);
     this.slides.getActiveIndex().then(index=>{
       this.mockService.currentCommittedActivity=this.completedActivities[index];
       console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
       const modal = this.modalController.create({
         component: CommentsComponent,
         cssClass: "modal",
-        componentProps: {commitedActivityId:1}
+        componentProps: {committedActivityId:committedActivityId}
       }).then(modal=>{
         this.currentComments=modal;
         modal.present();
