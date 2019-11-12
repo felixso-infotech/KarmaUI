@@ -42,7 +42,7 @@
         </div>
           <ion-row class="ion-no-padding ion-justify-content-center">
             <ion-col size="4" lass="ion-text-right" (click)="showReplies()">
-              <ion-button fill="clear" size="small" color="primary" (click)="openContact()" *ngIf="comment.noOfReplies>0">
+              <ion-button fill="clear" size="small" color="primary" *ngIf="comment.noOfReplies>0">
                 <ion-icon name="reply" slot="start"></ion-icon>
                 {{comment.noOfReplies+' replies'}}
               </ion-button>
