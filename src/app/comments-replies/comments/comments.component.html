@@ -13,17 +13,17 @@
           <ion-icon name="send" slot="end" (click)="doComment()"></ion-icon>
         </ion-item>
     <ion-list lines="none">
-      <ion-row *ngFor="let comment of comments; let i=index">
+      <ion-row *ngFor="let comment of commentAggregates; let i=index">
 
         <ion-col>
           <div class="comment-box">
       <ion-item>
             <ion-avatar>
-              <ion-img [src]="comment.postedUser.profilePic"></ion-img>
+              <ion-img [src]=""></ion-img>
             </ion-avatar>
-            <ion-label>{{comment.postedUser.name}}<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
+            <ion-label>UserName<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
 
-            <div  *ngIf="isLiked; else notLiked">
+            <div  *ngIf="comment.liked; else notLiked">
                 <ion-icon color='primary' size='large' name='heart' (click)="doLoveComment(i,comment.commentId)"></ion-icon>
                 </div>
                 <ng-template #notLiked>
@@ -37,7 +37,7 @@
           
           </ion-item>
           <ion-item>
-            {{comment.message}}
+            {{comment.description}}
           </ion-item>
         </div>
           <ion-row class="ion-no-padding ion-justify-content-center">
@@ -50,7 +50,7 @@
             <ion-col size="4" lass="ion-text-right">
                 <ion-button fill="clear" size="small" color="primary" (click)="openContact()" *ngIf="comment.noOfReplies>0">
                   <ion-icon name="reply" slot="start"></ion-icon>
-                  {{comment.noOfLikes+' loves'}}
+                  {{comment.noOfLoves+' loves'}}
                 </ion-button>
               </ion-col>
           </ion-row>

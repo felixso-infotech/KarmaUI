@@ -12,6 +12,7 @@ import { Storage } from '@ionic/storage';
 import { UserData } from './providers/user-data';
 
 import { timer } from 'rxjs';
+import { CompletedActivitiesService } from './providers/completed-activities.service';
 
 @Component({
   selector: 'app-root',
@@ -56,6 +57,7 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
+    private completedActivityService: CompletedActivitiesService
   ) {
     this.initializeApp();
   }
@@ -85,8 +87,8 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString('#e06841');
       this.splashScreen.hide();
-      timer(3000).subscribe(()=>{
-        this.isSplashShowing=false;
+      timer(10000).subscribe(()=>{
+        this.completedActivityService.isSplashShowing=false;
       })
     });
   }

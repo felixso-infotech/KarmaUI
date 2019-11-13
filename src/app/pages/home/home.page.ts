@@ -7,6 +7,7 @@ import { CommentsComponent } from '../../comments-replies/comments/comments.comp
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
 import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CompletedActivitiesService } from '../../providers/completed-activities.service';
 
 @Component({
   selector: 'home',
@@ -30,16 +31,17 @@ export class HomePage implements OnInit {
 
   currentComments = null;
   completedActivities: CommittedActivity[];
-  isLiking: Boolean = false;
-  committedActivityAggregate: CommittedActivityAggregate[] = [{}];
-  backgroundImageUrls: String[] = [];
+  isLiking: Boolean= false;
+  committedActivityAggregate: CommittedActivityAggregate[]=[];
+  backgroundImageUrls: String[]=[];
 
   loveDTO: LoveDTO = {};
 
   constructor(
     public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService,
     public gatewayAggregateCommandResource: GatewayAggregateCommandResourceService,
-    public mockService: MockDataService, public modalController: ModalController, public domSanitizer: DomSanitizer) { }
+    public mockService: MockDataService, public modalController: ModalController, public domSanitizer: DomSanitizer,
+    public completedActivityService: CompletedActivitiesService) { }
 
   ngOnInit() {
     console.log("home page initialized");
@@ -47,9 +49,11 @@ export class HomePage implements OnInit {
     console.log("*********", this.committedActivityAggregate);
   }
   ionViewWillEnter() {
+    console.log("method starts");
     this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET("DONE").subscribe((result) => {
     this.committedActivityAggregate = result;
       this.createActivityBackgroundImageUrls(result);
+      this.completedActivityService.isSplashShowing=false;
       console.log("-------", result);
       console.log("*********13", this.committedActivityAggregate[1].imageStringContentType);
     });
@@ -84,16 +88,17 @@ export class HomePage implements OnInit {
 
       });
   }
-  async showComments() {
-    this.slides.getActiveIndex().then(index => {
-      this.mockService.currentCommittedActivity = this.completedActivities[index];
-      console.log("ready to display the comments", this.completedActivities[index], this.mockService.currentCommittedActivity);
+  async showComments(committedActivityId:number) {
+    console.log("**********",committedActivityId);
+    this.slides.getActiveIndex().then(index=>{
+      this.mockService.currentCommittedActivity=this.completedActivities[index];
+      console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
       const modal = this.modalController.create({
         component: CommentsComponent,
         cssClass: "modal",
-        componentProps: { commitedActivityId: 1 }
-      }).then(modal => {
-        this.currentComments = modal;
+        componentProps: {committedActivityId:committedActivityId}
+      }).then(modal=>{
+        this.currentComments=modal;
         modal.present();
       });
     });
