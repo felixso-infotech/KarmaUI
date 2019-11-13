@@ -25,12 +25,12 @@
 
             <div  *ngIf="comment.liked; else notLiked">
                 <ion-icon color='primary' size='large' name='heart' (click)="doLoveComment(i,comment.commentId)"></ion-icon>
-                </div>
-                <ng-template #notLiked>
-                  <div>
-                  <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveComment(i,comment.commentId)"></ion-icon>
-                  </div>
-                </ng-template>
+            </div>
+            <ng-template #notLiked>
+              <div>
+              <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveComment(i,comment.commentId)"></ion-icon>
+              </div>
+            </ng-template>
 
             <!-- <ion-icon name="heart-empty" *ngIf="!comment.isLiked" slot="end" (click)="loveThisComment(i)" color="primary"></ion-icon>
             <ion-icon name="heart" *ngIf="comment.isLiked" slot="end" color="primary" (click)="unLoveThisComment(i)"></ion-icon> -->
@@ -41,16 +41,22 @@
           </ion-item>
         </div>
           <ion-row class="ion-no-padding ion-justify-content-center">
-            <ion-col size="4" lass="ion-text-right" (click)="showReplies()">
-              <ion-button fill="clear" size="small" color="primary" *ngIf="comment.noOfReplies>0">
-                <ion-icon name="reply" slot="start"></ion-icon>
-                {{comment.noOfReplies+' replies'}}
+            <ion-col size="4" lass="ion-text-right" (click)="showReplies(comment.commentId)">
+              <ion-button fill="clear" size="small" color="primary" >
+                <ion-icon name="undo" slot="start"></ion-icon>
+                <div><label>?????</label></div>
+                <div *ngIf="comment.noOfReplies>0">
+                  {{comment.noOfReplies+' replies'}}
+                </div>
               </ion-button>
             </ion-col>
             <ion-col size="4" lass="ion-text-right">
-                <ion-button fill="clear" size="small" color="primary" (click)="openContact()" *ngIf="comment.noOfReplies>0">
-                  <ion-icon name="reply" slot="start"></ion-icon>
+                <ion-button fill="clear" size="small" color="primary">
+                  <ion-icon name="heart" slot="start"></ion-icon>
+                  <div><label>?????</label></div>
+                  <div *ngIf="comment.noOfReplies>0">
                   {{comment.noOfLoves+' loves'}}
+                  </div>
                 </ion-button>
               </ion-col>
           </ion-row>
