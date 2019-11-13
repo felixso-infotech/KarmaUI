@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GatewayAggregateQueryResourceService } from '../../api/services';
+import { RegisteredUserAggregate } from '../../api/models';
 
 @Component({
   selector: 'user-info',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserInfoComponent implements OnInit {
 
-  constructor() { }
+  registeredUserAggregate:RegisteredUserAggregate={};
 
-  ngOnInit() {}
+  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService) { }
+
+  ngOnInit() {
+    this.gatewayAggregateQueryResourceService.getRegisteredUserByUserIdUsingGET("Sharai").subscribe(
+      (result)=>{
+        this.registeredUserAggregate=result;
+        console.log("***Fetched Registered User***",result);
+      }
+    );
+  }
 
 }
