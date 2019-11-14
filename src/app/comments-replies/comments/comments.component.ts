@@ -34,7 +34,7 @@ export class CommentsComponent implements OnInit {
       unpaged: true,
       sortUnsorted: true,
       sortSorted: false}).subscribe((result)=>{this.commentAggregates=result;
-      console.log("[[[[[[",result);
+      console.log("[[[[[[Comments[[[[[[[[----",result);
     });
    }
 
@@ -108,34 +108,38 @@ export class CommentsComponent implements OnInit {
   doLoveComment(i:number,commentId:number){
     console.log("index***",i);
     console.log("CommentId*****",commentId);
-
-     if(this.commentAggregates[i].liked==false){
+    console.log("&&&&&&before in love    ",this.commentAggregates[i].liked);
       this.commentAggregates[i].liked=true;
+    console.log("&&&&&&before in love    ",this.commentAggregates[i].liked);
       this.commentAggregates[i].noOfLoves=this.commentAggregates[i].noOfLoves+1;
-    }
-    else{
-      this.commentAggregates[i].liked=false;
+    
+    this.loveDTO.commentId=commentId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    this.loveDTO.userId="Sharai";
+     this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
+      (result)=>{
+        console.log("****Saved loveDTO Result****",result)
+      }
+    ); 
+    
+  }
+
+  undoLoveComment(i:number,commentId:number){
+    console.log("index***",i);
+    console.log("CommentId*****",commentId);
+    console.log("&&&&&&before in unlove    ",this.commentAggregates[i].liked);
+     this.commentAggregates[i].liked=false;
+     console.log("&&&&&&after in unlove    ",this.commentAggregates[i].liked);
       this.commentAggregates[i].noOfLoves=this.commentAggregates[i].noOfLoves-1;
-    }
     
     this.loveDTO.commentId=commentId;
     this.loveDTO.dateAndTime=this.getCurrentTime();
     //user id is taken from database
     this.loveDTO.userId="Sharai";
-    if(this.commentAggregates[i].liked==false){
-     this.gatewayAggregateCommandResourceService.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
-      (result)=>{
-        console.log("****loveDTO Result****",result)
-      }
-    ); 
-    }
-    else{ // to be chenged to delete love 
-      this.gatewayAggregateCommandResourceService.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+      this.gatewayAggregateCommandResourceService.unloveCommentUsingDELETE(this.loveDTO).subscribe(
         (result)=>{
-          console.log("****loveDTO Result****",result)
+          console.log("****deleted loveDTO Result****",result)
         }
       ); 
     } 
-    
-  }
 }

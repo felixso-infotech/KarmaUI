@@ -1,6 +1,6 @@
 <div>
   <ion-segment (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="COMPLETED" checked>
+    <ion-segment-button value="DONE" checked>
       <ion-label>Completed</ion-label>
     </ion-segment-button>
     <ion-segment-button value="INPROGRESS">
@@ -10,15 +10,12 @@
       <ion-label>Do later</ion-label>
     </ion-segment-button>
   </ion-segment>
+  <ion-grid>
   <ion-row class="activities">
-    <ion-col>
-      <ion-img src="https://images.unsplash.com/photo-1571167587556-0829afad1ce3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"></ion-img>
-    </ion-col>
-    <ion-col>
-      <ion-img src='https://images.unsplash.com/photo-1560362240-8a17b34bd352?ixlib=rb-1.2.1&auto=format&fit=crop&w=312&q=80'></ion-img>
-    </ion-col>
-    <ion-col>
-      <ion-img src='https://images.unsplash.com/photo-1573072111016-6724380f7c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80'></ion-img>
+    <ion-col *ngFor="let committedActivity of committedActivityAggregates" size="4">
+      <img [src]="'data:'+committedActivity.imageStringContentType+';base64,'+committedActivity.imageString | safeHtml"/>
+      <div><label>{{committedActivity.activityDescription}}</label></div>
     </ion-col>
   </ion-row>
+  </ion-grid>
 </div>

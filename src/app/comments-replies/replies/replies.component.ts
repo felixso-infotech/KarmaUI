@@ -99,16 +99,16 @@ export class RepliesComponent implements OnInit {
     this.loveDTO.userId="Sharai";
 
     if(this.replyAggregates[i].liked==false){
-     this.gatewayAggregateCommandResourceService.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+     this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
       (result)=>{
         console.log("****loveDTO Result****",result)
       }
     );  
     }
     else{  // to be chenged to delete love
-      this.gatewayAggregateCommandResourceService.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+      this.gatewayAggregateCommandResourceService.unloveReplyUsingDELETE(this.loveDTO).subscribe(
         (result)=>{
-          console.log("****loveDTO Result****",result)
+          console.log("****deleted loveDTO Result****",result)
         }
       ); 
     }

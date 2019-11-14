@@ -24,7 +24,7 @@
             <ion-label>UserName<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
 
             <div  *ngIf="comment.liked; else notLiked">
-                <ion-icon color='primary' size='large' name='heart' (click)="doLoveComment(i,comment.commentId)"></ion-icon>
+                <ion-icon color='primary' size='large' name='heart' (click)="undoLoveComment(i,comment.commentId)"></ion-icon>
             </div>
             <ng-template #notLiked>
               <div>
@@ -44,8 +44,8 @@
             <ion-col size="4" lass="ion-text-right" (click)="showReplies(comment.commentId)">
               <ion-button fill="clear" size="small" color="primary" >
                 <ion-icon name="undo" slot="start"></ion-icon>
-                <div><label>?????</label></div>
-                <div *ngIf="comment.noOfReplies>0">
+               <!-- <div *ngIf="comment.noOfReplies>0"></div -->
+                <div>
                   {{comment.noOfReplies+' replies'}}
                 </div>
               </ion-button>
@@ -53,9 +53,9 @@
             <ion-col size="4" lass="ion-text-right">
                 <ion-button fill="clear" size="small" color="primary">
                   <ion-icon name="heart" slot="start"></ion-icon>
-                  <div><label>?????</label></div>
-                  <div *ngIf="comment.noOfReplies>0">
-                  {{comment.noOfLoves+' loves'}}
+                  <!-- <div *ngIf="comment.noOfReplies>0"> -->
+                  <div>
+                    {{comment.noOfLoves+' loves'}}
                   </div>
                 </ion-button>
               </ion-col>

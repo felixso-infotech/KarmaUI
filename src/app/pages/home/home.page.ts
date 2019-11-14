@@ -167,7 +167,7 @@ export class HomePage implements OnInit {
       //user id is taken from database
       this.loveDTO.userId="Sharai";
       if(this.committedActivityAggregate[i].liked==true){
-      this.gatewayAggregateCommandResource.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+      this.gatewayAggregateCommandResource.doLoveUsingPOST(this.loveDTO).subscribe(
         (result)=>{
           console.log("****Saved loveDTO Result****",result);
         }

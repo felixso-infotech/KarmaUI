@@ -13,7 +13,6 @@ import { RegisteredUserDTO } from '../models/registered-user-dto';
 import { CommentDTO } from '../models/comment-dto';
 import { LoveDTO } from '../models/love-dto';
 import { ReplyDTO } from '../models/reply-dto';
-import { DeleteLoveModel } from '../models/delete-love-model';
 
 /**
  * Gateway Aggregate Command Resource
@@ -27,9 +26,11 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   static readonly createRegisteredUserUsingPOSTPath = '/api/command/create-registered-user';
   static readonly deleteRegisteredUserUsingDELETEPath = '/api/command/delete-registered-user/{id}';
   static readonly saveCommentUsingPOSTPath = '/api/command/save-comment';
-  static readonly loveCommittedActivityUsingPOSTPath = '/api/command/save-love';
+  static readonly doLoveUsingPOSTPath = '/api/command/save-love';
   static readonly saveReplyUsingPOSTPath = '/api/command/save-reply';
+  static readonly unloveCommentUsingDELETEPath = '/api/command/unlove-comment';
   static readonly unloveCommittedActivityUsingDELETEPath = '/api/command/unlove-committedactivity';
+  static readonly unloveReplyUsingDELETEPath = '/api/command/unlove-reply';
   static readonly updateActivityUsingPUTPath = '/api/command/update-activity';
   static readonly updateCommittedActivityUsingPUTPath = '/api/command/update-committed-activity';
   static readonly updateRegisteredUserUsingPUTPath = '/api/command/update-registered-user';
@@ -223,7 +224,7 @@ class GatewayAggregateCommandResourceService extends __BaseService {
    * @param loveDTO loveDTO
    * @return OK
    */
-  loveCommittedActivityUsingPOSTResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<LoveDTO>> {
+  doLoveUsingPOSTResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<LoveDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -249,8 +250,8 @@ class GatewayAggregateCommandResourceService extends __BaseService {
    * @param loveDTO loveDTO
    * @return OK
    */
-  loveCommittedActivityUsingPOST(loveDTO: LoveDTO): __Observable<LoveDTO> {
-    return this.loveCommittedActivityUsingPOSTResponse(loveDTO).pipe(
+  doLoveUsingPOST(loveDTO: LoveDTO): __Observable<LoveDTO> {
+    return this.doLoveUsingPOSTResponse(loveDTO).pipe(
       __map(_r => _r.body as LoveDTO)
     );
   }
@@ -292,13 +293,47 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   }
 
   /**
-   * @param deleteLoveModel deleteLoveModel
+   * @param loveDTO loveDTO
    */
-  unloveCommittedActivityUsingDELETEResponse(deleteLoveModel: DeleteLoveModel): __Observable<__StrictHttpResponse<null>> {
+  unloveCommentUsingDELETEResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = deleteLoveModel;
+    __body = loveDTO;
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/command/unlove-comment`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param loveDTO loveDTO
+   */
+  unloveCommentUsingDELETE(loveDTO: LoveDTO): __Observable<null> {
+    return this.unloveCommentUsingDELETEResponse(loveDTO).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param loveDTO loveDTO
+   */
+  unloveCommittedActivityUsingDELETEResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = loveDTO;
     let req = new HttpRequest<any>(
       'DELETE',
       this.rootUrl + `/api/command/unlove-committedactivity`,
@@ -317,10 +352,44 @@ class GatewayAggregateCommandResourceService extends __BaseService {
     );
   }
   /**
-   * @param deleteLoveModel deleteLoveModel
+   * @param loveDTO loveDTO
    */
-  unloveCommittedActivityUsingDELETE(deleteLoveModel: DeleteLoveModel): __Observable<null> {
-    return this.unloveCommittedActivityUsingDELETEResponse(deleteLoveModel).pipe(
+  unloveCommittedActivityUsingDELETE(loveDTO: LoveDTO): __Observable<null> {
+    return this.unloveCommittedActivityUsingDELETEResponse(loveDTO).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param loveDTO loveDTO
+   */
+  unloveReplyUsingDELETEResponse(loveDTO: LoveDTO): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = loveDTO;
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/command/unlove-reply`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param loveDTO loveDTO
+   */
+  unloveReplyUsingDELETE(loveDTO: LoveDTO): __Observable<null> {
+    return this.unloveReplyUsingDELETEResponse(loveDTO).pipe(
       __map(_r => _r.body as null)
     );
   }
