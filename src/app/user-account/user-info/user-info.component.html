@@ -1,4 +1,4 @@
-<div class="profile-info">
+<div class="profile-info" [ngStyle]="{'background' : 'url('+backgroundImageUrl+') center center/cover no-repeat fixed #000'}">
   <ion-row>
     <ion-col>
       <ion-text>
@@ -31,7 +31,7 @@
       [src]="'data:'+registeredUserAggregate.profilePictureContentType+';base64,'+registeredUserAggregate.profilePicture | safeHtml" />
     <div class="account-name">
       <ion-text class="account-name">
-        <h1>Annie Johnson</h1>
+        <h1>{{registeredUserAggregate.firstName+" "+registeredUserAggregate.lastName}}</h1>
       </ion-text>
     </div>
   </div>
