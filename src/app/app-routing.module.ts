@@ -16,11 +16,11 @@ const routes: Routes = [
     path: 'app',
     loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m=>m.TabsModule)
   },
-  { path: 'messages', loadChildren: './pages/messages/messages.module#MessagesPageModule' },
-  { path: 'karma', loadChildren: './pages/karma/karma.module#KarmaPageModule' },
-  { path: 'create-activity', loadChildren: './pages/create-activity/create-activity.module#CreateActivityPageModule' },
-  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
-  { path: 'create-rolemodel', loadChildren: './pages/create-rolemodel/create-rolemodel.module#CreateRolemodelPageModule' }
+  { path: 'create-rolemodel', loadChildren: './pages/create-rolemodel/create-rolemodel.module#CreateRolemodelPageModule' },
+  { path: 'loading', loadChildren: './pages/loading/loading.module#LoadingPageModule' },
+  { path: 'login-loading', loadChildren: './pages/login-loading/login-loading.module#LoginLoadingPageModule' },
+  { path: 'implicit/callback', loadChildren: './auth/implicit/auth-callback/auth-callback.module#AuthCallbackPageModule' },
+  { path: 'implicit/logout', loadChildren: './auth/implicit/end-session/end-session.module#EndSessionPageModule' },
 ];
 
 @NgModule({

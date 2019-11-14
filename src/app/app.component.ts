@@ -13,6 +13,7 @@ import { UserData } from './providers/user-data';
 
 import { timer } from 'rxjs';
 import { CompletedActivitiesService } from './providers/completed-activities.service';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -57,7 +58,8 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private completedActivityService: CompletedActivitiesService
+    private completedActivityService: CompletedActivitiesService,
+    private authService: AuthService,
   ) {
     this.initializeApp();
   }
@@ -85,8 +87,10 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.authService.startUpAsync();
       this.statusBar.backgroundColorByHexString('#e06841');
       this.splashScreen.hide();
+
       timer(10000).subscribe(()=>{
         this.completedActivityService.isSplashShowing=false;
       })

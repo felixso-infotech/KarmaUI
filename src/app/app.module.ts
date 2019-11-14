@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { AuthModule } from './auth/auth.module';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor';
 
 @NgModule({
   imports: [
@@ -22,10 +26,21 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-' }),
+    AuthModule
   ],
   declarations: [AppComponent],
-  providers: [InAppBrowser, SplashScreen, StatusBar],
+  providers: [InAppBrowser, SplashScreen, StatusBar, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthExpiredInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

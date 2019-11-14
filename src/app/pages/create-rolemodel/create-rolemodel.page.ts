@@ -86,7 +86,7 @@ export class CreateRolemodelPage implements OnInit {
         }
       });
     });
-    if(count>5) {
+    if(count>4) {
       this.presentAlertConfirm();
     }
     else {
@@ -101,7 +101,7 @@ export class CreateRolemodelPage implements OnInit {
       buttons: [ {
           text: 'Okay',
           handler: () => {
-            this.router.navigateByUrl('app');
+            this.router.navigateByUrl('login-loading');
           }
         }
       ]

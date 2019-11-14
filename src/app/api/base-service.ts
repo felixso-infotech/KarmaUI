@@ -35,7 +35,7 @@ export class BaseService {
   ) {
   }
 
-  private _rootUrl: string = 'http://35.208.4.27:8060';
+  private _rootUrl: string = '';
 
   /**
    * Returns the root url for API operations. If not set directly in this
