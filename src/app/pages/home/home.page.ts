@@ -90,6 +90,7 @@ export class HomePage implements OnInit {
   }
   async showComments(committedActivityId:number) {
     console.log("**********",committedActivityId);
+    console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
     this.slides.getActiveIndex().then(index=>{
       this.mockService.currentCommittedActivity=this.completedActivities[index];
       console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
