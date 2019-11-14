@@ -13,17 +13,17 @@
       <ion-icon name="send" slot="end" (click)="doReply()"></ion-icon>
     </ion-item>
 <ion-list lines="none">
-  <ion-row *ngFor="let reply of replies; let i=index">
+  <ion-row *ngFor="let reply of replyAggregates; let i=index">
 
     <ion-col>
       <div class="reply-box">
   <ion-item>
         <ion-avatar>
-          <ion-img [src]="reply.postedUser.profilePic"></ion-img>
+          <ion-img [src]=""></ion-img>
         </ion-avatar>
-        <ion-label>{{reply.postedUser.name}}<span class="time"><span class="dot">.</span>{{reply.timeElapsed}}</span></ion-label>
+        <ion-label>UserName<span class="time"><span class="dot">.</span>{{reply.timeElapsed}}</span></ion-label>
 
-        <div  *ngIf="isLiked; else notLiked">
+        <div  *ngIf="reply.liked; else notLiked">
             <ion-icon color='primary' size='large' name='heart' (click)="doLoveReply(i,reply.replyId)"></ion-icon>
             </div>
             <ng-template #notLiked>
@@ -37,14 +37,16 @@
       
       </ion-item>
       <ion-item>
-        {{reply.message}}
+        {{reply.description}}
       </ion-item>
     </div>
       <ion-row class="ion-no-padding ion-justify-content-center">
         <ion-col size="4" lass="ion-text-right">
             <ion-button fill="clear" size="small" color="primary" (click)="openContact()" *ngIf="reply.noOfReplies>0">
               <ion-icon name="reply" slot="start"></ion-icon>
-              {{reply.noOfLikes+' loves'}}
+              <div>
+              {{reply.noOfLoves+' loves'}}
+              </div>
             </ion-button>
           </ion-col>
       </ion-row>

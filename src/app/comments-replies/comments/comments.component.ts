@@ -13,7 +13,7 @@ import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceSe
 })
 export class CommentsComponent implements OnInit {
 
-  committedActivityId;  //data from modal componentProps
+  committedActivityId;  //data from modal componentProps from home ts
 
   commentDTO:CommentDTO={};
 
@@ -50,31 +50,37 @@ export class CommentsComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  loveThisComment(index: number) {
-          console.log("index of comment",index);
-          console.log("selected comment",this.comments[index]);
-          this.comments[index].noOfLikes=""+(+this.comments[index].noOfLikes+1);
-          this.comments[index].isLiked=true;
-        
-  }
-   unLoveThisComment(index: number) {
-    console.log("index of comment",index);
-    console.log("selected comment",this.comments[index]);
-    this.comments[index].noOfLikes=""+(+this.comments[index].noOfLikes-1);
-    this.comments[index].isLiked=false;
-  } 
-
-  showReplies() {
+  showReplies(commentId:number) {
+    console.log("**Comment id***",commentId);
     console.log("showing replies");
     const modal = this.modalController.create({
       component: RepliesComponent,
-      cssClass: "modal"
+      cssClass: "modal",
+      componentProps: {commentId:commentId}
     }).then(modal=>{
       modal.present();
     }); 
   }
 
   doComment(){
+
+    let commentAggregate:CommentAggregate={
+      /* commentId?: number;
+      completedChallengeId?: number;
+      createdDate?: string; */
+      description: this.commentDTO.description,
+      /* firstName?: string;
+      lastName?: string;
+      commitedActivityId?: number;
+      noOfLoves?: number;
+      noOfReplies?: this
+      profilePicture?: string;
+      profilePictureContentType?: string;
+      timeElapsed?: string;
+      userId?: string; */
+    }
+    this.commentAggregates.push(commentAggregate);
+
     this.commentDTO.commitedActivityId=this.committedActivityId;
     this.commentDTO.userId="1";
     let dateTime=this.getCurrentTime();
@@ -102,12 +108,6 @@ export class CommentsComponent implements OnInit {
   doLoveComment(i:number,commentId:number){
     console.log("index***",i);
     console.log("CommentId*****",commentId);
-    /* if(this.isLiked==false){
-      this.isLiked=true;
-    }
-    else{
-      this.isLiked=false;
-    } */
 
      if(this.commentAggregates[i].liked==false){
       this.commentAggregates[i].liked=true;
@@ -122,12 +122,20 @@ export class CommentsComponent implements OnInit {
     this.loveDTO.dateAndTime=this.getCurrentTime();
     //user id is taken from database
     this.loveDTO.userId="Sharai";
-
+    if(this.commentAggregates[i].liked==false){
      this.gatewayAggregateCommandResourceService.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
       (result)=>{
         console.log("****loveDTO Result****",result)
       }
-    );  
+    ); 
+    }
+    else{ // to be chenged to delete love 
+      this.gatewayAggregateCommandResourceService.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+        (result)=>{
+          console.log("****loveDTO Result****",result)
+        }
+      ); 
+    } 
     
   }
 }

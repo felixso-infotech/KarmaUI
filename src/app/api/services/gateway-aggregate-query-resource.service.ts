@@ -12,6 +12,7 @@ import { ChallengeDTO } from '../models/challenge-dto';
 import { CommittedActivityAggregate } from '../models/committed-activity-aggregate';
 import { DimensionDTO } from '../models/dimension-dto';
 import { CommentAggregate } from '../models/comment-aggregate';
+import { ReplyAggregate } from '../models/reply-aggregate';
 import { RegisteredUserAggregate } from '../models/registered-user-aggregate';
 
 /**
@@ -29,6 +30,7 @@ class GatewayAggregateQueryResourceService extends __BaseService {
   static readonly getAllEnumStatusUsingGETPath = '/api/query/enums/status';
   static readonly getAllEnumTypesUsingGETPath = '/api/query/enums/type';
   static readonly getAllCommentsByCommitedActivityIdUsingGETPath = '/api/query/get-comments/{commitedActivityId}';
+  static readonly getAllRepliesByCommentIdUsingGETPath = '/api/query/get-replies/{commentId}';
   static readonly getRegisteredUserByUserIdUsingGETPath = '/api/query/registered-user/{userId}';
 
   constructor(
@@ -419,6 +421,98 @@ class GatewayAggregateQueryResourceService extends __BaseService {
   }
 
   /**
+   * @param params The `GatewayAggregateQueryResourceService.GetAllRepliesByCommentIdUsingGETParams` containing the following parameters:
+   *
+   * - `commentId`: commentId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  getAllRepliesByCommentIdUsingGETResponse(params: GatewayAggregateQueryResourceService.GetAllRepliesByCommentIdUsingGETParams): __Observable<__StrictHttpResponse<Array<ReplyAggregate>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (params.unpaged != null) __params = __params.set('unpaged', params.unpaged.toString());
+    if (params.sortUnsorted != null) __params = __params.set('sort.unsorted', params.sortUnsorted.toString());
+    if (params.sortSorted != null) __params = __params.set('sort.sorted', params.sortSorted.toString());
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.paged != null) __params = __params.set('paged', params.paged.toString());
+    if (params.pageSize != null) __params = __params.set('pageSize', params.pageSize.toString());
+    if (params.pageNumber != null) __params = __params.set('pageNumber', params.pageNumber.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/get-replies/${params.commentId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<ReplyAggregate>>;
+      })
+    );
+  }
+  /**
+   * @param params The `GatewayAggregateQueryResourceService.GetAllRepliesByCommentIdUsingGETParams` containing the following parameters:
+   *
+   * - `commentId`: commentId
+   *
+   * - `unpaged`:
+   *
+   * - `sort.unsorted`:
+   *
+   * - `sort.sorted`:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `paged`:
+   *
+   * - `pageSize`:
+   *
+   * - `pageNumber`:
+   *
+   * - `page`: Page number of the requested page
+   *
+   * - `offset`:
+   *
+   * @return OK
+   */
+  getAllRepliesByCommentIdUsingGET(params: GatewayAggregateQueryResourceService.GetAllRepliesByCommentIdUsingGETParams): __Observable<Array<ReplyAggregate>> {
+    return this.getAllRepliesByCommentIdUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<ReplyAggregate>)
+    );
+  }
+
+  /**
    * @param userId userId
    * @return OK
    */
@@ -494,6 +588,39 @@ module GatewayAggregateQueryResourceService {
      * commitedActivityId
      */
     commitedActivityId: number;
+    unpaged?: boolean;
+    sortUnsorted?: boolean;
+    sortSorted?: boolean;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+    paged?: boolean;
+    pageSize?: number;
+    pageNumber?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+    offset?: number;
+  }
+
+  /**
+   * Parameters for getAllRepliesByCommentIdUsingGET
+   */
+  export interface GetAllRepliesByCommentIdUsingGETParams {
+
+    /**
+     * commentId
+     */
+    commentId: number;
     unpaged?: boolean;
     sortUnsorted?: boolean;
     sortSorted?: boolean;

@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
   transformation: any;
 
   currentComments = null;
-  completedActivities: CommittedActivity[];
+  completedActivities: CommittedActivity[]=[];
   isLiking: Boolean= false;
   committedActivityAggregate: CommittedActivityAggregate[]=[];
   backgroundImageUrls: String[]=[];
@@ -161,18 +161,27 @@ export class HomePage implements OnInit {
       this.committedActivityAggregate[i].liked = false;
       this.committedActivityAggregate[i].noOfLoves = this.committedActivityAggregate[i].noOfLoves - 1;
     }
-
-    this.loveDTO.commitedActivityId = committedActivityId;
-    this.loveDTO.dateAndTime = this.getCurrentTime();
-    //user id is taken from database
-    this.loveDTO.userId = "Sharai";
-
-    this.gatewayAggregateCommandResource.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
-      (result) => {
-        console.log("****loveDTO Result****", result)
-      }
-    )
-
+    
+    
+      this.loveDTO.commitedActivityId=committedActivityId;
+      this.loveDTO.dateAndTime=this.getCurrentTime();
+      //user id is taken from database
+      this.loveDTO.userId="Sharai";
+      if(this.committedActivityAggregate[i].liked==true){
+      this.gatewayAggregateCommandResource.loveCommittedActivityUsingPOST(this.loveDTO).subscribe(
+        (result)=>{
+          console.log("****Saved loveDTO Result****",result);
+        }
+      );
+    }
+    else{
+      this.gatewayAggregateCommandResource.unloveCommittedActivityUsingDELETE(this.loveDTO).subscribe(
+        (result)=>{
+          console.log("****Deleted loveDTO Result****",result);
+        }
+      );
+    }
+    
   }
 
   getCurrentTime(): string {

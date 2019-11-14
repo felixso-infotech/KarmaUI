@@ -12,5 +12,6 @@ export { IntroductionStoryDTO } from './models/introduction-story-dto';
 export { LoveDTO } from './models/love-dto';
 export { RegisteredUserAggregate } from './models/registered-user-aggregate';
 export { RegisteredUserDTO } from './models/registered-user-dto';
+export { ReplyAggregate } from './models/reply-aggregate';
 export { ReplyDTO } from './models/reply-dto';
 export { UserDTO } from './models/user-dto';
