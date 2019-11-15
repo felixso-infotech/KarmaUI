@@ -20,7 +20,13 @@ export class CommittedActivitiesComponent implements OnInit {
 
   ngOnInit() {
     console.log("committed Activity page initialized");
-    this.gatewayAggregateQueryResourceService.getAllCommittedActivitiesByStatusUsingGET("DONE").subscribe((result)=>{
+    this.gatewayAggregateQueryResourceService.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET({
+      status: "DONE",
+      registeredUserId: 3,
+      unpaged: true,
+      sortUnsorted: false,
+      sortSorted: true
+    }).subscribe((result)=>{
       this.committedActivityAggregates=result;
         this.createActivityBackgroundImageUrls(result);
         console.log("-------",result);
@@ -32,7 +38,7 @@ export class CommittedActivitiesComponent implements OnInit {
 
    segmentChanged(event: any) {
     console.log("*****Event value*****",event.detail.value);
-    status=event.detail.value;
+    this.status=event.detail.value;
     this.viewSegmentChange();
 
   }
@@ -40,7 +46,13 @@ export class CommittedActivitiesComponent implements OnInit {
   //To take data on order to changed status 
   viewSegmentChange(){
     console.log("Segment Changed.........")
-    this.gatewayAggregateQueryResourceService.getAllCommittedActivitiesByStatusUsingGET(status).subscribe((result)=>{this.committedActivityAggregates=result;
+    this.gatewayAggregateQueryResourceService.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET({
+      status: this.status,
+      registeredUserId: 3,
+      unpaged: true,
+      sortUnsorted: false,
+      sortSorted: true
+    }).subscribe((result)=>{this.committedActivityAggregates=result;
       this.createActivityBackgroundImageUrls(result);
       console.log("-------",result);
       console.log(" Array size:::::",this.committedActivityAggregates.length);});

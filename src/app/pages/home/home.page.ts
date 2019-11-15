@@ -5,7 +5,7 @@ import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
-import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
+import { CommittedActivityAggregate, LoveDTO, CommittedActivityDTO } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -45,7 +45,13 @@ export class HomePage implements OnInit {
     console.log("home page initialized");
     console.log("*********11");
     console.log("*********",this.committedActivityAggregate);
-    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET("DONE").subscribe((result)=>{this.committedActivityAggregate=result;
+    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET({
+      status: "DONE",
+      registeredUserId:3,
+    unpaged: true,
+    sortUnsorted: false,
+    sortSorted: true,
+    }).subscribe((result)=>{this.committedActivityAggregate=result;
         this.createActivityBackgroundImageUrls(result);
         console.log("-------",result);
         console.log("*********13",this.committedActivityAggregate[1].imageStringContentType);});
@@ -196,5 +202,22 @@ export class HomePage implements OnInit {
     else{
        return (currentTime.toISOString()).split("Z")[0]+"-0"+hours+":"+minutes;
     }  
+  }
+
+  addAsUserCommittedActivity(actId:number,desc:string,committedActId:number){
+
+    console.log("&&&&&&Description&&&&&&",desc);
+    
+    let committedActivityDTO:CommittedActivityDTO={
+      activityId: actId,
+      createdDate:this.getCurrentTime(),
+      description:desc,
+      referenceId:committedActId,
+      registeredUserId:3,
+      status: "TODO"     
+    }  
+
+    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(committedActivityDTO).subscribe((result)=>
+    {console.log("Result commited activity-------",result)});
   }
 }

@@ -4,7 +4,13 @@
         <ion-slides #slides [options]='slideOptions' (ionSlideDoubleTap)="loveThisFeedWithDoubleTap()">
           <ion-slide class="dark-slide" *ngFor="let activity of committedActivityAggregate; let i=index">
             
-            <div *ngIf="activity.imageString!=null" [ngStyle]="{'background' : 'url('+backgroundImageUrls[i]+') center center/cover no-repeat fixed #000'}" class="image-slide">
+            <ion-icon name="heart" class="double-tap-love" *ngIf="isLiking"></ion-icon>
+            <!-- <ng-template #notLiked>
+              <ion-icon name="heart-empty" class="double-tap-love" *ngIf="isLiking"></ion-icon>
+            </ng-template> -->
+           
+         
+         <div *ngIf="activity.imageString!=null" [ngStyle]="{'background' : 'url('+backgroundImageUrls[i]+') center center/cover no-repeat fixed #000'}" class="image-slide">
               
             </div>
             <div class="posted-user">
@@ -47,6 +53,10 @@
             </div>
             <div class="share">
               <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
+              <p>{{activity.noOfShares}}</p>
+            </div>
+            <div class="comment">
+                <ion-icon (click)="addAsUserCommittedActivity(activity.activityId,activity.activityDescription,activity.committedActivityId)"color='primary' size='large' name="add"></ion-icon>
               <p>{{activity.noOfShares}}</p>
             </div>
           </div>

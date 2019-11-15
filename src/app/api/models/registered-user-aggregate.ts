@@ -1,12 +1,13 @@
 /* tslint:disable */
 export interface RegisteredUserAggregate {
+  lastName?: string;
   coverPhoto?: string;
-  coverPhotoContentType?: string;
   email?: string;
   firstName?: string;
   id?: number;
-  lastName?: string;
+  coverPhotoContentType?: string;
   noOfCompletedTasks?: number;
+  noOfLoves?: number;
   profilePicture?: string;
   profilePictureContentType?: string;
   userId?: string;
