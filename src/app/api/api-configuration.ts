@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = '//35.208.4.27:8060';
+  rootUrl: string = 'http://35.208.4.27:8060';
 }
 
 export interface ApiConfigurationInterface {
