@@ -91,7 +91,7 @@ export class AppComponent implements OnInit {
       this.statusBar.backgroundColorByHexString('#e06841');
       this.splashScreen.hide();
 
-      timer(10000).subscribe(()=>{
+      timer(5000).subscribe(()=>{
         this.completedActivityService.isSplashShowing=false;
       })
     });

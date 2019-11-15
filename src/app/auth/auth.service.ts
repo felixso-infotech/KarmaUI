@@ -36,11 +36,13 @@ export class AuthService extends IonicAuth {
   }
 
   public async startUpAsync() {
-    console.log('startup async', this.platform);
+    console.log('startup async');
 
     if (this.platform.is('cordova')) {
       (<any>window).handleOpenURL = callbackUrl => {
+        console.log('call back url',callbackUrl);
         this.ngZone.run(() => {
+          console.log("callback url",callbackUrl);
           this.handleCallback(callbackUrl);
         });
       };
@@ -56,13 +58,14 @@ export class AuthService extends IonicAuth {
   private async addConfig() {
     console.log("in add config");
     const scopes = 'openid profile offline_access';
-    const redirectUri = this.onDevice() ? window.location.origin+'/callback' : 'http://localhost:8100/implicit/callback';
-    const logoutRedirectUri = this.onDevice() ? window.location.origin+'/logout' : 'http://localhost:8100/implicit/logout';
+    const redirectUri = this.onDevice() ? 'com.felixsoinfotech.karma:/callback' : window.location.origin+'/implicit/callback';
+    const logoutRedirectUri = this.onDevice() ? 'com.felixsoinfotech.karma:/logout' : window.location.origin+'/implicit/logout';
     const AUTH_CONFIG_URI = 'http://35.208.4.27:8060/api/auth-info';
 
     if (await this.storage.getItem(AUTH_CONFIG_URI)) {
       this.authConfig = JSON.parse(await this.storage.getItem(AUTH_CONFIG_URI));
-      await this.storage.removeItem(AUTH_CONFIG_URI);
+      console.log(this.authConfig);
+      //await this.storage.removeItem(AUTH_CONFIG_URI);
     } else {
       // try to get the oauth settings from the server
       this.requestor.xhr({ method: 'GET', url: AUTH_CONFIG_URI }).then(
@@ -94,6 +97,8 @@ export class AuthService extends IonicAuth {
   }
 
   private handleCallback(callbackUrl: string): void {
+    console.log('callback url',callbackUrl);
+    console.log('auth redirect url',this.authConfig.redirect_url);
     if (callbackUrl.indexOf(this.authConfig.redirect_url) === 0) {
       this.AuthorizationCallBack(callbackUrl).catch((error: string) => {
         console.error(`Authorization callback failed! ${error}`);
@@ -101,6 +106,8 @@ export class AuthService extends IonicAuth {
     }
 
     if (callbackUrl.indexOf(this.authConfig.end_session_redirect_url) === 0) {
+      console.log('callback url',callbackUrl);
+      console.log('auth session redirect url',this.authConfig.end_session_redirect_url);
       this.EndSessionCallBack().catch((error: string) => {
         console.error(`End session callback failed! ${error}`);
       });

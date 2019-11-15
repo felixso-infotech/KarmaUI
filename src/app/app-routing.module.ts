@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'login-loading', loadChildren: './pages/login-loading/login-loading.module#LoginLoadingPageModule' },
   { path: 'implicit/callback', loadChildren: './auth/implicit/auth-callback/auth-callback.module#AuthCallbackPageModule' },
   { path: 'implicit/logout', loadChildren: './auth/implicit/end-session/end-session.module#EndSessionPageModule' },
+  { path: 'accessdenied', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

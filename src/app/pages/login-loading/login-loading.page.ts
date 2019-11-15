@@ -15,9 +15,10 @@ export class LoginLoadingPage implements OnInit {
   ngOnInit() {
     console.log("begin");
     this.authService.authObservable.subscribe(action => {
+      console.log('action', action);
       if (action.action === AuthActions.SignInSuccess || action.action === AuthActions.AutoSignInSuccess) {
         console.log('action', action);
-        this.navController.navigateRoot('/tabs');
+        this.navController.navigateRoot('/app');
       } else if (action.action === AuthActions.SignOutSuccess) {
         // do nothing
       }
@@ -33,6 +34,8 @@ export class LoginLoadingPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('view entered');
+    this.authService.signIn().catch(error =>{ console.error(`Sign in error: ${error}`);
     this.authService.signIn().catch(error => console.error(`Sign in error: ${error}`));
+  });
   }
 }
