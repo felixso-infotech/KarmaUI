@@ -80,7 +80,7 @@ export class RepliesComponent implements OnInit {
     }  
   }
 
-  doLoveReply(i:number,replyId:number){
+  /* doLoveReply(i:number,replyId:number){
     console.log("index***",i);
     console.log("CommentId*****",replyId);
 
@@ -113,5 +113,44 @@ export class RepliesComponent implements OnInit {
       ); 
     }
     
+  } */
+
+
+  doLoveReply(i:number,replyId:number){
+    console.log("index***",i);
+    console.log("ReplyId*****",replyId);
+    console.log("&&&&&&before in love    ",this.replyAggregates[i].liked);
+      this.replyAggregates[i].liked=true;
+    console.log("&&&&&&before in love    ",this.replyAggregates[i].liked);
+      this.replyAggregates[i].noOfLoves=this.replyAggregates[i].noOfLoves+1;
+    
+    this.loveDTO.replyId=replyId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    this.loveDTO.userId="Sharai";
+     this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
+      (result)=>{
+        console.log("****Saved loveDTO Result****",result)
+      }
+    ); 
+    
   }
+
+  undoLoveReply(i:number,replyId:number){
+    console.log("index***",i);
+    console.log("CommentId*****",replyId);
+    console.log("&&&&&&before in unlove    ",this.replyAggregates[i].liked);
+     this.replyAggregates[i].liked=false;
+     console.log("&&&&&&after in unlove    ",this.replyAggregates[i].liked);
+      this.replyAggregates[i].noOfLoves=this.replyAggregates[i].noOfLoves-1;
+    
+    this.loveDTO.replyId=replyId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    //user id is taken from database
+    this.loveDTO.userId="Sharai";
+      this.gatewayAggregateCommandResourceService.unloveReplyUsingDELETE(this.loveDTO).subscribe(
+        (result)=>{
+          console.log("****deleted loveDTO Result****",result)
+        }
+      ); 
+    }
 }

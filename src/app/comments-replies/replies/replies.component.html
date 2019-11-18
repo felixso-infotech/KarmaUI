@@ -19,18 +19,19 @@
       <div class="reply-box">
   <ion-item>
         <ion-avatar>
-          <ion-img [src]=""></ion-img>
+          <img [src]="'data:'+reply.profilePictureContentType+';base64,'+reply.profilePicture | safeHtml"/>
         </ion-avatar>
         <ion-label>UserName<span class="time"><span class="dot">.</span>{{reply.timeElapsed}}</span></ion-label>
 
         <div  *ngIf="reply.liked; else notLiked">
-            <ion-icon color='primary' size='large' name='heart' (click)="doLoveReply(i,reply.replyId)"></ion-icon>
+            <ion-icon color='primary' size='large' name='heart' (click)="undoLoveReply(i,reply.replyId)"></ion-icon>
             </div>
             <ng-template #notLiked>
               <div>
               <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveReply(i,reply.replyId)"></ion-icon>
               </div>
             </ng-template>
+            <label>{{reply.noOfLoves}}</label>
 
         <!-- <ion-icon name="heart-empty" *ngIf="!reply.isLiked" slot="end" (click)="loveThisreply(i)" color="primary"></ion-icon>
         <ion-icon name="heart" *ngIf="reply.isLiked" slot="end" color="primary" (click)="unLoveThisreply(i)"></ion-icon> -->

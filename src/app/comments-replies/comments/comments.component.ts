@@ -82,7 +82,7 @@ export class CommentsComponent implements OnInit {
     this.commentAggregates.push(commentAggregate);
 
     this.commentDTO.commitedActivityId=this.committedActivityId;
-    this.commentDTO.userId="1";
+    this.commentDTO.userId="Sharai";
     let dateTime=this.getCurrentTime();
     this.commentDTO.dateAndTime=dateTime;
     console.log("----"+this.commentDTO.dateAndTime);

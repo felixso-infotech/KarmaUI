@@ -50,17 +50,16 @@ export class HomePage implements OnInit {
     console.log("home page initialized");
     console.log("*********11");
     console.log("*********",this.committedActivityAggregate);
-    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET({
+    this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET({
       status: "DONE",
-      registeredUserId:3,
-    unpaged: true,
-    sortUnsorted: false,
-    sortSorted: true,
+      unpaged: true,
+      sortUnsorted: false,
+      sortSorted: true
     }).subscribe((result)=>{this.committedActivityAggregate=result;
         this.createActivityBackgroundImageUrls(result);
         this.completedActivityService.isSplashShowing=false;
         console.log("-------",result);
-        console.log("*********13",this.committedActivityAggregate[1].imageStringContentType);});
+        /* console.log("*********13",this.committedActivityAggregate[1].imageStringContentType); */});
   }
   loveThisFeedWithDoubleTap() {
     this.isLiking = true;

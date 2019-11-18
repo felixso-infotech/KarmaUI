@@ -4,6 +4,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { RepliesComponent } from './replies/replies.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { PipemoduleModule } from '../pipes/pipemodule/pipemodule.module';
 
 
 
@@ -12,7 +13,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     IonicModule,
-    FormsModule
+    FormsModule,
+    PipemoduleModule
   ],
   entryComponents: [CommentsComponent,RepliesComponent],
   exports: [CommentsComponent,RepliesComponent]
