@@ -35,7 +35,7 @@ export class CommentsComponent implements OnInit {
       sortUnsorted: true,
       sortSorted: false}).subscribe((result)=>{this.commentAggregates=result;
       console.log("[[[[[[Comments[[[[[[[[----",result);
-    });
+    },(error)=>{console.log("Error ",error)});
    }
 
   ionViewDidEnter() {
@@ -87,7 +87,7 @@ export class CommentsComponent implements OnInit {
     this.commentDTO.dateAndTime=dateTime;
     console.log("----"+this.commentDTO.dateAndTime);
     this.gatewayAggregateCommandResourceService.saveCommentUsingPOST(this.commentDTO).subscribe((result)=>
-    {console.log("&&&&Result&&&&&",result)});
+    {console.log("&&&&Result&&&&&",result)},(error)=>{console.log("Error ",error)});
   }
  
   getCurrentTime():string{
@@ -119,7 +119,7 @@ export class CommentsComponent implements OnInit {
      this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
       (result)=>{
         console.log("****Saved loveDTO Result****",result)
-      }
+      },(error)=>{console.log("Error ",error)}
     ); 
     
   }
@@ -139,7 +139,7 @@ export class CommentsComponent implements OnInit {
       this.gatewayAggregateCommandResourceService.unloveCommentUsingDELETE(this.loveDTO).subscribe(
         (result)=>{
           console.log("****deleted loveDTO Result****",result)
-        }
+        },(error)=>{console.log("Error ",error)}
       ); 
     } 
 }

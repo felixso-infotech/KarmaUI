@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
         this.createActivityBackgroundImageUrls(result);
         this.completedActivityService.isSplashShowing=false;
         console.log("-------",result);
-        /* console.log("*********13",this.committedActivityAggregate[1].imageStringContentType); */});
+        /* console.log("*********13",this.committedActivityAggregate[1].imageStringContentType); */},(error)=>console.log("-Error- ",error));
   }
   loveThisFeedWithDoubleTap() {
     this.isLiking = true;
@@ -67,33 +67,18 @@ export class HomePage implements OnInit {
       this.isLiking = false;
       console.log("this.isLiking", this.isLiking);
     });
-    this.loveThisFeed();
+
+    this.slides.getActiveIndex().then((index)=>{
+      if(!this.committedActivityAggregate[index].liked){
+        this.doLoveCommittedActivity(index,this.committedActivityAggregate[index].committedActivityId,
+          this.committedActivityAggregate[index].userId);
+      }
+    }).catch((error)=>{console.log("-Error- ",error)});
 
   }
-  loveThisFeed() {
-    console.log("Liked this feed");
-    this.slides.getActiveIndex().
-      then(index => {
-        console.log("active slide", index);
-        if (!this.completedActivities[index].isLiked) {
-          this.completedActivities[index].noOfLoves = "" + (+this.completedActivities[index].noOfLoves + 1);
-          this.completedActivities[index].isLiked = true;
-        }
-      });
-  }
-  unLoveThisFeed() {
-    console.log("Un Liked this feed");
-    this.slides.getActiveIndex().
-      then(index => {
-        console.log("active slide", index);
-        this.completedActivities[index].isLiked = false;
-        this.completedActivities[index].noOfLoves = "" + (+this.completedActivities[index].noOfLoves - 1);
-
-      });
-  }
+  
   async showComments(committedActivityId:number) {
-    console.log("**********",committedActivityId);
-    console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
+    console.log("*****committedActivityId*****",committedActivityId);
     this.slides.getActiveIndex().then(index=>{
       this.mockService.currentCommittedActivity=this.completedActivities[index];
       console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
@@ -155,38 +140,45 @@ export class HomePage implements OnInit {
     })
   }
 
-  doLoveCommittedActivity(i: number, committedActivityId: number, userId: string) {
 
-    if (this.committedActivityAggregate[i].liked == false) {
-      this.committedActivityAggregate[i].liked = true;
-      this.committedActivityAggregate[i].noOfLoves = this.committedActivityAggregate[i].noOfLoves + 1;
-    }
-    else {
-      this.committedActivityAggregate[i].liked = false;
-      this.committedActivityAggregate[i].noOfLoves = this.committedActivityAggregate[i].noOfLoves - 1;
-    }
+  doLoveCommittedActivity(i: number, committedActivityId: number, userId: string){
+    console.log("index***",i);
+    console.log("committedActivityId*****",committedActivityId);
+    console.log("&&&&&&before in love    ",this.committedActivityAggregate[i].liked);
+      this.committedActivityAggregate[i].liked=true;
+    console.log("&&&&&&before in love    ",this.committedActivityAggregate[i].liked);
+      this.committedActivityAggregate[i].noOfLoves=this.committedActivityAggregate[i].noOfLoves+1;
     
-    
-      this.loveDTO.commitedActivityId=committedActivityId;
-      this.loveDTO.dateAndTime=this.getCurrentTime();
-      //user id is taken from database
-      this.loveDTO.userId="Sharai";
-      if(this.committedActivityAggregate[i].liked==true){
-      this.gatewayAggregateCommandResource.doLoveUsingPOST(this.loveDTO).subscribe(
-        (result)=>{
-          console.log("****Saved loveDTO Result****",result);
-        }
-      );
-    }
-    else{
-      this.gatewayAggregateCommandResource.unloveCommittedActivityUsingDELETE(this.loveDTO).subscribe(
-        (result)=>{
-          console.log("****Deleted loveDTO Result****",result);
-        }
-      );
-    }
+    this.loveDTO.commitedActivityId=committedActivityId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    this.loveDTO.userId="Sharai";
+     this.gatewayAggregateCommandResource.doLoveUsingPOST(this.loveDTO).subscribe(
+      (result)=>{
+        console.log("****Saved loveDTO Result****",result)
+      },(error)=>{console.log("Error ",error)}
+    ); 
     
   }
+
+  undoLoveCommittedActivity(i: number, committedActivityId: number, userId: string){
+    console.log("index***",i);
+    console.log("committedActivityId*****",committedActivityId);
+    console.log("&&&&&&before in unlove    ",this.committedActivityAggregate[i].liked);
+     this.committedActivityAggregate[i].liked=false;
+     console.log("&&&&&&after in unlove    ",this.committedActivityAggregate[i].liked);
+      this.committedActivityAggregate[i].noOfLoves=this.committedActivityAggregate[i].noOfLoves-1;
+    
+    this.loveDTO.commitedActivityId=committedActivityId;
+    this.loveDTO.dateAndTime=this.getCurrentTime();
+    //user id is taken from database
+    this.loveDTO.userId="Sharai";
+      this.gatewayAggregateCommandResource.unloveCommentUsingDELETE(this.loveDTO).subscribe(
+        (result)=>{
+          console.log("****deleted loveDTO Result****",result)
+        },(error)=>{console.log("Error ",error)}
+      ); 
+    }
+
 
   getCurrentTime(): string {
     let currentTime = new Date();
@@ -217,6 +209,6 @@ export class HomePage implements OnInit {
     }  
 
     this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(committedActivityDTO).subscribe((result)=>
-    {console.log("Result commited activity-------",result)});
+    {console.log("Result commited activity-------",result)},(error)=>{console.log("Error ",error)});
   }
 }

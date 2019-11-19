@@ -60,7 +60,7 @@ export class RepliesComponent implements OnInit {
     this.gatewayAggregateCommandResourceService.saveReplyUsingPOST(this.replyDTO).subscribe(
       (result)=>{
         console.log("***reply reponse***",result);
-      }
+      },(error)=>{console.log("Error ",error)}
     )
   }
 
@@ -80,48 +80,13 @@ export class RepliesComponent implements OnInit {
     }  
   }
 
-  /* doLoveReply(i:number,replyId:number){
-    console.log("index***",i);
-    console.log("CommentId*****",replyId);
-
-     if(this.replyAggregates[i].liked==false){
-      this.replyAggregates[i].liked=true;
-      this.replyAggregates[i].noOfLoves=this.replyAggregates[i].noOfLoves+1;
-    }
-    else{
-      this.replyAggregates[i].liked=false;
-      this.replyAggregates[i].noOfLoves=this.replyAggregates[i].noOfLoves-1;
-    }
-    
-    this.loveDTO.replyId=replyId;
-    this.loveDTO.dateAndTime=this.getCurrentTime();
-    //user id is taken from database
-    this.loveDTO.userId="Sharai";
-
-    if(this.replyAggregates[i].liked==false){
-     this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
-      (result)=>{
-        console.log("****loveDTO Result****",result)
-      }
-    );  
-    }
-    else{  // to be chenged to delete love
-      this.gatewayAggregateCommandResourceService.unloveReplyUsingDELETE(this.loveDTO).subscribe(
-        (result)=>{
-          console.log("****deleted loveDTO Result****",result)
-        }
-      ); 
-    }
-    
-  } */
-
-
+ 
   doLoveReply(i:number,replyId:number){
     console.log("index***",i);
     console.log("ReplyId*****",replyId);
     console.log("&&&&&&before in love    ",this.replyAggregates[i].liked);
       this.replyAggregates[i].liked=true;
-    console.log("&&&&&&before in love    ",this.replyAggregates[i].liked);
+    console.log("&&&&&&after in love    ",this.replyAggregates[i].liked);
       this.replyAggregates[i].noOfLoves=this.replyAggregates[i].noOfLoves+1;
     
     this.loveDTO.replyId=replyId;
@@ -130,7 +95,7 @@ export class RepliesComponent implements OnInit {
      this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
       (result)=>{
         console.log("****Saved loveDTO Result****",result)
-      }
+      },(error)=>{console.log("Error ",error)}
     ); 
     
   }
@@ -150,7 +115,7 @@ export class RepliesComponent implements OnInit {
       this.gatewayAggregateCommandResourceService.unloveReplyUsingDELETE(this.loveDTO).subscribe(
         (result)=>{
           console.log("****deleted loveDTO Result****",result)
-        }
+        },(error)=>{console.log("Error ",error)}
       ); 
     }
 }

@@ -36,7 +36,7 @@
             <div class="options">
             <div class="like">
               <div  *ngIf="activity.liked; else notLiked">
-              <ion-icon color='primary' size='large' name='heart' (click)="doLoveCommittedActivity(i,activity.committedActivityId,activity.userId)"></ion-icon>
+              <ion-icon color='primary' size='large' name='heart' (click)="undoLoveCommittedActivity(i,activity.committedActivityId,activity.userId)"></ion-icon>
               </div>
               <ng-template #notLiked>
                 <div>
