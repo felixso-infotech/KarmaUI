@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
   constructor(
     public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService,
     public gatewayAggregateCommandResource: GatewayAggregateCommandResourceService,
-    public mockService: MockDataService, public modalController: ModalController, public domSanitizer: DomSanitizer,
+    public modalController: ModalController, public domSanitizer: DomSanitizer,
     public completedActivityService: CompletedActivitiesService) { }
 
   ngOnInit() {
@@ -80,8 +80,6 @@ export class HomePage implements OnInit {
   async showComments(committedActivityId:number) {
     console.log("*****committedActivityId*****",committedActivityId);
     this.slides.getActiveIndex().then(index=>{
-      this.mockService.currentCommittedActivity=this.completedActivities[index];
-      console.log("ready to display the comments",this.completedActivities[index],this.mockService.currentCommittedActivity);
       const modal = this.modalController.create({
         component: CommentsComponent,
         cssClass: "modal",

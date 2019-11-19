@@ -26,7 +26,7 @@ export class CommentsComponent implements OnInit {
   loveDTO:LoveDTO={};
 
   constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,
-     public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public mockService: MockDataService, public modalController:ModalController) { }
+     public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,/* public mockService: MockDataService, */ public modalController:ModalController) { }
 
   ngOnInit() {
     console.log("[[[Id--------[[[",this.committedActivityId);
@@ -38,13 +38,13 @@ export class CommentsComponent implements OnInit {
     },(error)=>{console.log("Error ",error)});
    }
 
-  ionViewDidEnter() {
+  /* ionViewDidEnter() {
     this.mockService.getCommentsByCommittedActivityId().
       subscribe((data: any[])=>{
         this.comments=data;
         console.log("comments", this.comments);
       });
-  }
+  } */
 
   closeComments() {
     this.modalController.dismiss();
