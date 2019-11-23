@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceService } from '../../api/services';
 
 @Component({
   selector: 'karma',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KarmaPage implements OnInit {
 
-  constructor() { }
+  constructor(public gatewayAggregateQueryResource:GatewayAggregateQueryResourceService) { }
 
   ngOnInit() {
+
+    //this.gatewayAggregateQueryResource.
   }
 
 }
