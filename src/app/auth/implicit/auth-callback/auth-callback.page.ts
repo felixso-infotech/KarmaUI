@@ -12,8 +12,9 @@ export class AuthCallbackPage implements OnInit {
   constructor(private authService: AuthService, private navCtrl: NavController, private router: Router) {}
 
   ngOnInit() {
-    this.authService.AuthorizationCallBack(this.router.url);
     console.log('begin');
+    console.log('router url',this.router.url);
+    this.authService.AuthorizationCallBack(this.router.url);
     this.authService.authObservable
       .pipe(
         skipWhile(action => action.action !== AuthActions.SignInSuccess && action.action !== AuthActions.SignInFailed),
