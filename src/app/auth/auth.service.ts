@@ -42,7 +42,7 @@ export class AuthService extends IonicAuth {
       (<any>window).handleOpenURL = callbackUrl => {
         console.log('call back url',callbackUrl);
         this.ngZone.run(() => {
-          console.log("callback url",callbackUrl);
+          console.log("callback url in ngZone.run",callbackUrl);
           this.handleCallback(callbackUrl);
         });
       };
@@ -61,13 +61,16 @@ export class AuthService extends IonicAuth {
     const redirectUri = this.onDevice() ? 'com.felixsoinfotech.karma:/callback' : window.location.origin+'/implicit/callback';
     const logoutRedirectUri = this.onDevice() ? 'com.felixsoinfotech.karma:/logout' : window.location.origin+'/implicit/logout';
     const AUTH_CONFIG_URI = 'http://35.208.4.27:8060/api/auth-info';
+    let authLocalConfig;
 
-    if (await this.storage.getItem(AUTH_CONFIG_URI)) {
+    if (authLocalConfig=await this.storage.getItem(AUTH_CONFIG_URI)) {
+      console.log("auth config in local storage",)
       this.authConfig = JSON.parse(await this.storage.getItem(AUTH_CONFIG_URI));
-      console.log(this.authConfig);
+      console.log('locally stored auth config',this.authConfig);
       //await this.storage.removeItem(AUTH_CONFIG_URI);
     } else {
       // try to get the oauth settings from the server
+      console.log("no local auth config present");
       this.requestor.xhr({ method: 'GET', url: AUTH_CONFIG_URI }).then(
         async (data: any) => {
           this.authConfig = {
@@ -78,6 +81,7 @@ export class AuthService extends IonicAuth {
             scopes,
             usePkce: true
           };
+          console.log('The auth config from the server',this.authConfig);
           await this.storage.setItem(AUTH_CONFIG_URI, JSON.stringify(this.authConfig));
         },
         error => {
