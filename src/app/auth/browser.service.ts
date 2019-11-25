@@ -8,6 +8,19 @@ import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser'
 })
 export class BrowserService extends CordovaBrowser {
 
+  private inAppBrowserRefCopy : InAppBrowserObject | undefined;
+
+  public async  closeWindow(): Promise<void> {
+    await CordovaDocument.ready();
+
+/*     if(await SafariViewController.isAvailable()){
+        SafariViewController.hide(); 
+    }else{ */
+        if(this.inAppBrowserRefCopy != undefined)
+            this.inAppBrowserRefCopy.close(); 
+    
+}
+
   public async showWindow(url: string): Promise<string | undefined> {
     await CordovaDocument.ready();
 
@@ -30,10 +43,10 @@ export class BrowserService extends CordovaBrowser {
       clearsessioncache: 'yes',
     }
 
-    let inAppBrowserRef = InAppBrowser.create(url, '_self', options);
+     this.inAppBrowserRefCopy = InAppBrowser.create(url, '_self', options);
 
-    if (inAppBrowserRef != undefined)
-      inAppBrowserRef.on('exit').subscribe((event) => this.onCloseFunction);
+    if (this.inAppBrowserRefCopy != undefined)
+      this.inAppBrowserRefCopy.on('exit').subscribe((event) => this.onCloseFunction);
 
 
     return;

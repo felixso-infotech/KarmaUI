@@ -35,7 +35,6 @@ export class LoginLoadingPage implements OnInit {
   ionViewDidEnter() {
     console.log('view entered');
     this.authService.signIn().catch(error =>{ console.error(`Sign in error: ${error}`);
-    this.authService.signIn().catch(error => console.error(`Sign in error: ${error}`));
   });
   }
 }
