@@ -4,7 +4,7 @@ import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceSe
 @Component({
   selector: 'karma',
   templateUrl: './karma.page.html',
-  styleUrls: ['./karma.page.scss'],
+  styleUrls: ['./karma.page.scss']
 })
 export class KarmaPage implements OnInit {
 
