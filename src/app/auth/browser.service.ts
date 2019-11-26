@@ -48,7 +48,6 @@ export class BrowserService extends CordovaBrowser {
     if (this.inAppBrowserRefCopy != undefined)
       this.inAppBrowserRefCopy.on('exit').subscribe((event) => this.onCloseFunction);
 
-
     return;
   }
 }

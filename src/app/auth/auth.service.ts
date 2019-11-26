@@ -65,7 +65,7 @@ export class AuthService extends IonicAuth {
     let authLocalConfig;
     this.authConfig = {
       identity_client: 'karma-app',
-      identity_server: 'http://http://35.196.65.11:8099/auth/realms/karma',
+      identity_server: 'http://35.196.65.11:8099/auth/realms/karma',
       redirect_url: redirectUri,
       end_session_redirect_url: logoutRedirectUri,
       scopes,
