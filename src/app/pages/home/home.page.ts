@@ -57,11 +57,11 @@ export class HomePage implements OnInit {
         }, error=>{
           console.log('no user found in the server',error);
           if(error.status==500) {
-            
             this.gatewayAggregateCommandResource.createRegisteredUserUsingPOST({
               userId: this.userService.user.preferred_username,
               email: this.userService.user.email,
-              firstName: this.userService.user.given_name
+              firstName: this.userService.user.given_name,
+              createdDate: this.dateService.getCurrentTime()
             }).subscribe(response=>{
               console.log('user created', response);
               this.userService.registeredUser=response;
