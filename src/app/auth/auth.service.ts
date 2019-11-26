@@ -61,7 +61,16 @@ export class AuthService extends IonicAuth {
     const redirectUri = this.onDevice() ? 'com.felixsoinfotech.karma:/callback' : window.location.origin+'/implicit/callback';
     const logoutRedirectUri = this.onDevice() ? 'com.felixsoinfotech.karma:/logout' : window.location.origin+'/implicit/logout';
     const AUTH_CONFIG_URI = 'http://35.208.4.27:8060/api/auth-info';
+    
     let authLocalConfig;
+    this.authConfig = {
+      identity_client: 'karma-app',
+      identity_server: 'http://35.196.65.11:8099/auth/realms/karma',
+      redirect_url: redirectUri,
+      end_session_redirect_url: logoutRedirectUri,
+      scopes,
+      usePkce: true
+    };
 
     if (authLocalConfig=await this.storage.getItem(AUTH_CONFIG_URI)) {
       console.log("auth config in local storage",)
@@ -89,7 +98,7 @@ export class AuthService extends IonicAuth {
           console.error(error);
           this.authConfig = {
             identity_client: 'karma-app',
-            identity_server: 'http://http://35.196.65.11:8099/auth/realms/karma',
+            identity_server: 'http://35.196.65.11:8099/auth/realms/karma',
             redirect_url: redirectUri,
             end_session_redirect_url: logoutRedirectUri,
             scopes,
