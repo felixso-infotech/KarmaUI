@@ -12,9 +12,9 @@
   </ion-segment>
   <ion-grid>
   <ion-row class="activities">
-    <ion-col *ngFor="let committedActivity of committedActivityAggregates" size="4">
-      <img [src]="'data:'+committedActivity.imageStringContentType+';base64,'+committedActivity.imageString | safeHtml"/>
-      <div><label>{{committedActivity.activityDescription}}</label></div>
+    <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4">
+      <img [src]="'data:'+committedActivity.activityImageContentType+';base64,'+committedActivity.activityImageString | safeHtml"/>
+      <div><label>{{committedActivity.activityTitle}}</label></div>
     </ion-col>
   </ion-row>
   </ion-grid>

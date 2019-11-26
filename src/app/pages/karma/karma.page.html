@@ -5,17 +5,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-row *ngFor="let rowOfCharacters of charactersArray; let i=index">
-    <ion-col *ngFor="let character of rowOfCharacters; let j=index" size="6">
+  <ion-row>
+    <ion-col *ngFor="let activity of activityViewAggregates; let i=index" size="6">
       <ion-card>
-        <ion-img [src]="character.imageUrl"></ion-img>
+        <ion-img [src]="activity.imageUrl"></ion-img>
         <ion-card-header>
-          <ion-card-title>{{character.name}}</ion-card-title>
+          <ion-card-title>{{activity.title}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          {{character.description}}
+          {{activity.challengeName}}
         </ion-card-content>
-        <ion-checkbox slot="end" [(ngModel)]="character.isSelected"></ion-checkbox>
+        <ion-card-content>
+          {{activity.challengeName}}
+        </ion-card-content>
+        <ion-checkbox slot="end" [(ngModel)]="isSelected"></ion-checkbox>
       </ion-card>
     </ion-col>
   </ion-row>

@@ -5,7 +5,7 @@ import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
-import { CommittedActivityAggregate, LoveDTO, CommittedActivityDTO } from '../../api/models';
+import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CompletedActivitiesService } from '../../providers/completed-activities.service';
 
@@ -193,7 +193,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  addAsUserCommittedActivity(actId:number,desc:string,committedActId:number){
+  /* addAsUserCommittedActivity(actId:number,desc:string,committedActId:number){
 
     console.log("&&&&&&Description&&&&&&",desc);
     
@@ -208,5 +208,5 @@ export class HomePage implements OnInit {
 
     this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(committedActivityDTO).subscribe((result)=>
     {console.log("Result commited activity-------",result)},(error)=>{console.log("Error ",error)});
-  }
+  } */
 }

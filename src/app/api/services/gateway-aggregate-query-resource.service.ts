@@ -7,9 +7,10 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { ActivityDTO } from '../models/activity-dto';
+import { ActivityViewAggregate } from '../models/activity-view-aggregate';
 import { ChallengeDTO } from '../models/challenge-dto';
 import { CommittedActivityAggregate } from '../models/committed-activity-aggregate';
+import { CommittedActivityProfileAggregate } from '../models/committed-activity-profile-aggregate';
 import { DimensionDTO } from '../models/dimension-dto';
 import { CommentAggregate } from '../models/comment-aggregate';
 import { ReplyAggregate } from '../models/reply-aggregate';
@@ -66,7 +67,7 @@ class GatewayAggregateQueryResourceService extends __BaseService {
    *
    * @return OK
    */
-  getAllActivitiesUsingGETResponse(params: GatewayAggregateQueryResourceService.GetAllActivitiesUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityDTO>>> {
+  getAllActivitiesUsingGETResponse(params: GatewayAggregateQueryResourceService.GetAllActivitiesUsingGETParams): __Observable<__StrictHttpResponse<Array<ActivityViewAggregate>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -93,7 +94,7 @@ class GatewayAggregateQueryResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<ActivityDTO>>;
+        return _r as __StrictHttpResponse<Array<ActivityViewAggregate>>;
       })
     );
   }
@@ -122,9 +123,9 @@ class GatewayAggregateQueryResourceService extends __BaseService {
    *
    * @return OK
    */
-  getAllActivitiesUsingGET(params: GatewayAggregateQueryResourceService.GetAllActivitiesUsingGETParams): __Observable<Array<ActivityDTO>> {
+  getAllActivitiesUsingGET(params: GatewayAggregateQueryResourceService.GetAllActivitiesUsingGETParams): __Observable<Array<ActivityViewAggregate>> {
     return this.getAllActivitiesUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<ActivityDTO>)
+      __map(_r => _r.body as Array<ActivityViewAggregate>)
     );
   }
 
@@ -336,7 +337,7 @@ class GatewayAggregateQueryResourceService extends __BaseService {
    *
    * @return OK
    */
-  getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETResponse(params: GatewayAggregateQueryResourceService.GetAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETParams): __Observable<__StrictHttpResponse<Array<CommittedActivityAggregate>>> {
+  getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETResponse(params: GatewayAggregateQueryResourceService.GetAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETParams): __Observable<__StrictHttpResponse<Array<CommittedActivityProfileAggregate>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -365,7 +366,7 @@ class GatewayAggregateQueryResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<CommittedActivityAggregate>>;
+        return _r as __StrictHttpResponse<Array<CommittedActivityProfileAggregate>>;
       })
     );
   }
@@ -398,9 +399,9 @@ class GatewayAggregateQueryResourceService extends __BaseService {
    *
    * @return OK
    */
-  getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET(params: GatewayAggregateQueryResourceService.GetAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETParams): __Observable<Array<CommittedActivityAggregate>> {
+  getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET(params: GatewayAggregateQueryResourceService.GetAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETParams): __Observable<Array<CommittedActivityProfileAggregate>> {
     return this.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<CommittedActivityAggregate>)
+      __map(_r => _r.body as Array<CommittedActivityProfileAggregate>)
     );
   }
 
