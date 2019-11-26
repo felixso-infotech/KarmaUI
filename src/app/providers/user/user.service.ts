@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+
+  public user: any=null;
+  public registeredUser: any=null;
+
   constructor() {}
 
 }
