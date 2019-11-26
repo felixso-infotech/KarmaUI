@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommittedActivityAggregate } from '../../api/models';
+import { CommittedActivityAggregate, CommittedActivityProfileAggregate } from '../../api/models';
 import { GatewayAggregateQueryResourceService } from '../../api/services';
 
 @Component({
@@ -9,7 +9,7 @@ import { GatewayAggregateQueryResourceService } from '../../api/services';
 })
 export class CommittedActivitiesComponent implements OnInit {
 
-  committedActivityAggregates: CommittedActivityAggregate[]=[];
+  committedActivityProfileAggregates: CommittedActivityProfileAggregate[]=[];
   backgroundImageUrls: String[]=[];
   status:string;
   committedActivityAggregateTemp:CommittedActivityAggregate[][];
@@ -27,10 +27,10 @@ export class CommittedActivitiesComponent implements OnInit {
       sortUnsorted: false,
       sortSorted: true
     }).subscribe((result)=>{
-      this.committedActivityAggregates=result;
+      this.committedActivityProfileAggregates=result;
         this.createActivityBackgroundImageUrls(result);
         console.log("-------",result);
-        console.log(" Array size:::::",this.committedActivityAggregates.length)
+        console.log(" Array size:::::",this.committedActivityProfileAggregates.length)
         console.log("@@@@@@",this.backgroundImageUrls); 
       });
   
@@ -52,10 +52,10 @@ export class CommittedActivitiesComponent implements OnInit {
       unpaged: true,
       sortUnsorted: false,
       sortSorted: true
-    }).subscribe((result)=>{this.committedActivityAggregates=result;
+    }).subscribe((result)=>{this.committedActivityProfileAggregates=result;
       this.createActivityBackgroundImageUrls(result);
       console.log("-------",result);
-      console.log(" Array size:::::",this.committedActivityAggregates.length);});
+      console.log(" Array size:::::",this.committedActivityProfileAggregates.length);});
 
   }
   
@@ -83,9 +83,9 @@ export class CommittedActivitiesComponent implements OnInit {
 
   }
 
-  createActivityBackgroundImageUrls(committedActivities: CommittedActivityAggregate[]) {
+  createActivityBackgroundImageUrls(committedActivities: CommittedActivityProfileAggregate[]) {
     committedActivities.forEach(data=>{
-      this.backgroundImageUrls.push(this.getBlobUrl(data.imageString,data.imageStringContentType));
+      this.backgroundImageUrls.push(this.getBlobUrl(data.activityImageString,data.activityImageContentType));
     })
   }
 

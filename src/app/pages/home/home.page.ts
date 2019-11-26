@@ -5,7 +5,7 @@ import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
-import { CommittedActivityAggregate, LoveDTO, CommittedActivityDTO } from '../../api/models';
+import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CompletedActivitiesService } from '../../providers/completed-activities.service';
 import { UserService } from '../../providers/user/user.service';
@@ -219,19 +219,18 @@ export class HomePage implements OnInit {
     }
   }
 
-  addAsUserCommittedActivity(actId: number, desc: string, committedActId: number) {
-
-    console.log("&&&&&&Description&&&&&&", desc);
+  /* addAsUserCommittedActivity(actId:number,desc:string,committedActId:number){
 
     let committedActivityDTO: CommittedActivityDTO = {
       activityId: actId,
-      createdDate: this.getCurrentTime(),
-      description: desc,
-      referenceId: committedActId,
-      registeredUserId: 3,
-      status: "TODO"
-    }
+      createdDate:this.getCurrentTime(),
+      description:desc,
+      referenceId:committedActId,
+      registeredUserId:3,
+      status: "TODO"     
+    }  
 
-    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(committedActivityDTO).subscribe((result) => { console.log("Result commited activity-------", result) }, (error) => { console.log("Error ", error) });
-  }
+    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(committedActivityDTO).subscribe((result)=>
+    {console.log("Result commited activity-------",result)},(error)=>{console.log("Error ",error)});
+  } */
 }

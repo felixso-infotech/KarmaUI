@@ -8,7 +8,7 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { ActivityAggregate } from '../models/activity-aggregate';
-import { CommittedActivityDTO } from '../models/committed-activity-dto';
+import { CommittedActivityStatusAggregate } from '../models/committed-activity-status-aggregate';
 import { RegisteredUserDTO } from '../models/registered-user-dto';
 import { CommentDTO } from '../models/comment-dto';
 import { LoveDTO } from '../models/love-dto';
@@ -79,14 +79,14 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   }
 
   /**
-   * @param committedActivityDTO committedActivityDTO
+   * @param committedActivityStatusAggregate committedActivityStatusAggregate
    * @return OK
    */
-  createCommittedActivityUsingPOSTResponse(committedActivityDTO: CommittedActivityDTO): __Observable<__StrictHttpResponse<CommittedActivityDTO>> {
+  createCommittedActivityUsingPOSTResponse(committedActivityStatusAggregate: CommittedActivityStatusAggregate): __Observable<__StrictHttpResponse<CommittedActivityStatusAggregate>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = committedActivityDTO;
+    __body = committedActivityStatusAggregate;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/command/create-committed-activity`,
@@ -100,17 +100,17 @@ class GatewayAggregateCommandResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<CommittedActivityDTO>;
+        return _r as __StrictHttpResponse<CommittedActivityStatusAggregate>;
       })
     );
   }
   /**
-   * @param committedActivityDTO committedActivityDTO
+   * @param committedActivityStatusAggregate committedActivityStatusAggregate
    * @return OK
    */
-  createCommittedActivityUsingPOST(committedActivityDTO: CommittedActivityDTO): __Observable<CommittedActivityDTO> {
-    return this.createCommittedActivityUsingPOSTResponse(committedActivityDTO).pipe(
-      __map(_r => _r.body as CommittedActivityDTO)
+  createCommittedActivityUsingPOST(committedActivityStatusAggregate: CommittedActivityStatusAggregate): __Observable<CommittedActivityStatusAggregate> {
+    return this.createCommittedActivityUsingPOSTResponse(committedActivityStatusAggregate).pipe(
+      __map(_r => _r.body as CommittedActivityStatusAggregate)
     );
   }
 
@@ -431,14 +431,14 @@ class GatewayAggregateCommandResourceService extends __BaseService {
   }
 
   /**
-   * @param committedActivityDTO committedActivityDTO
+   * @param committedActivityStatusAggregate committedActivityStatusAggregate
    * @return OK
    */
-  updateCommittedActivityUsingPUTResponse(committedActivityDTO: CommittedActivityDTO): __Observable<__StrictHttpResponse<CommittedActivityDTO>> {
+  updateCommittedActivityUsingPUTResponse(committedActivityStatusAggregate: CommittedActivityStatusAggregate): __Observable<__StrictHttpResponse<CommittedActivityStatusAggregate>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = committedActivityDTO;
+    __body = committedActivityStatusAggregate;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/api/command/update-committed-activity`,
@@ -452,17 +452,17 @@ class GatewayAggregateCommandResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<CommittedActivityDTO>;
+        return _r as __StrictHttpResponse<CommittedActivityStatusAggregate>;
       })
     );
   }
   /**
-   * @param committedActivityDTO committedActivityDTO
+   * @param committedActivityStatusAggregate committedActivityStatusAggregate
    * @return OK
    */
-  updateCommittedActivityUsingPUT(committedActivityDTO: CommittedActivityDTO): __Observable<CommittedActivityDTO> {
-    return this.updateCommittedActivityUsingPUTResponse(committedActivityDTO).pipe(
-      __map(_r => _r.body as CommittedActivityDTO)
+  updateCommittedActivityUsingPUT(committedActivityStatusAggregate: CommittedActivityStatusAggregate): __Observable<CommittedActivityStatusAggregate> {
+    return this.updateCommittedActivityUsingPUTResponse(committedActivityStatusAggregate).pipe(
+      __map(_r => _r.body as CommittedActivityStatusAggregate)
     );
   }
 
