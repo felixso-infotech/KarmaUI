@@ -8,6 +8,8 @@ import { AccountResourceService, GatewayAggregateQueryResourceService, UserResou
 import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CompletedActivitiesService } from '../../providers/completed-activities.service';
+import { UserService } from '../../providers/user/user.service';
+import { DateService } from '../../providers/date.service';
 
 @Component({
   selector: 'home',
@@ -30,10 +32,10 @@ export class HomePage implements OnInit {
   transformation: any;
 
   currentComments = null;
-  completedActivities: CommittedActivity[]=[];
-  isLiking: Boolean= false;
-  committedActivityAggregate: CommittedActivityAggregate[]=[];
-  backgroundImageUrls: String[]=[];
+  completedActivities: CommittedActivity[] = [];
+  isLiking: Boolean = false;
+  committedActivityAggregate: CommittedActivityAggregate[] = [];
+  backgroundImageUrls: String[] = [];
 
   loveDTO: LoveDTO = {};
 
@@ -41,15 +43,37 @@ export class HomePage implements OnInit {
     public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService,
     public gatewayAggregateCommandResource: GatewayAggregateCommandResourceService,
     public modalController: ModalController, public domSanitizer: DomSanitizer,
-    public completedActivityService: CompletedActivitiesService) { }
+    public completedActivityService: CompletedActivitiesService, public userService: UserService,
+    public dateService: DateService) { }
 
   ngOnInit() {
-    
+    console.log('user in home',this.userService.user);
+    if (this.userService.user) {
+      console.log('valid user present');
+      this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.userService.user.preferred_username)
+        .subscribe(response=>{
+          console.log(response);
+          this.userService.registeredUser=response;
+        }, error=>{
+          console.log('no user found in the server',error);
+          if(error.status==500) {
+            this.gatewayAggregateCommandResource.createRegisteredUserUsingPOST({
+              userId: this.userService.user.preferred_username,
+              email: this.userService.user.email,
+              firstName: this.userService.user.given_name,
+              createdDate: this.dateService.getCurrentTime()
+            }).subscribe(response=>{
+              console.log('user created', response);
+              this.userService.registeredUser=response;
+            }, err=>console.log('error while creating the user',err))
+          }
+        });
+    }
   }
   ionViewWillEnter() {
     console.log("home page initialized");
     console.log("*********11");
-    console.log("*********",this.committedActivityAggregate);
+    console.log("*********", this.committedActivityAggregate);
     this.gatewayAggregateQueryResource.getAllCommittedActivitiesByStatusUsingGET({
       status: "DONE",
       unpaged: true,
@@ -60,7 +84,8 @@ export class HomePage implements OnInit {
         this.createActivityBackgroundImageUrls(result);
         this.completedActivityService.isSplashShowing=false;
         console.log("-------",result);
-        /* console.log("*********13",this.committedActivityAggregate[1].imageStringContentType); */},(error)=>console.log("-Error- ",error));
+    }, (error) => console.log("-Error- ", error));
+
   }
   loveThisFeedWithDoubleTap() {
     this.isLiking = true;
@@ -69,24 +94,24 @@ export class HomePage implements OnInit {
       console.log("this.isLiking", this.isLiking);
     });
 
-    this.slides.getActiveIndex().then((index)=>{
-      if(!this.committedActivityAggregate[index].liked){
-        this.doLoveCommittedActivity(index,this.committedActivityAggregate[index].committedActivityId,
+    this.slides.getActiveIndex().then((index) => {
+      if (!this.committedActivityAggregate[index].liked) {
+        this.doLoveCommittedActivity(index, this.committedActivityAggregate[index].committedActivityId,
           this.committedActivityAggregate[index].userId);
       }
-    }).catch((error)=>{console.log("-Error- ",error)});
+    }).catch((error) => { console.log("-Error- ", error) });
 
   }
-  
-  async showComments(committedActivityId:number) {
-    console.log("*****committedActivityId*****",committedActivityId);
-    this.slides.getActiveIndex().then(index=>{
+
+  async showComments(committedActivityId: number) {
+    console.log("*****committedActivityId*****", committedActivityId);
+    this.slides.getActiveIndex().then(index => {
       const modal = this.modalController.create({
         component: CommentsComponent,
         cssClass: "modal",
-        componentProps: {committedActivityId:committedActivityId}
-      }).then(modal=>{
-        this.currentComments=modal;
+        componentProps: { committedActivityId: committedActivityId }
+      }).then(modal => {
+        this.currentComments = modal;
         modal.present();
       });
     });
@@ -140,43 +165,43 @@ export class HomePage implements OnInit {
   }
 
 
-  doLoveCommittedActivity(i: number, committedActivityId: number, userId: string){
-    console.log("index***",i);
-    console.log("committedActivityId*****",committedActivityId);
-    console.log("&&&&&&before in love    ",this.committedActivityAggregate[i].liked);
-      this.committedActivityAggregate[i].liked=true;
-    console.log("&&&&&&before in love    ",this.committedActivityAggregate[i].liked);
-      this.committedActivityAggregate[i].noOfLoves=this.committedActivityAggregate[i].noOfLoves+1;
-    
-    this.loveDTO.commitedActivityId=committedActivityId;
-    this.loveDTO.dateAndTime=this.getCurrentTime();
-    this.loveDTO.userId="Sharai";
-     this.gatewayAggregateCommandResource.doLoveUsingPOST(this.loveDTO).subscribe(
-      (result)=>{
-        console.log("****Saved loveDTO Result****",result)
-      },(error)=>{console.log("Error ",error)}
-    ); 
-    
+  doLoveCommittedActivity(i: number, committedActivityId: number, userId: string) {
+    console.log("index***", i);
+    console.log("committedActivityId*****", committedActivityId);
+    console.log("&&&&&&before in love    ", this.committedActivityAggregate[i].liked);
+    this.committedActivityAggregate[i].liked = true;
+    console.log("&&&&&&before in love    ", this.committedActivityAggregate[i].liked);
+    this.committedActivityAggregate[i].noOfLoves = this.committedActivityAggregate[i].noOfLoves + 1;
+
+    this.loveDTO.commitedActivityId = committedActivityId;
+    this.loveDTO.dateAndTime = this.getCurrentTime();
+    this.loveDTO.userId = "Sharai";
+    this.gatewayAggregateCommandResource.doLoveUsingPOST(this.loveDTO).subscribe(
+      (result) => {
+        console.log("****Saved loveDTO Result****", result)
+      }, (error) => { console.log("Error ", error) }
+    );
+
   }
 
-  undoLoveCommittedActivity(i: number, committedActivityId: number, userId: string){
-    console.log("index***",i);
-    console.log("committedActivityId*****",committedActivityId);
-    console.log("&&&&&&before in unlove    ",this.committedActivityAggregate[i].liked);
-     this.committedActivityAggregate[i].liked=false;
-     console.log("&&&&&&after in unlove    ",this.committedActivityAggregate[i].liked);
-      this.committedActivityAggregate[i].noOfLoves=this.committedActivityAggregate[i].noOfLoves-1;
-    
-    this.loveDTO.commitedActivityId=committedActivityId;
-    this.loveDTO.dateAndTime=this.getCurrentTime();
+  undoLoveCommittedActivity(i: number, committedActivityId: number, userId: string) {
+    console.log("index***", i);
+    console.log("committedActivityId*****", committedActivityId);
+    console.log("&&&&&&before in unlove    ", this.committedActivityAggregate[i].liked);
+    this.committedActivityAggregate[i].liked = false;
+    console.log("&&&&&&after in unlove    ", this.committedActivityAggregate[i].liked);
+    this.committedActivityAggregate[i].noOfLoves = this.committedActivityAggregate[i].noOfLoves - 1;
+
+    this.loveDTO.commitedActivityId = committedActivityId;
+    this.loveDTO.dateAndTime = this.getCurrentTime();
     //user id is taken from database
-    this.loveDTO.userId="Sharai";
-      this.gatewayAggregateCommandResource.unloveCommentUsingDELETE(this.loveDTO).subscribe(
-        (result)=>{
-          console.log("****deleted loveDTO Result****",result)
-        },(error)=>{console.log("Error ",error)}
-      ); 
-    }
+    this.loveDTO.userId = "Sharai";
+    this.gatewayAggregateCommandResource.unloveCommentUsingDELETE(this.loveDTO).subscribe(
+      (result) => {
+        console.log("****deleted loveDTO Result****", result)
+      }, (error) => { console.log("Error ", error) }
+    );
+  }
 
 
   getCurrentTime(): string {
