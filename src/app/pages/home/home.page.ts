@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommittedActivity } from '../../interfaces/committed-activity';
 import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSlides, ModalController, LoadingController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
 import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
@@ -29,6 +29,8 @@ export class HomePage implements OnInit {
     height: window.screen.height - 60
   };
 
+  loading: HTMLIonLoadingElement;
+
   transformation: any;
 
   currentComments = null;
@@ -44,10 +46,12 @@ export class HomePage implements OnInit {
     public gatewayAggregateCommandResource: GatewayAggregateCommandResourceService,
     public modalController: ModalController, public domSanitizer: DomSanitizer,
     public completedActivityService: CompletedActivitiesService, public userService: UserService,
-    public dateService: DateService) { }
+    public dateService: DateService,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
     console.log('user in home', this.userService.user);
+    this.presentLoading();
     if (this.userService.user) {
       console.log('valid user present');
       this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.userService.user.preferred_username)
@@ -63,7 +67,6 @@ export class HomePage implements OnInit {
               firstName: this.userService.user.given_name,
               createdDate: this.dateService.getCurrentTime()
             }).subscribe(response => {
-              
               this.userService.registeredUser = response;
               console.log('user created', this.userService.registeredUser);
             }, err => console.log('error while creating the user', err))
@@ -80,11 +83,13 @@ export class HomePage implements OnInit {
       unpaged: true,
       sortUnsorted: false,
       sortSorted: true,
-      sort:['activityCreatedDate(,asc)']
-    }).subscribe((result)=>{this.committedActivityAggregate=result;
-        this.createActivityBackgroundImageUrls(result);
-        this.completedActivityService.isSplashShowing=false;
-        console.log("-------",result);
+      sort: ['activityCreatedDate(,asc)']
+    }).subscribe((result) => {
+    this.committedActivityAggregate = result;
+      this.createActivityBackgroundImageUrls(result);
+      this.loading.dismiss();
+      this.completedActivityService.isSplashShowing = false;
+      console.log("-------", result);
     }, (error) => console.log("-Error- ", error));
 
   }
@@ -218,6 +223,16 @@ export class HomePage implements OnInit {
     else {
       return (currentTime.toISOString()).split("Z")[0] + "-0" + hours + ":" + minutes;
     }
+  }
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: `<ion-img src="../../../assets/img/clock-trans.gif"></ion-img>`,
+      duration: 60000,
+      spinner: null,
+      cssClass: 'loading',
+      showBackdrop: true
+    });
+    await this.loading.present();
   }
 
 }

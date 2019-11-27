@@ -39,6 +39,7 @@ export class KarmaPage implements OnInit {
 
   ngOnInit() {
     console.log('registered user',this.userService.registeredUser);
+    this.presentLoading();
     this.gatewayAggregateQueryResource.getAllActivitiesUsingGET({
       unpaged: false,
       sortUnsorted: false,
@@ -54,6 +55,7 @@ export class KarmaPage implements OnInit {
     }).subscribe((result) => {
       this.activityViewAggregates = result;
       console.log("Activities...:", result);
+      this.loading.dismiss();
     }, (error) => { console.log("Error..:", error) });
   }
   selectSuggestedActivity() {
@@ -63,26 +65,26 @@ export class KarmaPage implements OnInit {
       .then(index => {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
         this.activityService.currentActivity= this.activityViewAggregates[index];
+        this.loading.dismiss();
       });
   }
   selectTrendingActivity() {
     console.log("selected trending activity");
+    this.presentLoading();
     this.trendingActivitySlides.getActiveIndex()
       .then(index => {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
         this.activityService.currentActivity= this.activityViewAggregates[index];
+        this.loading.dismiss();
       });
   }
   async presentLoading() {
     this.loading = await this.loadingController.create({
-      message: `<div class="full-screen-splash"><div class="spinner">
-      <div class="cube1"></div>
-      <div class="cube2"></div>
-    </div></div>`,
-      duration: 2000,
+      message: `<ion-img src="../../../assets/img/clock-trans.gif"></ion-img>`,
+      duration: 5000,
       spinner: null,
-      cssClass: 'full-screen-splash spinner cube1 cube2',
-      showBackdrop: false
+      cssClass: 'loading',
+      showBackdrop: true
     });
     await this.loading.present();
   }
