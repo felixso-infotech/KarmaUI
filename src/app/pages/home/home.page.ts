@@ -52,8 +52,8 @@ export class HomePage implements OnInit {
       console.log('valid user present');
       this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.userService.user.preferred_username)
         .subscribe(response => {
-          console.log(response);
           this.userService.registeredUser = response;
+          console.log(this.userService.registeredUser);
         }, error => {
           console.log('no user found in the server', error);
           if (error.status == 500) {
@@ -63,8 +63,9 @@ export class HomePage implements OnInit {
               firstName: this.userService.user.given_name,
               createdDate: this.dateService.getCurrentTime()
             }).subscribe(response => {
-              console.log('user created', response);
+              
               this.userService.registeredUser = response;
+              console.log('user created', this.userService.registeredUser);
             }, err => console.log('error while creating the user', err))
           }
         });
