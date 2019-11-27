@@ -16,7 +16,6 @@ export class KarmaPage implements OnInit {
   constructor(public gatewayAggregateQueryResource:GatewayAggregateQueryResourceService) { }
 
   ngOnInit() {
-    console.log("888888888888888888888888888888");
     this.gatewayAggregateQueryResource.getAllActivitiesUsingGET({
       unpaged: false,
       sortUnsorted: false,

@@ -54,7 +54,8 @@ export class HomePage implements OnInit {
       status: "DONE",
       unpaged: true,
       sortUnsorted: false,
-      sortSorted: true
+      sortSorted: true,
+      sort:['activityCreatedDate(,asc)']
     }).subscribe((result)=>{this.committedActivityAggregate=result;
         this.createActivityBackgroundImageUrls(result);
         this.completedActivityService.isSplashShowing=false;
@@ -193,20 +194,4 @@ export class HomePage implements OnInit {
     }
   }
 
-  /* addAsUserCommittedActivity(actId:number,desc:string,committedActId:number){
-
-    console.log("&&&&&&Description&&&&&&",desc);
-    
-    let committedActivityDTO:CommittedActivityDTO={
-      activityId: actId,
-      createdDate:this.getCurrentTime(),
-      description:desc,
-      referenceId:committedActId,
-      registeredUserId:3,
-      status: "TODO"     
-    }  
-
-    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(committedActivityDTO).subscribe((result)=>
-    {console.log("Result commited activity-------",result)},(error)=>{console.log("Error ",error)});
-  } */
 }
