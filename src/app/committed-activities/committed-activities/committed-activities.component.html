@@ -11,11 +11,21 @@
     </ion-segment-button>
   </ion-segment>
   <ion-grid>
-  <ion-row class="activities">
-    <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4">
-      <img [src]="'data:'+committedActivity.activityImageContentType+';base64,'+committedActivity.activityImageString | safeHtml"/>
-      <div><label>{{committedActivity.activityTitle}}</label></div>
-    </ion-col>
-  </ion-row>
+
+    <ion-row class="activities" *ngIf="status=='DONE';else InprogressAndTodo">
+        <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4">
+          <img [src]="'data:'+committedActivity.proofImageContentType+';base64,'+committedActivity.proofImageString | safeHtml"/>
+          <div><label>{{committedActivity.activityTitle}}</label></div>
+        </ion-col>
+    </ion-row>
+
+    <ng-template #InprogressAndTodo>
+      <ion-row class="activities">
+        <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4">
+          <img [src]="'data:'+committedActivity.activityImageContentType+';base64,'+committedActivity.activityImageString | safeHtml"/>
+          <div><label>{{committedActivity.activityTitle}}</label></div>
+        </ion-col>
+      </ion-row>
+    </ng-template>
   </ion-grid>
 </div>

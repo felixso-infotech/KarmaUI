@@ -5,7 +5,7 @@ import { MockDataService } from '../../providers/mock-data.service';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
-import { CommittedActivityAggregate, LoveDTO } from '../../api/models';
+import { CommittedActivityAggregate, LoveDTO, CommittedActivityStatusAggregate } from '../../api/models';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CompletedActivitiesService } from '../../providers/completed-activities.service';
 import { UserService } from '../../providers/user/user.service';
@@ -38,6 +38,8 @@ export class HomePage implements OnInit {
   backgroundImageUrls: String[] = [];
 
   loveDTO: LoveDTO = {};
+
+  committedActivityStatusAggregate:CommittedActivityStatusAggregate={};
 
   constructor(
     public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService,
@@ -217,6 +219,40 @@ export class HomePage implements OnInit {
     else {
       return (currentTime.toISOString()).split("Z")[0] + "-0" + hours + ":" + minutes;
     }
+  }
+
+  addAsUserCommittedActivity(index:number){
+    console.log("****",index);
+    console.log("(((((((",this.userService.registeredUser.id)
+
+    let committedActivityAggregate=this.committedActivityAggregate[index];
+
+    this.committedActivityStatusAggregate={
+      activityId:committedActivityAggregate.activityId,
+      committedActivityId:committedActivityAggregate.committedActivityId,
+      createdDate:this.getCurrentTime(),
+      description:committedActivityAggregate.activityDescription,
+      referenceId:committedActivityAggregate.committedActivityId,
+      registeredUserId:this.userService.registeredUser.id,
+      status:'TODO',
+      userId:this.userService.user.id
+    }
+
+    /* this.committedActivityStatusAggregate.activityId=committedActivityAggregate.activityId;
+    this.committedActivityStatusAggregate.committedActivityId=committedActivityAggregate.committedActivityId;
+    this.committedActivityStatusAggregate.createdDate=this.getCurrentTime();
+    this.committedActivityStatusAggregate.description=committedActivityAggregate.activityDescription;
+    this.committedActivityStatusAggregate.referenceId=committedActivityAggregate.committedActivityId;
+    this.committedActivityStatusAggregate.registeredUserId=this.userService.registeredUser.id;
+    this.committedActivityStatusAggregate.status='TODO';
+    this.committedActivityStatusAggregate.userId=this.userService.user.id; */
+    console.log("Index ooooo  ",committedActivityAggregate);
+
+    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
+      (result)=>{
+        console.log("****Saved committedActivityStatusAggregate Result****",result)
+      },(error)=>{console.log("Error ",error)}
+    );
   }
 
 }
