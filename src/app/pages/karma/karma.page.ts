@@ -11,7 +11,8 @@ import { ImageService } from '../../providers/image.service';
 })
 export class KarmaPage implements OnInit {
 
-  @ViewChild('slides', { static: false }) slides: IonSlides;
+  @ViewChild('suggestedActivities', { static: false }) suggestedActivitySlides: IonSlides;
+  @ViewChild('trendingActivities', { static: false }) trendingActivitySlides: IonSlides;
 
   slideOptions = {
     slidesPerView: 2,

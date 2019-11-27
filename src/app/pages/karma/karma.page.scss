@@ -3,7 +3,7 @@ ion-text h2 {
 }
 ion-card {
     --color: #fff;
-    --background: linear-gradient( orange, white);
+    --background: linear-gradient( var(--ion-color-primary-tint), white);
     width: 90%;
     height: 90%;
 }
@@ -14,4 +14,10 @@ ion-row{
 ion-slide {
     padding: 10px;
     margin-left: 5px;
+}
+.orange {
+    color: orange;
+}
+ion-card.orange {
+    --background: linear-gradient( orange, white);
 }
