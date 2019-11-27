@@ -80,8 +80,7 @@ export class HomePage implements OnInit {
       status: "DONE",
       unpaged: true,
       sortUnsorted: false,
-      sortSorted: true,
-      sort:['activityCreatedDate(,asc)']
+      sortSorted: true
     }).subscribe((result)=>{this.committedActivityAggregate=result;
         this.createActivityBackgroundImageUrls(result);
         this.completedActivityService.isSplashShowing=false;
