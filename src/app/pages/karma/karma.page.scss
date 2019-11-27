@@ -1,0 +1,17 @@
+ion-text h2 {
+    margin-left: 10px;
+}
+ion-card {
+    --color: #fff;
+    --background: linear-gradient( orange, white);
+    width: 90%;
+    height: 90%;
+}
+ion-row{
+    height: 270px;
+    align-items: stretch;
+}
+ion-slide {
+    padding: 10px;
+    margin-left: 5px;
+}

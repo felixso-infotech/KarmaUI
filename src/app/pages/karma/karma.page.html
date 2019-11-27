@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>select desired characters for your rolemodel</ion-title>
+    <ion-title>Pick one actvity from our suggested list</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-row>
+  <!-- <ion-row>
     <ion-col *ngFor="let activity of activityViewAggregates; let i=index" size="6">
       <ion-card>
         <ion-img [src]="activity.imageUrl"></ion-img>
@@ -22,5 +22,21 @@
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-button size="large"  expand="full" (click)="createRolemodel()">create rolemodel</ion-button>
+  <ion-button size="large"  expand="full" (click)="createRolemodel()">create rolemodel</ion-button> -->
+  <ion-text color="primary">
+    <h2>Recommended for you</h2>
+  </ion-text>
+  <ion-slides #slides [options]='slideOptions'>
+    <ion-slide *ngFor="let activity of activityViewAggregates; let i=index">
+      <ion-row>
+      <ion-card>
+          <ion-card-header>
+              <ion-card-title>{{activity.title}}</ion-card-title>
+              <ion-card-subtitle>{{activity.challengeName}}</ion-card-subtitle>
+            </ion-card-header>
+        <img [src]="'data:'+activity.imageStringContentType+';base64,'+activity.imageString | safeHtml"><img>
+      </ion-card>
+    </ion-row>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

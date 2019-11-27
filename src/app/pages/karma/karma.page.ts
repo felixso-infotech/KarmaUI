@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceService } from '../../api/services';
 import { ActivityViewAggregate } from '../../api/models';
+import { IonSlides } from '@ionic/angular';
+import { ImageService } from '../../providers/image.service';
 
 @Component({
   selector: 'karma',
@@ -8,12 +10,24 @@ import { ActivityViewAggregate } from '../../api/models';
   styleUrls: ['./karma.page.scss']
 })
 export class KarmaPage implements OnInit {
+
+  @ViewChild('slides', { static: false }) slides: IonSlides;
+
+  slideOptions = {
+    slidesPerView: 2,
+    initialSlide: 1,
+    speed: 300,
+    spaceBetween: 0,
+    loop: true,
+    loopedSlides: 3,
+    setWrapperSize: true
+  };
   
   isSelected: boolean;
 
   activityViewAggregates:ActivityViewAggregate[]=[];
 
-  constructor(public gatewayAggregateQueryResource:GatewayAggregateQueryResourceService) { }
+  constructor(public gatewayAggregateQueryResource:GatewayAggregateQueryResourceService, public imageService:ImageService) { }
 
   ngOnInit() {
     console.log("888888888888888888888888888888");

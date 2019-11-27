@@ -47,25 +47,25 @@ export class HomePage implements OnInit {
     public dateService: DateService) { }
 
   ngOnInit() {
-    console.log('user in home',this.userService.user);
+    console.log('user in home', this.userService.user);
     if (this.userService.user) {
       console.log('valid user present');
       this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.userService.user.preferred_username)
-        .subscribe(response=>{
+        .subscribe(response => {
           console.log(response);
-          this.userService.registeredUser=response;
-        }, error=>{
-          console.log('no user found in the server',error);
-          if(error.status==500) {
+          this.userService.registeredUser = response;
+        }, error => {
+          console.log('no user found in the server', error);
+          if (error.status == 500) {
             this.gatewayAggregateCommandResource.createRegisteredUserUsingPOST({
               userId: this.userService.user.preferred_username,
               email: this.userService.user.email,
               firstName: this.userService.user.given_name,
               createdDate: this.dateService.getCurrentTime()
-            }).subscribe(response=>{
+            }).subscribe(response => {
               console.log('user created', response);
-              this.userService.registeredUser=response;
-            }, err=>console.log('error while creating the user',err))
+              this.userService.registeredUser = response;
+            }, err => console.log('error while creating the user', err))
           }
         });
     }
