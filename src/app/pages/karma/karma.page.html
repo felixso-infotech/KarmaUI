@@ -23,20 +23,36 @@
     </ion-col>
   </ion-row>
   <ion-button size="large"  expand="full" (click)="createRolemodel()">create rolemodel</ion-button> -->
-  <ion-text color="primary">
+  <ion-text class="orange">
     <h2>Recommended for you</h2>
   </ion-text>
-  <ion-slides #slides [options]='slideOptions'>
+  <ion-slides #suggestedActivities [options]='slideOptions' (ionSlideTap)="selectSuggestedActivity()">
     <ion-slide *ngFor="let activity of activityViewAggregates; let i=index">
       <ion-row>
-      <ion-card>
+        <ion-card class="orange">
           <ion-card-header>
-              <ion-card-title>{{activity.title}}</ion-card-title>
-              <ion-card-subtitle>{{activity.challengeName}}</ion-card-subtitle>
-            </ion-card-header>
-        <img [src]="'data:'+activity.imageStringContentType+';base64,'+activity.imageString | safeHtml"><img>
-      </ion-card>
-    </ion-row>
+            <ion-card-title>{{activity.title}}</ion-card-title>
+            <ion-card-subtitle>{{activity.challengeName}}</ion-card-subtitle>
+          </ion-card-header>
+          <img [src]="'data:'+activity.imageStringContentType+';base64,'+activity.imageString | safeHtml"><img>
+        </ion-card>
+      </ion-row>
+    </ion-slide>
+  </ion-slides>
+  <ion-text color="primary">
+    <h2>Trending</h2>
+  </ion-text>
+  <ion-slides #trendingActivities [options]='slideOptions' (ionSlideTap)="selectTrendingActivity()">
+    <ion-slide *ngFor="let activity of activityViewAggregates; let i=index">
+      <ion-row>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{activity.title}}</ion-card-title>
+            <ion-card-subtitle>{{activity.challengeName}}</ion-card-subtitle>
+          </ion-card-header>
+          <img [src]="'data:'+activity.imageStringContentType+';base64,'+activity.imageString | safeHtml"><img>
+        </ion-card>
+      </ion-row>
     </ion-slide>
   </ion-slides>
 </ion-content>
