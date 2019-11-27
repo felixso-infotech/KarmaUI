@@ -26,7 +26,7 @@
   <ion-text class="orange">
     <h2>Recommended for you</h2>
   </ion-text>
-  <ion-slides #suggestedActivities [options]='slideOptions'>
+  <ion-slides #suggestedActivities [options]='slideOptions' (ionSlideTap)="selectSuggestedActivity()">
     <ion-slide *ngFor="let activity of activityViewAggregates; let i=index">
       <ion-row>
         <ion-card class="orange">
@@ -42,7 +42,7 @@
   <ion-text color="primary">
     <h2>Trending</h2>
   </ion-text>
-  <ion-slides #trendingActivities [options]='slideOptions'>
+  <ion-slides #trendingActivities [options]='slideOptions' (ionSlideTap)="selectTrendingActivity()">
     <ion-slide *ngFor="let activity of activityViewAggregates; let i=index">
       <ion-row>
         <ion-card>

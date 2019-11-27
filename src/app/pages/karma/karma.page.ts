@@ -23,12 +23,12 @@ export class KarmaPage implements OnInit {
     loopedSlides: 3,
     setWrapperSize: true
   };
-  
+
   isSelected: boolean;
 
-  activityViewAggregates:ActivityViewAggregate[]=[];
+  activityViewAggregates: ActivityViewAggregate[] = [];
 
-  constructor(public gatewayAggregateQueryResource:GatewayAggregateQueryResourceService, public imageService:ImageService) { }
+  constructor(public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService, public imageService: ImageService) { }
 
   ngOnInit() {
     this.gatewayAggregateQueryResource.getAllActivitiesUsingGET({
@@ -43,10 +43,23 @@ export class KarmaPage implements OnInit {
       page: 2,
       offset: 2
     */
-    }).subscribe((result)=>{
-      this.activityViewAggregates=result;
-      console.log("Activities...:",result);
-    },(error)=>{ console.log("Error..:",error)});
+    }).subscribe((result) => {
+      this.activityViewAggregates = result;
+      console.log("Activities...:", result);
+    }, (error) => { console.log("Error..:", error) });
   }
-
+  selectSuggestedActivity() {
+    console.log("selected suggested activity");
+     this.suggestedActivitySlides.getActiveIndex()
+      .then(index=>{
+        console.log("selected index and activity",index,this.activityViewAggregates[index]);
+      });
+  }
+  selectTrendingActivity() {
+    console.log("selected trending activity");
+    this.trendingActivitySlides.getActiveIndex()
+    .then(index=>{
+      console.log("selected index and activity",index,this.activityViewAggregates[index]);
+    });
+  }
 }
