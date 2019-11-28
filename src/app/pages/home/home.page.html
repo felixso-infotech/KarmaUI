@@ -60,7 +60,7 @@
               <ion-icon (click)="showComments(activity.committedActivityId)" color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
               <p>{{activity.noOfComments}}</p>
             </div>
-            <div class="share" (click)='share(activity.successMessage+"/n@Install Karma",activity.imageString)'>
+            <div class="share" (click)='shareService.share(activity.successMessage+"\n\n"+activity.committedActivityDescription+"\n@Install Karma","data:"+activity.imageStringContentType+";base64,"+activity.imageString)'>
               <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
               <p>{{activity.noOfShares}}</p>
             </div>
