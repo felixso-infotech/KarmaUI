@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommittedActivityAggregate, CommittedActivityProfileAggregate } from '../../api/models';
 import { GatewayAggregateQueryResourceService } from '../../api/services';
+import { UserService } from '../../providers/user/user.service';
 
 @Component({
   selector: 'committed-activities',
@@ -16,13 +17,13 @@ export class CommittedActivitiesComponent implements OnInit {
 
 
 
-  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService) { }
+  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,public userService:UserService) { }
 
   ngOnInit() {
     console.log("committed Activity page initialized");
     this.gatewayAggregateQueryResourceService.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET({
       status: "DONE",
-      registeredUserId: 3,
+      registeredUserId: this.userService.getRegisteredUser().id,
       unpaged: true,
       sortUnsorted: false,
       sortSorted: true
@@ -48,7 +49,7 @@ export class CommittedActivitiesComponent implements OnInit {
     console.log("Segment Changed.........")
     this.gatewayAggregateQueryResourceService.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET({
       status: this.status,
-      registeredUserId: 3,
+      registeredUserId: this.userService.getRegisteredUser().id,
       unpaged: true,
       sortUnsorted: false,
       sortSorted: true

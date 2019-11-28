@@ -1,12 +1,12 @@
 /* tslint:disable */
 export interface CommittedActivityProfileAggregate {
   noOfLoves?: number;
-  activityCreatedDate?: string;
-  activityImageContentType?: string;
+  activityId?: number;
   activityImageString?: string;
   activityTitle?: string;
+  committedActivityCreatedDate?: string;
   committedActivityId?: number;
-  activityId?: number;
+  activityImageContentType?: string;
   proofImageContentType?: string;
   proofImageString?: string;
   status?: 'TODO' | 'INPROGRESS' | 'DONE';

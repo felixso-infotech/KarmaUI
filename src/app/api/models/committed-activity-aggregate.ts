@@ -13,7 +13,6 @@ export interface CommittedActivityAggregate {
   imageStringContentType?: string;
   lastName?: string;
   liked?: boolean;
-  likedUserPhotos?: Array<string>;
   activityDescription?: string;
   noOfLoves?: number;
   noOfReferences?: number;

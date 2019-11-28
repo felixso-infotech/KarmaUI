@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GatewayAggregateQueryResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
 import { CommentAggregate, ReplyAggregate, ReplyDTO, LoveDTO } from '../../api/models';
+import { UserService } from '../../providers/user/user.service';
 
 @Component({
   selector: 'replies',
@@ -19,7 +20,8 @@ export class RepliesComponent implements OnInit {
   loveDTO:LoveDTO={};
 
   constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,
-    public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public modalController: ModalController) { }
+    public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public modalController: ModalController,
+    public userService:UserService) { }
 
   ngOnInit() {
     this.gatewayAggregateQueryResourceService.getAllRepliesByCommentIdUsingGET({commentId: this.commentId,
@@ -55,7 +57,7 @@ export class RepliesComponent implements OnInit {
 
     this.replyDTO.commentId=this.commentId;
     this.replyDTO.dateAndTime=this.getCurrentTime();
-    this.replyDTO.userId="Sharai";
+    this.replyDTO.userId=this.userService.getRegisteredUser().userId;
 
     this.gatewayAggregateCommandResourceService.saveReplyUsingPOST(this.replyDTO).subscribe(
       (result)=>{
@@ -91,7 +93,7 @@ export class RepliesComponent implements OnInit {
     
     this.loveDTO.replyId=replyId;
     this.loveDTO.dateAndTime=this.getCurrentTime();
-    this.loveDTO.userId="Sharai";
+    this.loveDTO.userId=this.userService.getRegisteredUser().userId;
      this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
       (result)=>{
         console.log("****Saved loveDTO Result****",result)
@@ -111,7 +113,7 @@ export class RepliesComponent implements OnInit {
     this.loveDTO.replyId=replyId;
     this.loveDTO.dateAndTime=this.getCurrentTime();
     //user id is taken from database
-    this.loveDTO.userId="Sharai";
+    this.loveDTO.userId=this.userService.getRegisteredUser().userId;
       this.gatewayAggregateCommandResourceService.unloveReplyUsingDELETE(this.loveDTO).subscribe(
         (result)=>{
           console.log("****deleted loveDTO Result****",result)

@@ -27,7 +27,7 @@ export class AuthCallbackPage implements OnInit {
           
           this.authService.getUserInfo().then(data=>{
             console.log(data);
-            this.userService.user=data;
+            this.userService.setUser(data);
             this.navCtrl.navigateRoot('app');
           }, error=>{
             console.log(error);

@@ -38,7 +38,7 @@ export class KarmaPage implements OnInit {
     public userService: UserService) { }
 
   ngOnInit() {
-    console.log('registered user',this.userService.registeredUser);
+    console.log('registered user',this.userService.getRegisteredUser());
     this.gatewayAggregateQueryResource.getAllActivitiesUsingGET({
       unpaged: false,
       sortUnsorted: false,

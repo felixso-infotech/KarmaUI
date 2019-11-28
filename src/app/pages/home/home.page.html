@@ -19,6 +19,15 @@
                 <img [src]="'data:'+activity.profilePictureContentType+';base64,'+activity.profilePicture | safeHtml"/>
               </ion-avatar>              
               <ion-label>{{activity.firstName}}<span class="time"><span class="dot">.</span>{{activity.timeElapsed}}</span></ion-label>
+              <div class="comment" *ngIf="activity.noOfReferences>0;else NoReference">
+                <ion-icon color='primary' size='large' name="happy"></ion-icon>
+                <p>{{activity.noOfReferences}}</p>
+              </div>
+              <ng-template #NoReference>
+                <div>
+                  <ion-icon name="sad" color='primary' size='large'></ion-icon>
+                </div>
+              </ng-template>
             </ion-item>
             </div>
             <div class="activity-name" *ngIf="!isLiking">
@@ -59,6 +68,7 @@
                 <ion-icon (click)="addAsUserCommittedActivity(i)"color='primary' size='large' name="add"></ion-icon>
               <p>{{activity.noOfShares}}</p>
             </div>
+            
           </div>
 <!--              <img
               src="https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="posted-image"/> -->
@@ -132,4 +142,5 @@
         Users completed challenges and profile information will be displayed here
       </ion-slide>
     </ion-slides>
+    
   </ion-content>
