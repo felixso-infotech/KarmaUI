@@ -22,7 +22,7 @@
     <ng-template #InprogressAndTodo>
       <ion-row class="activities">
         <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4">
-          <img [src]="'data:'+committedActivity.activityImageContentType+';base64,'+committedActivity.activityImageString | safeHtml"/>
+          <img [src]="'data:'+committedActivity.activityImageContentType+';base64,'+committedActivity.activityImageString | safeHtml"  (click)="goToDetail(i)"/>
           <div><label>{{committedActivity.activityTitle}}</label></div>
         </ion-col>
       </ion-row>
