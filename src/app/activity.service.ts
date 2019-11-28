@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivityViewAggregate } from './api/models';
+import { ActivityViewAggregate, CommittedActivityAggregate } from './api/models';
 import { GatewayAggregateQueryResourceService } from './api/services';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { GatewayAggregateQueryResourceService } from './api/services';
 export class ActivityService {
 
   public currentActivity: ActivityViewAggregate=null;
+  public currentCommittedActivity:CommittedActivityAggregate=null;
 
   constructor(public aggregatetQueryService: GatewayAggregateQueryResourceService) { }
 
@@ -16,6 +17,14 @@ export class ActivityService {
       this.currentActivity=response;
       console.log(response);
     })
+  }
+
+  public selectCommittedACtivity(committedActivityId:number):void{
+    console.log("*********selectCommittedACtivity");
+    this.aggregatetQueryService.getCommittedActivityUsingGET(committedActivityId).subscribe((response)=>
+    {this.currentCommittedActivity=response;
+    console.log("res ",response);
+    console.log("res after ",this.currentCommittedActivity)})
   }
 
 }

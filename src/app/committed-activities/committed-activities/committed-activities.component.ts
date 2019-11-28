@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommittedActivityAggregate, CommittedActivityProfileAggregate } from '../../api/models';
 import { GatewayAggregateQueryResourceService } from '../../api/services';
 import { UserService } from '../../providers/user/user.service';
+import { ActivityService } from '../../activity.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'committed-activities',
@@ -17,7 +19,8 @@ export class CommittedActivitiesComponent implements OnInit {
 
 
 
-  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,public userService:UserService) { }
+
+  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,public userService:UserService,public activityService:ActivityService,public navController:NavController) { }
 
   ngOnInit() {
     console.log("committed Activity page initialized");
@@ -88,6 +91,21 @@ export class CommittedActivitiesComponent implements OnInit {
     committedActivities.forEach(data=>{
       this.backgroundImageUrls.push(this.getBlobUrl(data.activityImageString,data.activityImageContentType));
     })
+  }
+
+  goToDetail(index:number){
+    console.log("&&&&&&&&&&&&&&&& Iam hereeee");
+    this.activityService.selectCommittedACtivity(this.committedActivityProfileAggregates[index].committedActivityId);
+    
+    if(this.committedActivityProfileAggregates[index].status=='TODO'){
+      this.activityService.selectActivity(this.committedActivityProfileAggregates[index].activityId);
+      this.navController.navigateRoot('app/tabs/karma/activity');
+    }
+    else if(this.committedActivityProfileAggregates[index].status=='INPROGRESS'){
+      this.activityService.selectActivity(this.committedActivityProfileAggregates[index].activityId);
+      this.navController.navigateRoot('app/tabs/karma/finish-activity');
+    }
+    else{}
   }
 
 }

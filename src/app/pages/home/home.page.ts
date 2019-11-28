@@ -226,6 +226,7 @@ export class HomePage implements OnInit {
 
   addAsUserCommittedActivity(index:number){
     this.presentAlert();
+    this.committedActivityAggregate[index].noOfReferences+=1;
     console.log("****",index);
     console.log("(((((((",this.regId)
 
