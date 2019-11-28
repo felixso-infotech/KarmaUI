@@ -60,7 +60,7 @@
               <ion-icon (click)="showComments(activity.committedActivityId)" color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
               <p>{{activity.noOfComments}}</p>
             </div>
-            <div class="share" (click)='share(activity,activityDescription,backgroundImageUrls)'>
+            <div class="share" (click)='share(activity.successMessage+"/n@Install Karma",activity.imageString)'>
               <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
               <p>{{activity.noOfShares}}</p>
             </div>
@@ -73,7 +73,7 @@
 <!--              <img
               src="https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="posted-image"/> -->
               <div class="description">
-                {{'completed #'+activity.title+'. '+activity.activityDescription}}  
+                {{'completed #'+activity.title+'. '+activity.committedActivityDescription}}  
               </div>
 
           </ion-slide>

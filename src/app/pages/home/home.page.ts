@@ -59,6 +59,7 @@ export class HomePage implements OnInit {
     private socialSharing: SocialSharing) { }
 
   ngOnInit() {
+    this.presentLoading();
     this.userService.configureUsers();
   }
   ionViewWillEnter() {
@@ -73,6 +74,7 @@ export class HomePage implements OnInit {
       sort:["timeElapsed(ASC)"]
     }).subscribe((result)=>{this.committedActivityAggregate=result;
         this.createActivityBackgroundImageUrls(result);
+        this.loading.dismiss();
         this.completedActivityService.isSplashShowing=false;
         console.log("-------",result);
     }, (error) => console.log("-Error- ", error));
@@ -257,7 +259,7 @@ export class HomePage implements OnInit {
   }
  share(message:string,imgUrl:string) {
    console.log('to be shared',message,imgUrl);
-   this.socialSharing.share(message,imgUrl).then(data=>{
+   this.socialSharing.share(message,null,imgUrl,null).then(data=>{
      console.log('the post can be shared',data);
    },error=>{
      console.log('something went wrong when sharing',error);
