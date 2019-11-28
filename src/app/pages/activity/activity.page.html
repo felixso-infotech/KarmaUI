@@ -19,17 +19,23 @@
       </div>
       <ion-text color="primary">
         <h3>
-          {{introductionStory?.story}}
+          {{i==0?'Hi..Now it is the time to become more positive and happy. Read the instructions before doing the activity':introductionStory?.story}}
         </h3>
       </ion-text>
-      <ion-item>
-          <ion-button fill="clear" color='primary-shade'>
+      <ion-item lines='none' *ngIf="i==0">
+          <ion-button fill="outline" color='primary-shade' slot="end">
+              Take a look
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+      </ion-item>
+      <ion-item lines='none' *ngIf="i==(this.activityService?.currentActivity?.introductionStories.length-1)">
+          <ion-button fill="outline" color='primary-shade' slot="end">
               Completed
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
-            <ion-button fill="clear" color='primary-shade'>
+            <ion-button fill="outline" color='primary-shade' (click)='presentAlertConfirm()'>
+                <ion-icon slot="start" name="arrow-back"></ion-icon>
                 Will do later
-                <ion-icon slot="end" name="arrow-forward"></ion-icon>
               </ion-button>
       </ion-item>
     </ion-slide>
