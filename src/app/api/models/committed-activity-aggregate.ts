@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { DimensionDTO } from './dimension-dto';
 export interface CommittedActivityAggregate {
-  noOfComments?: number;
-  activityCreatedDate?: string;
-  activityId?: number;
+  noOfLoves?: number;
+  activityDescription?: string;
   challengeId?: number;
+  committedActivityCreatedDate?: string;
   committedActivityDescription?: string;
   committedActivityId?: number;
   dimensions?: Array<DimensionDTO>;
@@ -13,13 +13,13 @@ export interface CommittedActivityAggregate {
   imageStringContentType?: string;
   lastName?: string;
   liked?: boolean;
-  likedUserPhotos?: Array<string>;
-  activityDescription?: string;
-  noOfLoves?: number;
+  noOfComments?: number;
+  activityId?: number;
   noOfReferences?: number;
   profilePicture?: string;
   profilePictureContentType?: string;
   proofType?: 'IMAGE' | 'VIDEO' | 'TEXT' | 'PDF' | 'PPT' | 'DOC' | 'XLX';
+  status?: 'TODO' | 'INPROGRESS' | 'DONE';
   successMessage?: string;
   timeElapsed?: string;
   title?: string;

@@ -1,0 +1,37 @@
+<ion-header no-border *ngIf="this.activityService?.currentActivity">
+    <ion-toolbar>
+<ion-title>{{this.activityService?.currentActivity?.title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content *ngIf="this.activityService?.currentActivity" fullscreen>
+  <ion-slides #slides [options]='slideOptions' pager (ionSlideReachStart)='slideShowBegins()' (ionSlideReachEnd)='slideShowEnds()'>
+    <ion-slide
+      *ngFor='let introductionStory of this.activityService?.currentActivity?.introductionStories; let i=index'>
+<!--       <ion-text color="primary">
+        <h1>
+          {{this.activityService?.currentActivity?.title}}
+        </h1>
+      </ion-text> -->
+      <div class="activity-image">
+        <img
+          [src]="'data:'+introductionStory?.imageStringContentType+';base64,'+introductionStory?.imageString | safeHtml" />
+      </div>
+      <ion-text color="primary">
+        <h3>
+          {{introductionStory?.story}}
+        </h3>
+      </ion-text>
+      <ion-item>
+          <ion-button fill="clear" color='primary-shade'>
+              Completed
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" color='primary-shade'>
+                Will do later
+                <ion-icon slot="end" name="arrow-forward"></ion-icon>
+              </ion-button>
+      </ion-item>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

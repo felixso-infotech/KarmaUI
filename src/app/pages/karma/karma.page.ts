@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceService } from '../../api/services';
 import { ActivityViewAggregate } from '../../api/models';
-import { IonSlides, LoadingController } from '@ionic/angular';
+import { IonSlides, LoadingController, NavController } from '@ionic/angular';
 import { ImageService } from '../../providers/image.service';
 import { ActivityService } from '../../activity.service';
 import { UserService } from '../../providers/user/user.service';
@@ -35,7 +35,8 @@ export class KarmaPage implements OnInit {
     public imageService: ImageService,
     public activityService: ActivityService,
     public loadingController: LoadingController,
-    public userService: UserService) { }
+    public userService: UserService,
+    public navController: NavController) { }
 
   ngOnInit() {
     console.log('registered user',this.userService.registeredUser);
@@ -64,8 +65,10 @@ export class KarmaPage implements OnInit {
     this.suggestedActivitySlides.getActiveIndex()
       .then(index => {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
+        this.activityService.selectActivity(this.activityViewAggregates[index].activityId);
         this.activityService.currentActivity= this.activityViewAggregates[index];
         this.loading.dismiss();
+        this.navController.navigateForward('app/tabs/karma/activity');
       });
   }
   selectTrendingActivity() {
@@ -74,14 +77,17 @@ export class KarmaPage implements OnInit {
     this.trendingActivitySlides.getActiveIndex()
       .then(index => {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
+        this.activityService.selectActivity(this.activityViewAggregates[index].activityId);
         this.activityService.currentActivity= this.activityViewAggregates[index];
         this.loading.dismiss();
       });
+      this.navController.navigateForward('activity');
+      this.navController.navigateForward('app/tabs/karma/activity');
   }
   async presentLoading() {
     this.loading = await this.loadingController.create({
       message: `<ion-img src="../../../assets/img/clock-trans.gif"></ion-img>`,
-      duration: 5000,
+      duration: 50000,
       spinner: null,
       cssClass: 'loading',
       showBackdrop: true

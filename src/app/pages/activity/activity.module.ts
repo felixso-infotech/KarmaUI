@@ -5,23 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { KarmaPage } from './karma.page';
+import { ActivityPage } from './activity.page';
 import { PipemoduleModule } from '../../pipes/pipemodule/pipemodule.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: KarmaPage
-  },
-  {
-    path: 'activity',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('../activity/activity.module').then(m => m.ActivityPageModule)
-      }
-    ]
-  },
+    component: ActivityPage
+  }
 ];
 
 @NgModule({
@@ -32,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     PipemoduleModule
   ],
-  declarations: [KarmaPage]
+  declarations: [ActivityPage]
 })
-export class KarmaPageModule {}
+export class ActivityPageModule {}

@@ -232,7 +232,7 @@ export class HomePage implements OnInit {
       duration: 60000,
       spinner: null,
       cssClass: 'loading',
-      showBackdrop: true
+      showBackdrop: false
     });
     await this.loading.present();
   }
@@ -269,6 +269,6 @@ export class HomePage implements OnInit {
         console.log("****Saved committedActivityStatusAggregate Result****",result)
       },(error)=>{console.log("Error ",error)}
     );
-  }
+   }
 
 }

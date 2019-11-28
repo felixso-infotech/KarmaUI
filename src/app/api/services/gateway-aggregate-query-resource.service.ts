@@ -24,9 +24,11 @@ import { RegisteredUserAggregate } from '../models/registered-user-aggregate';
 })
 class GatewayAggregateQueryResourceService extends __BaseService {
   static readonly getAllActivitiesUsingGETPath = '/api/query/activities';
+  static readonly getActivityByIdUsingGETPath = '/api/query/activity/{id}';
   static readonly getAllChallengesUsingGETPath = '/api/query/challenges';
   static readonly getAllCommittedActivitiesByStatusUsingGETPath = '/api/query/committed-activities/{status}';
   static readonly getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETPath = '/api/query/committed-activities/{status}/{registeredUserId}';
+  static readonly getCommittedActivityUsingGETPath = '/api/query/committed-activity/{id}';
   static readonly getAllDimensionsUsingGETPath = '/api/query/dimensions';
   static readonly getAllEnumProofTypesUsingGETPath = '/api/query/enums/proof-type';
   static readonly getAllEnumStatusUsingGETPath = '/api/query/enums/status';
@@ -126,6 +128,42 @@ class GatewayAggregateQueryResourceService extends __BaseService {
   getAllActivitiesUsingGET(params: GatewayAggregateQueryResourceService.GetAllActivitiesUsingGETParams): __Observable<Array<ActivityViewAggregate>> {
     return this.getAllActivitiesUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<ActivityViewAggregate>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  getActivityByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<ActivityViewAggregate>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/activity/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ActivityViewAggregate>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  getActivityByIdUsingGET(id: number): __Observable<ActivityViewAggregate> {
+    return this.getActivityByIdUsingGETResponse(id).pipe(
+      __map(_r => _r.body as ActivityViewAggregate)
     );
   }
 
@@ -402,6 +440,42 @@ class GatewayAggregateQueryResourceService extends __BaseService {
   getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGET(params: GatewayAggregateQueryResourceService.GetAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETParams): __Observable<Array<CommittedActivityProfileAggregate>> {
     return this.getAllCommittedActivitiesByStatusAndRegisteredUserIdUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<CommittedActivityProfileAggregate>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  getCommittedActivityUsingGETResponse(id: number): __Observable<__StrictHttpResponse<CommittedActivityAggregate>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/committed-activity/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<CommittedActivityAggregate>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  getCommittedActivityUsingGET(id: number): __Observable<CommittedActivityAggregate> {
+    return this.getCommittedActivityUsingGETResponse(id).pipe(
+      __map(_r => _r.body as CommittedActivityAggregate)
     );
   }
 
