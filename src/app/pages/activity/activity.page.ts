@@ -18,11 +18,20 @@ export class ActivityPage implements OnInit {
 
   totalElements: number;
 
+<<<<<<< HEAD
   committedActivityStatusAggregate:CommittedActivityStatusAggregate;
   
   constructor(public imageService: ImageService, public activityService: ActivityService,
     public gatewayAggregateCommandResource:GatewayAggregateCommandResourceService,public userService:UserService,public alertController: AlertController, public navController: NavController,public dateService:DateService) { }
  
+=======
+
+
+  constructor(public imageService: ImageService, public activityService: ActivityService,
+    public alertController: AlertController, public navController: NavController) { }
+
+
+>>>>>>> f46df13f471d335e6796d1bce58a57f320d1b10a
   slideOptions = {
     slidesPerView: 1,
     initialSlide: 0,
@@ -55,6 +64,7 @@ export class ActivityPage implements OnInit {
           handler: () => {
             this.addToTodoLater();
             console.log('pressed Yes');
+            this.navController.navigateRoot('app/tabs/karma');
           }
         }
       ]
@@ -62,6 +72,7 @@ export class ActivityPage implements OnInit {
 
     await alert.present();
   }
+<<<<<<< HEAD
 
   addToInprogress(){
 
@@ -97,5 +108,10 @@ export class ActivityPage implements OnInit {
         console.log("****Saved committedActivityStatusAggregate Result****",result)
       },(error)=>{console.log("Error ",error)}
     );
+=======
+  finishActivity() {
+    console.log('activity is now ready to finish');
+    this.navController.navigateRoot('app/tabs/karma/finish-activity');
+>>>>>>> f46df13f471d335e6796d1bce58a57f320d1b10a
   }
 }

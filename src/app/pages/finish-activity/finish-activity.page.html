@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>finish-activity</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="image-container">
+
+    <img [src]='this.base64Image' *ngIf='bse64Image'/>
+
+  </div>
+  <div class="center">
+    <ion-item lines='none'>
+      <ion-button fill='none' size='large' (click)='selectImageFromGallery()'>
+        <ion-icon name='attach' color='primary'></ion-icon>
+      </ion-button>
+      <ion-button size='large' fill='none' color='primary' (click)='takePicture()'>
+        <ion-icon name='camera' color='primary'></ion-icon>
+      </ion-button>
+      <ion-button size='large' fill='none' color='primary' slot="end" disabled='!this.base64Image' (click)='presentAlertConfirm()'>
+          finish
+
+        </ion-button>
+    </ion-item>
+  </div>
+
+
+</ion-content>

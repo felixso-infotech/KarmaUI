@@ -22,7 +22,8 @@ const routes: Routes = [
   { path: 'implicit/callback', loadChildren: './auth/implicit/auth-callback/auth-callback.module#AuthCallbackPageModule' },
   { path: 'implicit/logout', loadChildren: './auth/implicit/end-session/end-session.module#EndSessionPageModule' },
   { path: 'accessdenied', redirectTo: '', pathMatch: 'full' },
-  { path: 'activity', loadChildren: './pages/activity/activity.module#ActivityPageModule' }
+  { path: 'activity', loadChildren: './pages/activity/activity.module#ActivityPageModule' },
+  { path: 'finish-activity', loadChildren: './pages/finish-activity/finish-activity.module#FinishActivityPageModule' }
 ];
 
 @NgModule({

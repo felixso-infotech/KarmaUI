@@ -16,6 +16,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor';
+import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor'
       provide: HTTP_INTERCEPTORS,
       useClass: AuthExpiredInterceptor,
       multi: true
-    }],
+    },
+    Camera],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

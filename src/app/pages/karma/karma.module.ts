@@ -22,6 +22,15 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'finish-activity',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../finish-activity/finish-activity.module').then(m => m.FinishActivityPageModule)
+      }
+    ]
+  }
 ];
 
 @NgModule({
