@@ -11,6 +11,7 @@ import { CompletedActivitiesService } from '../../providers/completed-activities
 import { UserService } from '../../providers/user/user.service';
 import { DateService } from '../../providers/date.service';
 import { AuthService } from '../../auth/auth.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'home',
@@ -54,7 +55,8 @@ export class HomePage implements OnInit {
     public completedActivityService: CompletedActivitiesService, public userService: UserService,
     public dateService: DateService,public authService:AuthService,public navController:NavController,
     public alertController:AlertController,
-    public loadingController: LoadingController) { }
+    public loadingController: LoadingController,
+    private socialSharing: SocialSharing) { }
 
   ngOnInit() {
     this.userService.configureUsers();
@@ -253,5 +255,12 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
- 
+ share(message:string,imgUrl:string) {
+   console.log('to be shared',message,imgUrl);
+   this.socialSharing.share(message,imgUrl).then(data=>{
+     console.log('the post can be shared',data);
+   },error=>{
+     console.log('something went wrong when sharing',error);
+   })
+ }
 }

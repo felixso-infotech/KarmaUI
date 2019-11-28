@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor';
 import { Camera } from '@ionic-native/camera/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { Camera } from '@ionic-native/camera/ngx';
       useClass: AuthExpiredInterceptor,
       multi: true
     },
-    Camera],
+    Camera,
+  SocialSharing],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

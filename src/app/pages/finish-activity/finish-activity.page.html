@@ -7,7 +7,7 @@
 <ion-content>
   <div class="image-container">
 
-    <img [src]='this.base64Image' *ngIf='bse64Image'/>
+    <img [src]='base64Image' *ngIf='base64Image'/>
 
   </div>
   <div class="center">
@@ -18,7 +18,7 @@
       <ion-button size='large' fill='none' color='primary' (click)='takePicture()'>
         <ion-icon name='camera' color='primary'></ion-icon>
       </ion-button>
-      <ion-button size='large' fill='none' color='primary' slot="end" disabled='!this.base64Image' (click)='presentAlertConfirm()'>
+      <ion-button size='large' fill='none' color='primary' slot="end" [disabled]='!base64Image' (click)='presentAlertConfirm()'>
           finish
 
         </ion-button>

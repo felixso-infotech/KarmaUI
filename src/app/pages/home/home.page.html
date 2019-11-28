@@ -60,7 +60,7 @@
               <ion-icon (click)="showComments(activity.committedActivityId)" color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
               <p>{{activity.noOfComments}}</p>
             </div>
-            <div class="share">
+            <div class="share" (click)='share(activity,activityDescription,backgroundImageUrls)'>
               <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
               <p>{{activity.noOfShares}}</p>
             </div>
