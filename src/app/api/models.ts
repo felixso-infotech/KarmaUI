@@ -1,5 +1,6 @@
 export { ActivityAggregate } from './models/activity-aggregate';
 export { ActivityDTO } from './models/activity-dto';
+export { ActivityImageAggregate } from './models/activity-image-aggregate';
 export { ActivityViewAggregate } from './models/activity-view-aggregate';
 export { AuthInfoVM } from './models/auth-info-vm';
 export { ChallengeDTO } from './models/challenge-dto';

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceService } from '../../api/services';
 import { ActivityViewAggregate } from '../../api/models';
-import { IonSlides, LoadingController } from '@ionic/angular';
+import { IonSlides, LoadingController, NavController } from '@ionic/angular';
 import { ImageService } from '../../providers/image.service';
 import { ActivityService } from '../../activity.service';
 import { UserService } from '../../providers/user/user.service';
@@ -35,10 +35,12 @@ export class KarmaPage implements OnInit {
     public imageService: ImageService,
     public activityService: ActivityService,
     public loadingController: LoadingController,
-    public userService: UserService) { }
+    public userService: UserService,
+    public navController: NavController) { }
 
   ngOnInit() {
     console.log('registered user',this.userService.getRegisteredUser());
+    this.presentLoading();
     this.gatewayAggregateQueryResource.getAllActivitiesUsingGET({
       unpaged: false,
       sortUnsorted: false,
@@ -54,6 +56,7 @@ export class KarmaPage implements OnInit {
     }).subscribe((result) => {
       this.activityViewAggregates = result;
       console.log("Activities...:", result);
+      this.loading.dismiss();
     }, (error) => { console.log("Error..:", error) });
   }
   selectSuggestedActivity() {
@@ -62,27 +65,32 @@ export class KarmaPage implements OnInit {
     this.suggestedActivitySlides.getActiveIndex()
       .then(index => {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
+        this.activityService.selectActivity(this.activityViewAggregates[index].activityId);
         this.activityService.currentActivity= this.activityViewAggregates[index];
+        this.loading.dismiss();
+        this.navController.navigateForward('app/tabs/karma/activity');
       });
   }
   selectTrendingActivity() {
     console.log("selected trending activity");
+    this.presentLoading();
     this.trendingActivitySlides.getActiveIndex()
       .then(index => {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
+        this.activityService.selectActivity(this.activityViewAggregates[index].activityId);
         this.activityService.currentActivity= this.activityViewAggregates[index];
+        this.loading.dismiss();
       });
+      this.navController.navigateForward('activity');
+      this.navController.navigateForward('app/tabs/karma/activity');
   }
   async presentLoading() {
     this.loading = await this.loadingController.create({
-      message: `<div class="full-screen-splash"><div class="spinner">
-      <div class="cube1"></div>
-      <div class="cube2"></div>
-    </div></div>`,
-      duration: 2000,
+      message: `<ion-img src="../../../assets/img/clock-trans.gif"></ion-img>`,
+      duration: 50000,
       spinner: null,
-      cssClass: 'full-screen-splash spinner cube1 cube2',
-      showBackdrop: false
+      cssClass: 'loading',
+      showBackdrop: true
     });
     await this.loading.present();
   }

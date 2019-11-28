@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommittedActivity } from '../../interfaces/committed-activity';
 import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
-import { IonSlides, ModalController, NavController, AlertController } from '@ionic/angular';
+import { IonSlides, ModalController, NavController, AlertController, LoadingController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
 import { CommittedActivityAggregate, LoveDTO, CommittedActivityStatusAggregate } from '../../api/models';
@@ -30,6 +30,8 @@ export class HomePage implements OnInit {
     height: window.screen.height - 60
   };
 
+  loading: HTMLIonLoadingElement;
+
   transformation: any;
 
   currentComments = null;
@@ -51,7 +53,8 @@ export class HomePage implements OnInit {
     public modalController: ModalController, public domSanitizer: DomSanitizer,
     public completedActivityService: CompletedActivitiesService, public userService: UserService,
     public dateService: DateService,public authService:AuthService,public navController:NavController,
-    public alertController:AlertController) { }
+    public alertController:AlertController,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
     this.userService.configureUsers();
@@ -203,6 +206,16 @@ export class HomePage implements OnInit {
     else {
       return (currentTime.toISOString()).split("Z")[0] + "-0" + hours + ":" + minutes;
     }
+  }
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: `<ion-img src="../../../assets/img/clock-trans.gif"></ion-img>`,
+      duration: 60000,
+      spinner: null,
+      cssClass: 'loading',
+      showBackdrop: false
+    });
+    await this.loading.present();
   }
 
   addAsUserCommittedActivity(index:number){
