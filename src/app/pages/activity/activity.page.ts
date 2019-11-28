@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ImageService } from '../../providers/image.service';
 import { ActivityService } from '../../activity.service';
 import { IonSlides, AlertController, NavController } from '@ionic/angular';
+import { CommittedActivityStatusAggregate } from '../../api/models';
+import { DateService } from '../../providers/date.service';
+import { UserService } from '../../providers/user/user.service';
+import { GatewayAggregateCommandResourceService } from '../../api/services';
 
 @Component({
   selector: 'activity',
@@ -13,9 +17,11 @@ export class ActivityPage implements OnInit {
   @ViewChild('slides', { static: false }) slides: IonSlides;
 
   totalElements: number;
+
+  committedActivityStatusAggregate:CommittedActivityStatusAggregate;
   
   constructor(public imageService: ImageService, public activityService: ActivityService,
-    public alertController: AlertController, public navController: NavController) { }
+    public gatewayAggregateCommandResource:GatewayAggregateCommandResourceService,public userService:UserService,public alertController: AlertController, public navController: NavController,public dateService:DateService) { }
  
   slideOptions = {
     slidesPerView: 1,
@@ -47,6 +53,7 @@ export class ActivityPage implements OnInit {
         }, {
           text: 'Yes',
           handler: () => {
+            this.addToTodoLater();
             console.log('pressed Yes');
           }
         }
@@ -54,5 +61,41 @@ export class ActivityPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  addToInprogress(){
+
+    this.activityService.currentActivity;
+    this.committedActivityStatusAggregate={
+      activityId:this.activityService.currentActivity.activityId,
+      createdDate:this.dateService.getCurrentTime(),
+      registeredUserId:this.userService.getRegisteredUser().id,
+      status:'INPROGRESS',
+      userId:this.userService.getRegisteredUser().userId
+    }
+
+    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
+      (result)=>{
+        console.log("****Saved committedActivityStatusAggregate Result****",result)
+      },(error)=>{console.log("Error ",error)}
+    );
+  }
+
+  addToTodoLater(){
+
+    this.activityService.currentActivity;
+    this.committedActivityStatusAggregate={
+      activityId:this.activityService.currentActivity.activityId,
+      createdDate:this.dateService.getCurrentTime(),
+      registeredUserId:this.userService.getRegisteredUser().id,
+      status:'TODO',
+      userId:this.userService.getRegisteredUser().userId
+    }
+
+    this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
+      (result)=>{
+        console.log("****Saved committedActivityStatusAggregate Result****",result)
+      },(error)=>{console.log("Error ",error)}
+    );
   }
 }
