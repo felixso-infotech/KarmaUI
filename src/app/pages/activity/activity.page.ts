@@ -80,6 +80,7 @@ export class ActivityPage implements OnInit {
         console.log("****Saved committedActivityStatusAggregate Result****",result)
       },(error)=>{console.log("Error ",error)}
     );
+    this.navController.navigateRoot('app/tabs/karma/finish-activity');
   }
 
   addToTodoLater(){
@@ -95,8 +96,11 @@ export class ActivityPage implements OnInit {
 
     this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
       (result)=>{
+        
         console.log("****Saved committedActivityStatusAggregate Result****",result)
       },(error)=>{console.log("Error ",error)}
     );
+
+    
   }
 }
