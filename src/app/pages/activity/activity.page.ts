@@ -13,10 +13,13 @@ export class ActivityPage implements OnInit {
   @ViewChild('slides', { static: false }) slides: IonSlides;
 
   totalElements: number;
-  
+
+
+
   constructor(public imageService: ImageService, public activityService: ActivityService,
     public alertController: AlertController, public navController: NavController) { }
- 
+
+
   slideOptions = {
     slidesPerView: 1,
     initialSlide: 0,
@@ -48,11 +51,16 @@ export class ActivityPage implements OnInit {
           text: 'Yes',
           handler: () => {
             console.log('pressed Yes');
+            this.navController.navigateRoot('app/tabs/karma');
           }
         }
       ]
     });
 
     await alert.present();
+  }
+  finishActivity() {
+    console.log('activity is now ready to finish');
+    this.navController.navigateRoot('app/tabs/karma/finish-activity');
   }
 }

@@ -29,7 +29,7 @@
             </ion-button>
       </ion-item>
       <ion-item lines='none' *ngIf="i==(this.activityService?.currentActivity?.introductionStories.length-1)">
-          <ion-button fill="outline" color='primary-shade' slot="end">
+          <ion-button fill="outline" color='primary-shade' slot="end" (click)='finishActivity()'>
               Completed
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
