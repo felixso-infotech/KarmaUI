@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GatewayAggregateQueryResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
 import { DateService } from '../date.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserService {
 
   constructor(public gatewayAggregateQueryResource:GatewayAggregateQueryResourceService,
     public gatewayAggregateCommandResource:GatewayAggregateCommandResourceService,
-    public dateService:DateService) {
+    public dateService:DateService, public authService: AuthService) {
 
     console.log("Hello i am in constructor @@@@")
   }
@@ -33,34 +34,34 @@ export class UserService {
   }
 
   configureUsers(){
-    console.log('user in home', this.getUser());
-    if (this.getUser()) {
-      console.log('valid user present');
-      this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.getUser().preferred_username)
+      console.log('configuring user');
+
+      this.authService.getUserInfo().then(data=>{
+        this.user=data;
+        console.log("The user from the auth 2 server",this.user);
+        this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.user.preferred_username)
         .subscribe(response => {
-          this.setRegisteredUser(response);
-          console.log("ConfigureUsers;;;;",this.registeredUser.id)
-          //this.regId=this.userService.getRegisteredUser().id;//to get reg user id
-         // this.userId=this.userService.getRegisteredUser().userId;
-          console.log(this.getRegisteredUser());
+          this.registeredUser=response;
+          console.log("registered user retrieved",this.registeredUser);
         }, error => {
           console.log('no user found in the server', error);
           if (error.status == 500) {
             this.gatewayAggregateCommandResource.createRegisteredUserUsingPOST({
-              userId: this.getUser().preferred_username,
-              email: this.getUser().email,
-              firstName: this.getUser().given_name,
+              userId: this.user.preferred_username,
+              email: this.user.email,
+              firstName: this.user.given_name,
               createdDate: this.dateService.getCurrentTime()
             }).subscribe(response => {
               
-              this.setRegisteredUser(response);
-              //this.regId=this.getRegisteredUser().id;//to get reg user id
-              //this.userId=this.getRegisteredUser().userId;
-              console.log('user created', this.getRegisteredUser());
-            }, err => console.log('error while creating the user', err))
+              this.registeredUser= response;
+              console.log('new registered user created', this.getRegisteredUser());
+            }, err => console.log('error while creating the new registered user', err))
           }
         });
+
+      }, error=>{
+        console.log('error while retreving user from the keycloak',error);
+      });
     }
-  }
 
 }
