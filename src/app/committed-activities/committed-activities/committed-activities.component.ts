@@ -19,6 +19,7 @@ export class CommittedActivitiesComponent implements OnInit {
 
 
 
+
   constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,public userService:UserService,public activityService:ActivityService,public navController:NavController) { }
 
   ngOnInit() {
@@ -95,14 +96,14 @@ export class CommittedActivitiesComponent implements OnInit {
   goToDetail(index:number){
     console.log("&&&&&&&&&&&&&&&& Iam hereeee");
     this.activityService.selectCommittedACtivity(this.committedActivityProfileAggregates[index].committedActivityId);
-    console.log("status----",this.activityService.currentCommittedActivity.status)
-    if(this.activityService.currentCommittedActivity.status=='DONE'){
+    
+    if(this.committedActivityProfileAggregates[index].status=='TODO'){
       this.activityService.selectActivity(this.committedActivityProfileAggregates[index].activityId);
-      this.navController.navigateRoot('app/pages/activity');
+      this.navController.navigateRoot('app/tabs/karma/activity');
     }
-    else if(this.activityService.currentCommittedActivity.status=='INPROGRESS'){
+    else if(this.committedActivityProfileAggregates[index].status=='INPROGRESS'){
       this.activityService.selectActivity(this.committedActivityProfileAggregates[index].activityId);
-      this.navController.navigateRoot('app/pages/finish-activity');
+      this.navController.navigateRoot('app/tabs/karma/finish-activity');
     }
     else{}
   }
