@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { RepliesComponent } from '../replies/replies.component';
 import { CommentDTO, LoveDTO, CommentAggregate } from '../../api/models';
 import { GatewayAggregateCommandResourceService, GatewayAggregateQueryResourceService } from '../../api/services';
+import { UserService } from '../../providers/user/user.service';
 
 @Component({
   selector: 'comments',
@@ -26,7 +27,7 @@ export class CommentsComponent implements OnInit {
   loveDTO:LoveDTO={};
 
   constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,
-     public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,/* public mockService: MockDataService, */ public modalController:ModalController) { }
+     public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,public modalController:ModalController,public userService:UserService) { }
 
   ngOnInit() {
     console.log("[[[Id--------[[[",this.committedActivityId);
@@ -82,10 +83,11 @@ export class CommentsComponent implements OnInit {
     this.commentAggregates.push(commentAggregate);
 
     this.commentDTO.commitedActivityId=this.committedActivityId;
-    this.commentDTO.userId="Sharai";
+    console.log("************",this.userService.getRegisteredUser().userId);
+    this.commentDTO.userId=this.userService.getRegisteredUser().userId;
     let dateTime=this.getCurrentTime();
     this.commentDTO.dateAndTime=dateTime;
-    console.log("----"+this.commentDTO.dateAndTime);
+    console.log("--userrrrrrr--"+this.commentDTO.userId);
     this.gatewayAggregateCommandResourceService.saveCommentUsingPOST(this.commentDTO).subscribe((result)=>
     {console.log("&&&&Result&&&&&",result)},(error)=>{console.log("Error ",error)});
   }
@@ -115,7 +117,7 @@ export class CommentsComponent implements OnInit {
     
     this.loveDTO.commentId=commentId;
     this.loveDTO.dateAndTime=this.getCurrentTime();
-    this.loveDTO.userId="Sharai";
+    this.loveDTO.userId=this.userService.getRegisteredUser().userId;
      this.gatewayAggregateCommandResourceService.doLoveUsingPOST(this.loveDTO).subscribe(
       (result)=>{
         console.log("****Saved loveDTO Result****",result)
@@ -135,7 +137,7 @@ export class CommentsComponent implements OnInit {
     this.loveDTO.commentId=commentId;
     this.loveDTO.dateAndTime=this.getCurrentTime();
     //user id is taken from database
-    this.loveDTO.userId="Sharai";
+    this.loveDTO.userId=this.userService.getRegisteredUser().userId;
       this.gatewayAggregateCommandResourceService.unloveCommentUsingDELETE(this.loveDTO).subscribe(
         (result)=>{
           console.log("****deleted loveDTO Result****",result)

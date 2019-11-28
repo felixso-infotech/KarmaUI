@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommittedActivity } from '../../interfaces/committed-activity';
 import { timer } from 'rxjs';
 import { MockDataService } from '../../providers/mock-data.service';
-import { IonSlides, ModalController, LoadingController } from '@ionic/angular';
+import { IonSlides, ModalController, NavController, AlertController, LoadingController } from '@ionic/angular';
 import { CommentsComponent } from '../../comments-replies/comments/comments.component';
 import { AccountResourceService, GatewayAggregateQueryResourceService, UserResourceService, GatewayAggregateCommandResourceService } from '../../api/services';
 import { CommittedActivityAggregate, LoveDTO, CommittedActivityStatusAggregate } from '../../api/models';
@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CompletedActivitiesService } from '../../providers/completed-activities.service';
 import { UserService } from '../../providers/user/user.service';
 import { DateService } from '../../providers/date.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'home',
@@ -43,38 +44,20 @@ export class HomePage implements OnInit {
 
   committedActivityStatusAggregate:CommittedActivityStatusAggregate={};
 
+  regId:number;
+  userId:string;
+
   constructor(
     public gatewayAggregateQueryResource: GatewayAggregateQueryResourceService,
     public gatewayAggregateCommandResource: GatewayAggregateCommandResourceService,
     public modalController: ModalController, public domSanitizer: DomSanitizer,
     public completedActivityService: CompletedActivitiesService, public userService: UserService,
-    public dateService: DateService,
+    public dateService: DateService,public authService:AuthService,public navController:NavController,
+    public alertController:AlertController,
     public loadingController: LoadingController) { }
 
   ngOnInit() {
-    console.log('user in home', this.userService.user);
-    this.presentLoading();
-    if (this.userService.user) {
-      console.log('valid user present');
-      this.gatewayAggregateQueryResource.getRegisteredUserByUserIdUsingGET(this.userService.user.preferred_username)
-        .subscribe(response => {
-          this.userService.registeredUser = response;
-          console.log(this.userService.registeredUser);
-        }, error => {
-          console.log('no user found in the server', error);
-          if (error.status == 500) {
-            this.gatewayAggregateCommandResource.createRegisteredUserUsingPOST({
-              userId: this.userService.user.preferred_username,
-              email: this.userService.user.email,
-              firstName: this.userService.user.given_name,
-              createdDate: this.dateService.getCurrentTime()
-            }).subscribe(response => {
-              this.userService.registeredUser = response;
-              console.log('user created', this.userService.registeredUser);
-            }, err => console.log('error while creating the user', err))
-          }
-        });
-    }
+    this.userService.configureUsers();
   }
   ionViewWillEnter() {
     console.log("home page initialized");
@@ -85,13 +68,11 @@ export class HomePage implements OnInit {
       unpaged: true,
       sortUnsorted: false,
       sortSorted: true,
-      sort: ['activityCreatedDate(,asc)']
-    }).subscribe((result) => {
-    this.committedActivityAggregate = result;
-      this.createActivityBackgroundImageUrls(result);
-      this.loading.dismiss();
-      this.completedActivityService.isSplashShowing = false;
-      console.log("-------", result);
+      sort:["timeElapsed(ASC)"]
+    }).subscribe((result)=>{this.committedActivityAggregate=result;
+        this.createActivityBackgroundImageUrls(result);
+        this.completedActivityService.isSplashShowing=false;
+        console.log("-------",result);
     }, (error) => console.log("-Error- ", error));
 
   }
@@ -183,7 +164,7 @@ export class HomePage implements OnInit {
 
     this.loveDTO.commitedActivityId = committedActivityId;
     this.loveDTO.dateAndTime = this.getCurrentTime();
-    this.loveDTO.userId = "Sharai";
+    this.loveDTO.userId = this.userService.getRegisteredUser().userId;
     this.gatewayAggregateCommandResource.doLoveUsingPOST(this.loveDTO).subscribe(
       (result) => {
         console.log("****Saved loveDTO Result****", result)
@@ -203,7 +184,7 @@ export class HomePage implements OnInit {
     this.loveDTO.commitedActivityId = committedActivityId;
     this.loveDTO.dateAndTime = this.getCurrentTime();
     //user id is taken from database
-    this.loveDTO.userId = "Sharai";
+    this.loveDTO.userId = this.userService.getRegisteredUser().userId;
     this.gatewayAggregateCommandResource.unloveCommentUsingDELETE(this.loveDTO).subscribe(
       (result) => {
         console.log("****deleted loveDTO Result****", result)
@@ -238,30 +219,21 @@ export class HomePage implements OnInit {
   }
 
   addAsUserCommittedActivity(index:number){
+    this.presentAlert();
     console.log("****",index);
-    console.log("(((((((",this.userService.registeredUser.id)
+    console.log("(((((((",this.regId)
 
     let committedActivityAggregate=this.committedActivityAggregate[index];
 
     this.committedActivityStatusAggregate={
       activityId:committedActivityAggregate.activityId,
-      committedActivityId:committedActivityAggregate.committedActivityId,
       createdDate:this.getCurrentTime(),
       description:committedActivityAggregate.activityDescription,
       referenceId:committedActivityAggregate.committedActivityId,
-      registeredUserId:this.userService.registeredUser.id,
+      registeredUserId:this.userService.getRegisteredUser().id,
       status:'TODO',
-      userId:this.userService.user.id
+      userId:this.userService.getRegisteredUser().userId
     }
-
-    /* this.committedActivityStatusAggregate.activityId=committedActivityAggregate.activityId;
-    this.committedActivityStatusAggregate.committedActivityId=committedActivityAggregate.committedActivityId;
-    this.committedActivityStatusAggregate.createdDate=this.getCurrentTime();
-    this.committedActivityStatusAggregate.description=committedActivityAggregate.activityDescription;
-    this.committedActivityStatusAggregate.referenceId=committedActivityAggregate.committedActivityId;
-    this.committedActivityStatusAggregate.registeredUserId=this.userService.registeredUser.id;
-    this.committedActivityStatusAggregate.status='TODO';
-    this.committedActivityStatusAggregate.userId=this.userService.user.id; */
     console.log("Index ooooo  ",committedActivityAggregate);
 
     this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
@@ -269,6 +241,17 @@ export class HomePage implements OnInit {
         console.log("****Saved committedActivityStatusAggregate Result****",result)
       },(error)=>{console.log("Error ",error)}
     );
-   }
+  }
+   
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Success',
+      subHeader: '',
+      message: 'Successfully added to do later list.',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
+ 
 }

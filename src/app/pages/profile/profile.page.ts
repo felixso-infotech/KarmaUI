@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'profile',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+  constructor(public navController:NavController,public authService:AuthService) { }
 
   ngOnInit() {
+  }
+
+  logoutTemp(){
+    this.navController.navigateRoot("implicit/logout")
   }
 
 }

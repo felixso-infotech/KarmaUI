@@ -39,7 +39,7 @@ export class KarmaPage implements OnInit {
     public navController: NavController) { }
 
   ngOnInit() {
-    console.log('registered user',this.userService.registeredUser);
+    console.log('registered user',this.userService.getRegisteredUser());
     this.presentLoading();
     this.gatewayAggregateQueryResource.getAllActivitiesUsingGET({
       unpaged: false,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GatewayAggregateQueryResourceService } from '../../api/services';
 import { RegisteredUserAggregate } from '../../api/models';
+import { UserService } from '../../providers/user/user.service';
 
 @Component({
   selector: 'user-info',
@@ -13,10 +14,10 @@ export class UserInfoComponent implements OnInit {
 
   backgroundImageUrl:string;
 
-  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService) { }
+  constructor(public gatewayAggregateQueryResourceService:GatewayAggregateQueryResourceService,public userService:UserService) { }
 
   ngOnInit() {
-    this.gatewayAggregateQueryResourceService.getRegisteredUserByUserIdUsingGET("Sharai").subscribe(
+    this.gatewayAggregateQueryResourceService.getRegisteredUserByUserIdUsingGET(this.userService.getRegisteredUser().userId).subscribe(
       (result)=>{
         this.registeredUserAggregate=result;
         this.createActivityBackgroundImageUrls(result);
