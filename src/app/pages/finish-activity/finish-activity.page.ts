@@ -4,6 +4,9 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { ImageService } from '../../providers/image.service';
 import { NavController, AlertController } from '@ionic/angular';
 import { ActivityService } from '../../activity.service';
+import { CommittedActivityStatusAggregate } from '../../api/models';
+import { DateService } from '../../providers/date.service';
+import { UserService } from '../../providers/user/user.service';
 
 @Component({
   selector: 'finish-activity',
@@ -13,6 +16,7 @@ import { ActivityService } from '../../activity.service';
 export class FinishActivityPage implements OnInit {
 
   base64Image:any;
+  imageString:any;
 
   cameraOptions: CameraOptions = {
     quality: 100,
@@ -30,7 +34,10 @@ export class FinishActivityPage implements OnInit {
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
   }
 
-  constructor(private camera: Camera, public imageService: ImageService, private navController: NavController, private alertController:AlertController, private activityService:ActivityService) { }
+  committedActivityStatusAggregate:CommittedActivityStatusAggregate;
+
+  constructor(private camera: Camera, public imageService: ImageService, private navController: NavController, private alertController:AlertController, 
+    private activityService:ActivityService,public dateService:DateService,public userService:UserService) { }
 
   ngOnInit() {
   }
@@ -39,6 +46,7 @@ export class FinishActivityPage implements OnInit {
   takePicture() {
     this.camera.getPicture(this.cameraOptions).then(data=>{
       console.log('taking picture',data);
+      this.imageString=data;
       this.base64Image=this.imageService.getSanitazedUrl('image/jpeg',data);
     }).catch(err=>{
       console.log('error while taking image',err);
@@ -47,6 +55,7 @@ export class FinishActivityPage implements OnInit {
   selectImageFromGallery() {
     this.camera.getPicture(this.photoOptions).then(data=>{
       console.log('getting image from gallery',data);
+      this.imageString=data;
       this.base64Image=this.imageService.getSanitazedUrl('image/jpeg',data);
     }).catch(err=>{
       console.log('error when getting image from gallery',err);
@@ -54,6 +63,8 @@ export class FinishActivityPage implements OnInit {
   }
 
   async presentAlertConfirm() {
+    this.addToFinished();
+
     const alert = await this.alertController.create({
       header: 'Do you want to finish your task?',
       message: 'Press no to upload the files later',
@@ -100,5 +111,31 @@ export class FinishActivityPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  addToFinished(){
+
+ /*    activityId?: number;
+    committedActivityId?: number;
+    createdDate?: string;
+    description?: string;
+    proofFile?: string;
+    proofFileContentType?: string;
+    referenceId?: number;
+    registeredUserId?: number;
+    status?: 'TODO' | 'INPROGRESS' | 'DONE';
+    userId?: string;
+ */
+
+
+    this.committedActivityStatusAggregate={
+      activityId:this.activityService.currentActivity.activityId,
+      createdDate:this.dateService.getCurrentTime(),
+      proofFile:this.imageString,
+      proofFileContentType:'image/jpeg',
+      registeredUserId:this.userService.getRegisteredUser().id,
+      status:'DONE',
+      userId:this.userService.getRegisteredUser().userId
+    }
   }
 }
