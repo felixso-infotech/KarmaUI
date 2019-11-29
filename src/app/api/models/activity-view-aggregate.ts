@@ -8,6 +8,7 @@ export interface ActivityViewAggregate {
   imageString?: string;
   imageStringContentType?: string;
   introductionStories?: Array<ActivityImageAggregate>;
+  successMessage?: string;
   title?: string;
   type?: 'SINGLE' | 'TEAM';
 }

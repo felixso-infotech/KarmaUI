@@ -8,6 +8,7 @@ import { CommittedActivityStatusAggregate } from '../../api/models';
 import { DateService } from '../../providers/date.service';
 import { UserService } from '../../providers/user/user.service';
 import { ShareService } from '../../providers/share.service';
+import { GatewayAggregateCommandResourceService } from '../../api/services';
 
 @Component({
   selector: 'finish-activity',
@@ -38,7 +39,8 @@ export class FinishActivityPage implements OnInit {
   committedActivityStatusAggregate:CommittedActivityStatusAggregate;
 
   constructor(private camera: Camera, public imageService: ImageService, private navController: NavController, private alertController:AlertController, 
-    private activityService:ActivityService,public dateService:DateService,public userService:UserService,public shareService: ShareService) { }
+    private activityService:ActivityService,public dateService:DateService,public userService:UserService,public gatewayAggregateCommandResourceService:GatewayAggregateCommandResourceService,
+    public shareService: ShareService) { }
 
   ngOnInit() {
   }
@@ -124,19 +126,22 @@ export class FinishActivityPage implements OnInit {
 
   addToFinished(){
 
- /*    activityId?: number;
-    committedActivityId?: number;
-    createdDate?: string;
-    description?: string;
-    proofFile?: string;
-    proofFileContentType?: string;
-    referenceId?: number;
-    registeredUserId?: number;
-    status?: 'TODO' | 'INPROGRESS' | 'DONE';
-    userId?: string;
- */
+    if(this.activityService.currentCommittedProfileAggregate!=null){
+      if(this.activityService.currentActivity.activityId==this.activityService.currentCommittedProfileAggregate.activityId){
+        this.committedActivityStatusAggregate={
+          activityId:this.activityService.currentCommittedProfileAggregate.activityId,
+          committedActivityId:this.activityService.currentCommittedProfileAggregate.committedActivityId,
+          proofFile:this.imageString,
+          proofFileContentType:'image/jpeg',
+          createdDate:this.dateService.getCurrentTime(),
+          registeredUserId:this.userService.getRegisteredUser().id,
+          status:'DONE',
+          userId:this.userService.getRegisteredUser().userId
+        }
+      }
+    }
 
-
+    else{
     this.committedActivityStatusAggregate={
       activityId:this.activityService.currentActivity.activityId,
       createdDate:this.dateService.getCurrentTime(),
@@ -147,4 +152,8 @@ export class FinishActivityPage implements OnInit {
       userId:this.userService.getRegisteredUser().userId
     }
   }
+  this.gatewayAggregateCommandResourceService.updateCommittedActivityUsingPUT(this.committedActivityStatusAggregate).subscribe(
+    (result)=>{console.log("Result---:",result)}
+  )
+}
 }

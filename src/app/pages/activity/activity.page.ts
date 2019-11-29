@@ -65,7 +65,19 @@ export class ActivityPage implements OnInit {
   }
 
   addToInprogress(){
-
+    if(this.activityService.currentCommittedProfileAggregate!=null){
+    if(this.activityService.currentActivity.activityId==this.activityService.currentCommittedProfileAggregate.activityId){
+      this.committedActivityStatusAggregate={
+        activityId:this.activityService.currentCommittedProfileAggregate.activityId,
+        committedActivityId:this.activityService.currentCommittedProfileAggregate.committedActivityId,
+        createdDate:this.dateService.getCurrentTime(),
+        registeredUserId:this.userService.getRegisteredUser().id,
+        status:'INPROGRESS',
+        userId:this.userService.getRegisteredUser().userId
+      }
+    }
+  }
+    else{
     this.activityService.currentActivity;
     this.committedActivityStatusAggregate={
       activityId:this.activityService.currentActivity.activityId,
@@ -74,7 +86,7 @@ export class ActivityPage implements OnInit {
       status:'INPROGRESS',
       userId:this.userService.getRegisteredUser().userId
     }
-
+  }
     this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
       (result)=>{
         console.log("****Saved committedActivityStatusAggregate Result****",result)

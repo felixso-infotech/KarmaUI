@@ -18,10 +18,16 @@
         <ion-col>
           <div class="comment-box">
       <ion-item>
-            <ion-avatar>
+            <ion-avatar *ngIf="comment.profilePicture!=null;else NoAvatar">
               <img [src]="'data:'+comment.profilePictureContentType+';base64,'+comment.profilePicture | safeHtml"/>
             </ion-avatar>
-            <ion-label>UserName<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
+            <ng-template #NoAvatar>
+              <ion-avatar>
+                <ion-icon name="person" size="large"></ion-icon>
+              </ion-avatar>
+            </ng-template>
+
+            <ion-label>{{comment.firstName}}<span class="time"><span class="dot">.</span>{{comment.timeElapsed}}</span></ion-label>
 
             <div  *ngIf="comment.liked; else notLiked">
                 <ion-icon color='primary' size='large' name='heart' (click)="undoLoveComment(i,comment.commentId)"></ion-icon>

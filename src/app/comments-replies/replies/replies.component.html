@@ -18,10 +18,15 @@
     <ion-col>
       <div class="reply-box">
   <ion-item>
-        <ion-avatar>
+    <ion-avatar *ngIf="reply.profilePicture!=null;else NoAvatar">
           <img [src]="'data:'+reply.profilePictureContentType+';base64,'+reply.profilePicture | safeHtml"/>
         </ion-avatar>
-        <ion-label>UserName<span class="time"><span class="dot">.</span>{{reply.timeElapsed}}</span></ion-label>
+        <ng-template #NoAvatar>
+          <ion-avatar>
+            <ion-icon name="person" size="large"></ion-icon>
+          </ion-avatar>
+        </ng-template>
+        <ion-label>{{reply.firstName}}<span class="time"><span class="dot">.</span>{{reply.timeElapsed}}</span></ion-label>
 
         <div  *ngIf="reply.liked; else notLiked">
             <ion-icon color='primary' size='large' name='heart' (click)="undoLoveReply(i,reply.replyId)"></ion-icon>
