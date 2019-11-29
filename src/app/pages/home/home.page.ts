@@ -61,6 +61,7 @@ export class HomePage implements OnInit {
     public shareService: ShareService) { }
 
   ngOnInit() {
+    console.log("init home page");
     this.presentLoading();
     this.userService.configureUsers();
   }

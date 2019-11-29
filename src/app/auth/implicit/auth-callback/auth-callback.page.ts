@@ -26,8 +26,8 @@ export class AuthCallbackPage implements OnInit {
         if (action.action === AuthActions.SignInSuccess) {
           
           this.authService.getUserInfo().then(data=>{
-            console.log(data);
-            this.userService.setUser(data);
+            console.log('auth callback user when action sign in success',data);
+            this.userService.configureUsers();
             this.navCtrl.navigateRoot('app');
           }, error=>{
             console.log(error);

@@ -15,7 +15,9 @@ export class ProfilePage implements OnInit {
   }
 
   logoutTemp(){
-    this.navController.navigateRoot("implicit/logout")
+    console.log('logout');
+    
+    this.authService.signOut();
   }
 
 }

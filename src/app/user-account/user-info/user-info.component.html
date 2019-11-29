@@ -14,24 +14,27 @@
     </ion-col>
     <ion-col>
       <ion-text>
-        <h1>456</h1>
+        <h1 *ngIf="this.userService.getRegisteredUser().noOfLoves">{{this.userService.getRegisteredUser().noOfLoves}}</h1>
+        <h1 *ngIf="!this.userService.getRegisteredUser().noOfLoves">0</h1>
         <ion-icon name="heart"></ion-icon>
       </ion-text>
     </ion-col>
     <ion-col>
       <ion-text>
-        <h1>{{registeredUserAggregate.noOfCompletedTasks}}</h1>
+        <h1>{{this.userService.getRegisteredUser().noOfCompletedTasks}}</h1>
         <p>Tasks completed</p>
       </ion-text>
     </ion-col>
   </ion-row>
-  <ion-button class="edit-profile-button" shape="round" fill="outline">Edit Profile</ion-button>
+  <ion-button class="edit-profile-button" shape="round" fill="outline" (click)='selectPic()'>Edit Profile Pic</ion-button>
+  <ion-button class="edit-profile-button" shape="round" fill="none" (click)="logoutTemp()"><ion-icon name="log-out" color='primary'></ion-icon></ion-button>
   <div class="user-info">
     <img
-      [src]="'data:'+registeredUserAggregate.profilePictureContentType+';base64,'+registeredUserAggregate.profilePicture | safeHtml" />
+      [src]="'data:'+this.userService.getRegisteredUser().profilePictureContentType+';base64,'+this.userService.getRegisteredUser().profilePicture | safeHtml" *ngIf='this.userService.getRegisteredUser().profilePicture'/>
+      <img *ngIf='!this.userService.getRegisteredUser().profilePicture' src='../../../assets/img/undraw_male_avatar_323b.png'/>
     <div class="account-name">
       <ion-text class="account-name">
-        <h1>{{registeredUserAggregate.firstName}}</h1>
+        <h1>{{this.userService.getRegisteredUser().firstName}}</h1>
       </ion-text>
     </div>
   </div>

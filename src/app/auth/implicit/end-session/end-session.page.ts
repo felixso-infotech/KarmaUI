@@ -9,6 +9,7 @@ export class EndSessionPage implements OnInit {
   constructor(private authService: AuthService, private navCtrl: NavController) {}
 
   ngOnInit() {
+    console.log("end session works");
     this.authService.EndSessionCallBack();
     this.navCtrl.navigateRoot('login-loading');
   }

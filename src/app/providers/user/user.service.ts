@@ -35,7 +35,7 @@ export class UserService {
 
   configureUsers(){
       console.log('configuring user');
-
+      
       this.authService.getUserInfo().then(data=>{
         this.user=data;
         console.log("The user from the auth 2 server",this.user);

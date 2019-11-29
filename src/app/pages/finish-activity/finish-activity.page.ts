@@ -7,6 +7,7 @@ import { ActivityService } from '../../activity.service';
 import { CommittedActivityStatusAggregate } from '../../api/models';
 import { DateService } from '../../providers/date.service';
 import { UserService } from '../../providers/user/user.service';
+import { ShareService } from '../../providers/share.service';
 
 @Component({
   selector: 'finish-activity',
@@ -37,7 +38,7 @@ export class FinishActivityPage implements OnInit {
   committedActivityStatusAggregate:CommittedActivityStatusAggregate;
 
   constructor(private camera: Camera, public imageService: ImageService, private navController: NavController, private alertController:AlertController, 
-    private activityService:ActivityService,public dateService:DateService,public userService:UserService) { }
+    private activityService:ActivityService,public dateService:DateService,public userService:UserService,public shareService: ShareService) { }
 
   ngOnInit() {
   }
@@ -63,7 +64,6 @@ export class FinishActivityPage implements OnInit {
   }
 
   async presentAlertConfirm() {
-    this.addToFinished();
 
     const alert = await this.alertController.create({
       header: 'Do you want to finish your task?',
@@ -81,6 +81,7 @@ export class FinishActivityPage implements OnInit {
           text: 'Yes',
           handler: () => {
             console.log('pressed Yes');
+            this.addToFinished();
             this.showCongradulations();
           }
         }
@@ -100,6 +101,14 @@ export class FinishActivityPage implements OnInit {
       cssClass: 'congradulations',
       backdropDismiss: false,
       buttons: [
+        {
+          text: 'Share',
+          handler: () => {
+            console.log('Shared after finishing activity');
+            this.shareService.share(this.committedActivityStatusAggregate.description+"\ncompleted task\ninstall karma",'data:image/jpeg;base64,'+this.imageString);
+            this.finishActivity();
+          }
+        },
         {
           text: 'Thank you',
           handler: () => {
