@@ -95,7 +95,7 @@ export class CommittedActivitiesComponent implements OnInit {
 
   goToDetail(index:number){
     console.log("&&&&&&&&&&&&&&&& Iam hereeee");
-    this.activityService.selectCommittedACtivity(this.committedActivityProfileAggregates[index].committedActivityId);
+    this.activityService.selectCurrentCommittedProfileAggregate(this.committedActivityProfileAggregates[index]);
     
     if(this.committedActivityProfileAggregates[index].status=='TODO'){
       this.activityService.selectActivity(this.committedActivityProfileAggregates[index].activityId);
