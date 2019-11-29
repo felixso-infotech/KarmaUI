@@ -12,6 +12,7 @@ import { UserService } from '../../providers/user/user.service';
 import { DateService } from '../../providers/date.service';
 import { AuthService } from '../../auth/auth.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ShareService } from '../../providers/share.service';
 
 @Component({
   selector: 'home',
@@ -56,7 +57,8 @@ export class HomePage implements OnInit {
     public dateService: DateService,public authService:AuthService,public navController:NavController,
     public alertController:AlertController,
     public loadingController: LoadingController,
-    private socialSharing: SocialSharing) { }
+    private socialSharing: SocialSharing,
+    public shareService: ShareService) { }
 
   ngOnInit() {
     this.presentLoading();
