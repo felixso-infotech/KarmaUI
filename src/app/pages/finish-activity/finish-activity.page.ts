@@ -125,7 +125,7 @@ export class FinishActivityPage implements OnInit {
   }
 
   addToFinished(){
-
+    console.log("********finished*******")
     if(this.activityService.currentCommittedProfileAggregate!=null){
       if(this.activityService.currentActivity.activityId==this.activityService.currentCommittedProfileAggregate.activityId){
         this.committedActivityStatusAggregate={
