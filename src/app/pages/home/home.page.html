@@ -15,9 +15,14 @@
             </div>
             <div class="posted-user">
               <ion-item>
-              <ion-avatar>
+              <ion-avatar *ngIf="activity.profilePicture!=null;else NoAvatar">
                 <img [src]="'data:'+activity.profilePictureContentType+';base64,'+activity.profilePicture | safeHtml"/>
-              </ion-avatar>              
+              </ion-avatar> 
+              <ng-template #NoAvatar>
+                <ion-avatar>
+                  <ion-icon name="person" size="large"></ion-icon>
+                </ion-avatar>
+              </ng-template>             
               <ion-label>{{activity.firstName}}<span class="time"><span class="dot">.</span>{{activity.timeElapsed}}</span></ion-label>
               <div class="comment" *ngIf="activity.noOfReferences>0;else NoReference">
                 <ion-icon color='primary' size='large' name="happy"></ion-icon>
@@ -73,7 +78,8 @@
 <!--              <img
               src="https://images.unsplash.com/photo-1569527570474-77374e08a93c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="posted-image"/> -->
               <div class="description">
-                {{'completed #'+activity.title+'. '+activity.committedActivityDescription}}  
+                {{'completed #'+activity.title}}  
+                <div *ngIf="activity.committedActivityDescription!=null">{{'. '+activity.committedActivityDescription}}</div>
               </div>
 
           </ion-slide>
