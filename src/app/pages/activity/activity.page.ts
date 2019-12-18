@@ -66,7 +66,9 @@ export class ActivityPage implements OnInit {
 
   addToInprogress(){
     if(this.activityService.currentCommittedProfileAggregate!=null){
+      console.log("1st if passed ");
     if(this.activityService.currentActivity.activityId==this.activityService.currentCommittedProfileAggregate.activityId){
+      console.log("2nd if passed ");
       this.committedActivityStatusAggregate={
         activityId:this.activityService.currentCommittedProfileAggregate.activityId,
         committedActivityId:this.activityService.currentCommittedProfileAggregate.committedActivityId,
@@ -75,9 +77,14 @@ export class ActivityPage implements OnInit {
         status:'INPROGRESS',
         userId:this.userService.getRegisteredUser().userId
       }
+      console.log("&&&&&&&&&&&&&&&&&",this.committedActivityStatusAggregate);
+  this.gatewayAggregateCommandResource.updateCommittedActivityUsingPUT(this.committedActivityStatusAggregate).subscribe(
+    (result)=>{console.log("Result---:",result)}
+  )
     }
   }
     else{
+      console.log("I am in else ")
     this.activityService.currentActivity;
     this.committedActivityStatusAggregate={
       activityId:this.activityService.currentActivity.activityId,
@@ -86,17 +93,19 @@ export class ActivityPage implements OnInit {
       status:'INPROGRESS',
       userId:this.userService.getRegisteredUser().userId
     }
-  }
     this.gatewayAggregateCommandResource.createCommittedActivityUsingPOST(this.committedActivityStatusAggregate).subscribe(
       (result)=>{
+          this.activityService.currentCommittedProfileAggregate=result;
         console.log("****Saved committedActivityStatusAggregate Result****",result)
       },(error)=>{console.log("Error ",error)}
     );
+  }
+    
     this.navController.navigateRoot('app/tabs/karma/finish-activity');
   }
 
   addToTodoLater(){
-
+    console.log("In todo later ");
     this.activityService.currentActivity;
     this.committedActivityStatusAggregate={
       activityId:this.activityService.currentActivity.activityId,

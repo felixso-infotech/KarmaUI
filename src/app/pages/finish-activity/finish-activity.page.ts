@@ -128,6 +128,7 @@ export class FinishActivityPage implements OnInit {
     console.log("********finished*******")
     if(this.activityService.currentCommittedProfileAggregate!=null){
       if(this.activityService.currentActivity.activityId==this.activityService.currentCommittedProfileAggregate.activityId){
+        console.log("Currently not Committed Activity ");
         this.committedActivityStatusAggregate={
           activityId:this.activityService.currentCommittedProfileAggregate.activityId,
           committedActivityId:this.activityService.currentCommittedProfileAggregate.committedActivityId,
@@ -142,8 +143,10 @@ export class FinishActivityPage implements OnInit {
     }
 
     else{
+      console.log("Currently existed Committed Activity ");
     this.committedActivityStatusAggregate={
       activityId:this.activityService.currentActivity.activityId,
+      committedActivityId:this.activityService.currentCommittedProfileAggregate.committedActivityId,
       createdDate:this.dateService.getCurrentTime(),
       proofFile:this.imageString,
       proofFileContentType:'image/jpeg',
@@ -152,6 +155,7 @@ export class FinishActivityPage implements OnInit {
       userId:this.userService.getRegisteredUser().userId
     }
   }
+  console.log("&&&&&&&&&&&&&&&&&",this.committedActivityStatusAggregate);
   this.gatewayAggregateCommandResourceService.updateCommittedActivityUsingPUT(this.committedActivityStatusAggregate).subscribe(
     (result)=>{console.log("Result---:",result)}
   )

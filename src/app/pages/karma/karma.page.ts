@@ -67,6 +67,7 @@ export class KarmaPage implements OnInit {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
         this.activityService.selectActivity(this.activityViewAggregates[index].activityId);
         this.activityService.currentActivity= this.activityViewAggregates[index];
+        console.log("current activity here Suggesting karma ts",this.activityService.currentActivity);
         this.loading.dismiss();
         this.navController.navigateForward('app/tabs/karma/activity');
       });
@@ -79,6 +80,7 @@ export class KarmaPage implements OnInit {
         console.log("selected index and activity", index, this.activityViewAggregates[index]);
         this.activityService.selectActivity(this.activityViewAggregates[index].activityId);
         this.activityService.currentActivity= this.activityViewAggregates[index];
+        console.log("current activity here Trending karma ts",this.activityService.currentActivity);
         this.loading.dismiss();
       });
       this.navController.navigateForward('activity');

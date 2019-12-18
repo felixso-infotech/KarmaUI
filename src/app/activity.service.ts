@@ -17,6 +17,7 @@ export class ActivityService {
       this.currentActivity=response;
       console.log(response);
     })
+    console.log("Current Activity here",this.currentActivity);
   }
 
   public selectCurrentCommittedProfileAggregate(currentCommittedProfileAggregate:CommittedActivityProfileAggregate):void{
