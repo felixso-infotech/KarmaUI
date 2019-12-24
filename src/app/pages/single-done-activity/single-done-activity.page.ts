@@ -12,7 +12,7 @@ import { CommentsComponent } from '../../comments-replies/comments/comments.comp
 })
 export class SingleDoneActivityPage implements OnInit {
 
-  @ViewChild('slides', { static: false }) slides: IonSlides;
+  /* @ViewChild('slides', { static: false }) slides: IonSlides;
 
   slideOptions = {
     direction: 'vertical',
@@ -21,7 +21,7 @@ export class SingleDoneActivityPage implements OnInit {
     speed: 300,
     spaceBetween: 0,
     height: window.screen.height - 60
-  };
+  }; */
 
   currentComments = null;
   committedActivityProfileAggregate:CommittedActivityProfileAggregate;
@@ -33,9 +33,8 @@ export class SingleDoneActivityPage implements OnInit {
     this.committedActivityProfileAggregate=this.activityService.currentCommittedProfileAggregate;
   }
 
-  /* async showComments(committedActivityId: number) {
+  async showComments(committedActivityId: number) {
     console.log("*****committedActivityId*****", committedActivityId);
-    this.slides.getActiveIndex().then(index => {
       const modal = this.modalController.create({
         component: CommentsComponent,
         cssClass: "modal",
@@ -44,8 +43,7 @@ export class SingleDoneActivityPage implements OnInit {
         this.currentComments = modal;
         modal.present();
       });
-    });
-  } */
+  }
 
 
 
