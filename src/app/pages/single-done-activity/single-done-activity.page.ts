@@ -12,16 +12,6 @@ import { CommentsComponent } from '../../comments-replies/comments/comments.comp
 })
 export class SingleDoneActivityPage implements OnInit {
 
-  /* @ViewChild('slides', { static: false }) slides: IonSlides;
-
-  slideOptions = {
-    direction: 'vertical',
-    slidesPerView: 1,
-    initialSlide: 0,
-    speed: 300,
-    spaceBetween: 0,
-    height: window.screen.height - 60
-  }; */
 
   currentComments = null;
   committedActivityProfileAggregate:CommittedActivityProfileAggregate;
