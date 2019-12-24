@@ -108,4 +108,10 @@ export class CommittedActivitiesComponent implements OnInit {
     else{}
   }
 
+  goToDeatailForView(index:number){
+    console.log("*****I am in detail view");
+    this.activityService.selectCurrentCommittedProfileAggregate(this.committedActivityProfileAggregates[index]);
+    this.navController.navigateRoot('app/tabs/profile/single-done-activity');
+  }
+
 }

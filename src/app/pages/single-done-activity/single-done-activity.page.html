@@ -1,33 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>single-done-activity</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
   <ion-slide class="dark-slide">
             
     <ion-icon name="heart" class="double-tap-love" *ngIf="isLiking"></ion-icon>
    
  
- <div *ngIf="committedActivityAggregate.imageString!=null" [ngStyle]="{'background' : 'url('+backgroundImageUrls[i]+') center center/cover no-repeat fixed #000'}" class="image-slide">
+ <div *ngIf="committedActivityProfileAggregate.imageString!=null" [ngStyle]="{'background' : 'url('+backgroundImageUrls[i]+') center center/cover no-repeat fixed #000'}" class="image-slide">
       
     </div>
     <div class="posted-user">
       <ion-item>
-      <ion-avatar *ngIf="committedActivityAggregate.profilePicture!=null;else NoAvatar">
-        <img [src]="'data:'+committedActivityAggregate.profilePictureContentType+';base64,'+committedActivityAggregate.profilePicture | safeHtml"/>
+      <ion-avatar *ngIf="committedActivityProfileAggregate.profilePicture!=null;else NoAvatar">
+        <img [src]="'data:'+committedActivityProfileAggregate.profilePictureContentType+';base64,'+committedActivityProfileAggregate.profilePicture | safeHtml"/>
       </ion-avatar> 
       <ng-template #NoAvatar>
         <ion-avatar>
           <ion-icon name="person" size="large"></ion-icon>
         </ion-avatar>
       </ng-template>             
-      <ion-label>{{committedActivityAggregate.firstName}}<span class="time"><span class="dot">.</span>{{committedActivityAggregate.timeElapsed}}</span></ion-label>
-      <div class="comment" *ngIf="committedActivityAggregate.noOfReferences>0;else NoReference">
+      <ion-label>{{committedActivityProfileAggregate.firstName}}<span class="time"><span class="dot">.</span>{{committedActivityProfileAggregate.timeElapsed}}</span></ion-label>
+      <div class="comment" *ngIf="committedActivityProfileAggregate.noOfReferences>0;else NoReference">
         <ion-icon color='primary' size='large' name="happy"></ion-icon>
-        <p>{{committedActivityAggregate.noOfReferences}}</p>
+        <p>{{committedActivityProfileAggregate.noOfReferences}}</p>
       </div>
       <ng-template #NoReference>
         <div>
@@ -37,37 +30,37 @@
     </ion-item>
     </div>
     <div class="activity-name" *ngIf="!isLiking">
-      {{'completed '+committedActivityAggregate.title}}
+      {{'completed '+committedActivityProfileAggregate.title}}
     </div>
     <div class="options">
     <div class="like">
-      <div  *ngIf="committedActivityAggregate.liked; else notLiked">
-      <ion-icon color='primary' size='large' name='heart' (click)="undoLoveCommittedActivity(i,committedActivityAggregate.committedActivityId,committedActivityAggregate.userId)"></ion-icon>
+      <div  *ngIf="committedActivityProfileAggregate.liked; else notLiked">
+      <ion-icon color='primary' size='large' name='heart' (click)="undoLoveCommittedActivity(i,committedActivityProfileAggregate.committedActivityId,committedActivityProfileAggregate.userId)"></ion-icon>
       </div>
       <ng-template #notLiked>
         <div>
-        <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveCommittedActivity(i,committedActivityAggregate.committedActivityId,committedActivityAggregate.userId)"></ion-icon>
+        <ion-icon color='primary' size='large' name="heart-empty" (click)="doLoveCommittedActivity(i,committedActivityProfileAggregate.committedActivityId,committedActivityProfileAggregate.userId)"></ion-icon>
         </div>
       </ng-template>
-      <p>{{committedActivityAggregate.noOfLoves}}</p>
+      <p>{{committedActivityProfileAggregate.noOfLoves}}</p>
     </div>
     <div class="comment">
-      <ion-icon (click)="showComments(committedActivityAggregate.committedActivityId)" color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
-      <p>{{committedActivityAggregate.noOfComments}}</p>
+      <ion-icon (click)="showComments(committedActivityProfileAggregate.committedActivityId)" color='primary' size='large' src='../../assets/icons/72-icons-eleken/SVG/message.svg'></ion-icon>
+      <p>{{committedActivityProfileAggregate.noOfComments}}</p>
     </div>
-    <div class="share" (click)='shareService.share(committedActivityAggregate.successMessage+"\n\n"+committedActivityAggregate.committedActivityDescription+"\n@Install Karma","data:"+committedActivityAggregate.imageStringContentType+";base64,"+committedActivityAggregate.imageString)'>
+    <div class="share" (click)='shareService.share(committedActivityProfileAggregate.successMessage+"\n\n"+committedActivityProfileAggregate.committedActivityDescription+"\n@Install Karma","data:"+committedActivityProfileAggregate.imageStringContentType+";base64,"+committedActivityProfileAggregate.imageString)'>
       <ion-icon color='primary' size='large' name='share-alt'></ion-icon>
-      <p>{{committedActivityAggregate.noOfShares}}</p>
+      <p>{{committedActivityProfileAggregate.noOfShares}}</p>
     </div>
     <div class="comment">
         <ion-icon (click)="addAsUserCommittedActivity(i)"color='primary' size='large' name="add"></ion-icon>
-      <p>{{committedActivityAggregate.noOfShares}}</p>
+      <p>{{committedActivityProfileAggregate.noOfShares}}</p>
     </div>
     
   </div>
       <div class="description">
-        {{'completed #'+committedActivityAggregate.title}}  
-        <div *ngIf="committedActivityAggregate.committedActivityDescription!=null">{{'. '+committedActivityAggregate.committedActivityDescription}}</div>
+        {{'completed #'+committedActivityProfileAggregate.title}}  
+        <div *ngIf="committedActivityProfileAggregate.committedActivityDescription!=null">{{'. '+committedActivityProfileAggregate.committedActivityDescription}}</div>
       </div>
 
   </ion-slide>

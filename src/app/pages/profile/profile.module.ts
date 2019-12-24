@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage
+  },
+  {
+    path: 'single-done-activity',
+    loadChildren: './pages/single-done-activity/single-done-activity.module#SingleDoneActivityPageModule',
   }
 ];
 

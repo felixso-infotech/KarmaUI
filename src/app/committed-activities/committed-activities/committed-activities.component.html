@@ -13,8 +13,8 @@
   <ion-grid>
 
     <ion-row class="activities" *ngIf="status=='DONE';else InprogressAndTodo">
-        <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4">
-          <img [src]="'data:'+committedActivity.proofImageContentType+';base64,'+committedActivity.proofImageString | safeHtml" (click)="goToDeatailForView(i)"/>
+        <ion-col *ngFor="let committedActivity of committedActivityProfileAggregates; let i=index" size="4"  (click)="goToDeatailForView(i)">
+          <img [src]="'data:'+committedActivity.proofImageContentType+';base64,'+committedActivity.proofImageString | safeHtml"/>
           <div><label>{{committedActivity.activityTitle}}</label></div>
         </ion-col>
     </ion-row>

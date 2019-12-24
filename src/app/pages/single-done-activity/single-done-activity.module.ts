@@ -6,6 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SingleDoneActivityPage } from './single-done-activity.page';
+import { PipemoduleModule } from '../../pipes/pipemodule/pipemodule.module';
+import { ProfilePageModule } from '../profile/profile.module';
+import { UserInfoComponent } from '../../user-account/user-info/user-info.component';
+import { UserAccountModule } from '../../user-account/user-account.module';
 
 const routes: Routes = [
   {
@@ -19,6 +23,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipemoduleModule,
+    UserAccountModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SingleDoneActivityPage]
