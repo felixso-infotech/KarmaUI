@@ -32,6 +32,8 @@ export class HomePage implements OnInit {
     height: window.screen.height - 60
   };
 
+  temp:any; //used in getCurrentTime logic in converting date to zonedatetime
+
   loading: HTMLIonLoadingElement;
 
   transformation: any;
@@ -61,6 +63,8 @@ export class HomePage implements OnInit {
     public shareService: ShareService) { }
 
   ngOnInit() {
+    console.log("%%%%%%my method%%%%%",this.getCurrentTime());
+    console.log("%%%% new DAte%%%%",new Date());
     console.log("init home page");
     this.presentLoading();
     this.userService.configureUsers();
@@ -190,6 +194,7 @@ export class HomePage implements OnInit {
 
     this.loveDTO.commitedActivityId = committedActivityId;
     this.loveDTO.dateAndTime = this.getCurrentTime();
+    
     //user id is taken from database
     this.loveDTO.userId = this.userService.getRegisteredUser().userId;
     this.gatewayAggregateCommandResource.unloveCommentUsingDELETE(this.loveDTO).subscribe(
@@ -203,7 +208,10 @@ export class HomePage implements OnInit {
   getCurrentTime(): string {
     let currentTime = new Date();
     let offset = currentTime.getTimezoneOffset();
-    var hours = (Math.floor(offset / 60)).toString().replace("-", "");
+    console.log("---------------",offset);
+    this.temp=offset.toString().replace("-","").valueOf();
+    console.log("(((((((((((",this.temp);
+    var hours = Math.floor(this.temp / 60);
     var minutes = (offset % 60).toString().replace("-", "");
     console.log("+++++++  " + (currentTime.toISOString()).split("Z")[0] + "+0" + hours + ":" + minutes);
 
