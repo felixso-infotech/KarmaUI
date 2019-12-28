@@ -16,6 +16,8 @@ export class CommentsComponent implements OnInit {
 
   committedActivityId;  //data from modal componentProps from home ts
 
+  temp:any; //used in getCurrentTime logic in converting date to zonedatetime
+
   commentDTO:CommentDTO={};
 
   comments: Comment[];
@@ -92,19 +94,22 @@ export class CommentsComponent implements OnInit {
     {console.log("&&&&Result&&&&&",result)},(error)=>{console.log("Error ",error)});
   }
  
-  getCurrentTime():string{
-    let currentTime=new Date();
-    let offset=currentTime.getTimezoneOffset();
-    var hours=(Math.floor(offset / 60)).toString().replace("-","");
-    var minutes=(offset % 60).toString().replace("-","");
-    console.log("+++++++  "+(currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes);
+  getCurrentTime(): string {
+    let currentTime = new Date();
+    let offset = currentTime.getTimezoneOffset();
+    console.log("---------------",offset);
+    this.temp=offset.toString().replace("-","").valueOf();
+    console.log("(((((((((((",this.temp);
+    var hours = Math.floor(this.temp / 60);
+    var minutes = (offset % 60).toString().replace("-", "");
+    console.log("+++++++  " + (currentTime.toISOString()).split("Z")[0] + "+0" + hours + ":" + minutes);
 
-    if(offset<0){
-      return (currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes;
+    if (offset < 0) {
+      return (currentTime.toISOString()).split("Z")[0] + "+0" + hours + ":" + minutes;
     }
-    else{
-       return (currentTime.toISOString()).split("Z")[0]+"-0"+hours+":"+minutes;
-    }  
+    else {
+      return (currentTime.toISOString()).split("Z")[0] + "-0" + hours + ":" + minutes;
+    }
   }
 
   doLoveComment(i:number,commentId:number){

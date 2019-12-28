@@ -83,8 +83,11 @@ export class HomePage implements OnInit {
         this.createActivityBackgroundImageUrls(result);
         this.loading.dismiss();
         this.completedActivityService.isSplashShowing=false;
+        this.calculateElapsedTime();
         console.log("-------",result);
     }, (error) => console.log("-Error- ", error));
+
+    
 
   }
   loveThisFeedWithDoubleTap() {
@@ -276,5 +279,11 @@ export class HomePage implements OnInit {
    },error=>{
      console.log('something went wrong when sharing',error);
    })
+ }
+
+ calculateElapsedTime(){
+   for(let temp of this.committedActivityAggregate){
+      temp.timeElapsed=this.dateService.getElapsedTime(temp.committedActivityCreatedDate);
+   }
  }
 }

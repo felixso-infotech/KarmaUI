@@ -13,6 +13,8 @@ export class RepliesComponent implements OnInit {
 
   commentId; ////data from modal componentProps from comment ts
 
+  temp:any;
+
   replyAggregates:ReplyAggregate[]=[];
 
   replyDTO:ReplyDTO={};//for reply data binding from UI
@@ -67,19 +69,22 @@ export class RepliesComponent implements OnInit {
   }
 
 
-  getCurrentTime():string{
-    let currentTime=new Date();
-    let offset=currentTime.getTimezoneOffset();
-    var hours=(Math.floor(offset / 60)).toString().replace("-","");
-    var minutes=(offset % 60).toString().replace("-","");
-    console.log("+++++++  "+(currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes);
+  getCurrentTime(): string {
+    let currentTime = new Date();
+    let offset = currentTime.getTimezoneOffset();
+    console.log("---------------",offset);
+    this.temp=offset.toString().replace("-","").valueOf();
+    console.log("(((((((((((",this.temp);
+    var hours = Math.floor(this.temp / 60);
+    var minutes = (offset % 60).toString().replace("-", "");
+    console.log("+++++++  " + (currentTime.toISOString()).split("Z")[0] + "+0" + hours + ":" + minutes);
 
-    if(offset<0){
-      return (currentTime.toISOString()).split("Z")[0]+"+0"+hours+":"+minutes;
+    if (offset < 0) {
+      return (currentTime.toISOString()).split("Z")[0] + "+0" + hours + ":" + minutes;
     }
-    else{
-       return (currentTime.toISOString()).split("Z")[0]+"-0"+hours+":"+minutes;
-    }  
+    else {
+      return (currentTime.toISOString()).split("Z")[0] + "-0" + hours + ":" + minutes;
+    }
   }
 
  
