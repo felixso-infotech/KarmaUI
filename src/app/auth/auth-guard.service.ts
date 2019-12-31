@@ -21,9 +21,11 @@ export class AuthGuardService implements CanActivate {
       .toPromise();
 
     if (!authenticated) {
-      this.navCtrl.navigateRoot('login');
+      console.log('auth guard blocks navigation');
+      
+      this.navCtrl.navigateRoot('/');
     }
-
+    console.log('auth guard allows navigation');
     return authenticated;
   }
 }

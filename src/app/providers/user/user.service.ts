@@ -16,7 +16,8 @@ export class UserService {
     public gatewayAggregateCommandResource:GatewayAggregateCommandResourceService,
     public dateService:DateService, public authService: AuthService) {
 
-    console.log("Hello i am in constructor @@@@")
+    console.log("Hello i am in constructor @@@@");
+    this.configureUsers();
   }
 
   public setUser(val:any) :void {

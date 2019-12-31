@@ -18,6 +18,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor';
 import { Camera } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
       multi: true
     },
     Camera,
+    AuthGuardService,
   SocialSharing],
   bootstrap: [AppComponent]
 })

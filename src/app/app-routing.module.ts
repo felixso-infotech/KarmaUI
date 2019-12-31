@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CheckTutorial } from './providers/check-tutorial.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
@@ -14,7 +15,8 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m=>m.TabsModule)
+    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m=>m.TabsModule),
+    canActivate: [AuthGuardService]
   },
   { path: 'create-rolemodel', loadChildren: './pages/create-rolemodel/create-rolemodel.module#CreateRolemodelPageModule' },
   { path: 'loading', loadChildren: './pages/loading/loading.module#LoadingPageModule' },
@@ -24,7 +26,8 @@ const routes: Routes = [
   { path: 'accessdenied', redirectTo: '', pathMatch: 'full' },
   { path: 'activity', loadChildren: './pages/activity/activity.module#ActivityPageModule' },
   { path: 'finish-activity', loadChildren: './pages/finish-activity/finish-activity.module#FinishActivityPageModule' },
-  { path: 'single-done-activity', loadChildren: './pages/single-done-activity/single-done-activity.module#SingleDoneActivityPageModule' }
+  { path: 'single-done-activity', loadChildren: './pages/single-done-activity/single-done-activity.module#SingleDoneActivityPageModule' },
+  { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' }
 ];
 
 @NgModule({
