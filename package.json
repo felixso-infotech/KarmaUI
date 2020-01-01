@@ -55,9 +55,13 @@
     "core-js": "^2.5.7",
     "es6-promise-plugin": "^4.2.2",
     "ionic-appauth": "^0.4.4",
+    "jquery": "^3.4.1",
+    "net": "^1.0.2",
     "ng-swagger-gen": "^1.8.1",
     "ngx-webstorage": "^4.0.1",
     "rxjs": "6.5.2",
+    "sockjs-client": "^1.4.0",
+    "stompjs": "^2.3.3",
     "sw-toolbox": "3.6.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
