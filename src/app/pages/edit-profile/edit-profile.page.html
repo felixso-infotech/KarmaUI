@@ -8,5 +8,54 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row justify-content-center align-items-stretch>
+      <ion-col>
+        <div class="profile-pic">
+          <ion-text class="not-set
+          " *ngIf="!this.userService.getRegisteredUser().profilePicture">
+            <h6>no profile pic</h6>
+          </ion-text>
+          <img *ngIf="this.userService.getRegisteredUser().profilePicture"
+            [src]="this.imageService.getSanitazedUrl(this.userService.getRegisteredUser().profilePictureContentType, this.userService.getRegisteredUser().profilePicture)" />
+        </div>
+        <input type="file" id="selectedFile" #selectedFile hidden accept="image/*"/>
+        <ion-item lines="none" class="color-label" (click)='uploadPic(selectedFile, 1, 250, true)'>
+          <ion-label>Profile pic</ion-label>
+          <ion-icon name="create"></ion-icon>
+        </ion-item>
+      </ion-col>
+      <ion-col align-self-stretch>
+        <div class="cover-photo">
+          <ion-text class="not-set
+          " *ngIf="!this.userService.getRegisteredUser().coverPhoto">
+            <h6>no cover photo</h6>
+          </ion-text>
+          <img *ngIf="this.userService.getRegisteredUser().coverPhoto"
+            [src]="this.imageService.getSanitazedUrl(this.userService.getRegisteredUser().coverPhotoContentType, this.userService.getRegisteredUser().coverPhoto)" />
+        </div>
+        <ion-item lines="none" class="color-label" (click)='uploadPic(selectedFile, 5/3, 500, false)'>
+          <ion-label>Cover photo</ion-label>
+          <ion-icon name="create"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="basic-info">
+      <ion-item>
+        <ion-label>First name</ion-label>
+        <ion-input [(ngModel)]="this.userService.getRegisteredUser().firstName" color="primary"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last name</ion-label>
+        <ion-input [(ngModel)]="this.userService.getRegisteredUser().lastName" color="primary"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item lines="none" class="full-width">
+        <ion-button shape="round" fill="outline" slot="end" size="large" (click)="updateRegisteredUser()">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
 </ion-content>
