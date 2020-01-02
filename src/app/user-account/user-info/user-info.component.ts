@@ -5,6 +5,7 @@ import { UserService } from '../../providers/user/user.service';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { AuthService } from '../../auth/auth.service';
 import { ModalController } from '@ionic/angular';
+import { ImageService } from '../../providers/image.service';
 
 @Component({
   selector: 'user-info',
@@ -12,6 +13,8 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./user-info.component.scss'],
 })
 export class UserInfoComponent implements OnInit {
+
+  coverPhoto: String="";
 
   cameraOptions: CameraOptions = {
     quality: 100,
@@ -26,18 +29,19 @@ export class UserInfoComponent implements OnInit {
   backgroundImageUrl: string;
 
   constructor(private camera: Camera, public gatewayAggregateQueryResourceService: GatewayAggregateQueryResourceService, public userService: UserService, public authService: AuthService,
-    public gatewayAggregateCommandResourceService: GatewayAggregateCommandResourceService, private modalController: ModalController) { }
+    public gatewayAggregateCommandResourceService: GatewayAggregateCommandResourceService, private modalController: ModalController, private imageService: ImageService) { }
 
   ngOnInit() {
     console.log("profile page user details");
     console.log("user, registered user", this.userService.getUser(), this.userService.getRegisteredUser());
-    this.gatewayAggregateQueryResourceService.getRegisteredUserByUserIdUsingGET(this.userService.getRegisteredUser().userId).subscribe(
+/*     this.gatewayAggregateQueryResourceService.getRegisteredUserByUserIdUsingGET(this.userService.getRegisteredUser().userId).subscribe(
       (result) => {
         this.registeredUserAggregate = result;
         this.createActivityBackgroundImageUrls(result);
         console.log("***Fetched Registered User***", result);
       }
-    );
+    ); */
+    this.coverPhoto = this.imageService.getBlobUrl(this.userService.getRegisteredUser().coverPhoto, this.userService.getRegisteredUser().coverPhotoContentType);
   }
 
   createActivityBackgroundImageUrls(registeredUserAggregate: RegisteredUserAggregate) {

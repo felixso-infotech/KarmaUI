@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Choose image</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="this.close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="cropping-area">
+    <image-cropper [imageBase64]="this.imageService.uploadedImage" [maintainAspectRatio]="true"
+      [aspectRatio]="this.imageService.cropImageProperties.aspectRatio"
+      [resizeToWidth]="this.imageService.cropImageProperties.resizeToWidth" format="jpeg"
+      (imageCropped)="this.imageService.cropImage($event)" [roundCropper]="this.imageService.cropImageProperties.roundCropper"></image-cropper>
+  </div>
+
+  <ion-item class="full-width" lines="none">
+    <ion-button size="large" slot="end" fill="outline" (click)="selectImage()">
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-content>

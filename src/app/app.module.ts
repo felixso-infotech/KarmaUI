@@ -19,6 +19,7 @@ import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor'
 import { Camera } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AuthGuardService } from './auth/auth-guard.service';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   imports: [

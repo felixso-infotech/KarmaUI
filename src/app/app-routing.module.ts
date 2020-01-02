@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'activity', loadChildren: './pages/activity/activity.module#ActivityPageModule' },
   { path: 'finish-activity', loadChildren: './pages/finish-activity/finish-activity.module#FinishActivityPageModule' },
   { path: 'single-done-activity', loadChildren: './pages/single-done-activity/single-done-activity.module#SingleDoneActivityPageModule' },
-  { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' }
+  { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule', canActivate: [AuthGuardService] }
 ];
 
 @NgModule({

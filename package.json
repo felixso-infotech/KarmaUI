@@ -58,6 +58,7 @@
     "jquery": "^3.4.1",
     "net": "^1.0.2",
     "ng-swagger-gen": "^1.8.1",
+    "ngx-image-cropper": "^2.0.2",
     "ngx-webstorage": "^4.0.1",
     "rxjs": "6.5.2",
     "sockjs-client": "^1.4.0",

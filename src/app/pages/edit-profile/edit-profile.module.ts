@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { EditProfilePage } from './edit-profile.page';
+import { ImageCropperUploadComponent } from '../../image-cropper-upload/image-cropper-upload.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 const routes: Routes = [
   {
@@ -19,8 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ImageCropperModule
   ],
-  declarations: [EditProfilePage]
+  declarations: [EditProfilePage,  ImageCropperUploadComponent],
+  entryComponents: [ ImageCropperUploadComponent]
 })
 export class EditProfilePageModule {}
