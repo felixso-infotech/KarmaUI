@@ -10,7 +10,7 @@ import * as $ from 'jquery'
 })
 export class MessagesPage implements OnInit {
 
-  private serverUrl = 'http://localhost:8080/socket'
+  private serverUrl = 'http://35.208.4.27:8045/socket'
   private title = 'WebSockets chat';
   private stompClient;
   chat_input:string;
