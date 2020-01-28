@@ -16,18 +16,26 @@
     </div>
   </div>
  -->
-
  <div class="chat-container">
   <div class="chat">
-    <div class="message"></div>
+    <div class="message">
+  <ion-list no-lines class="msgbubble" *ngFor="let msg of messages">
+    <div class="innermsg left">
+      <p>{{msg}} </p>
+    </div>
+    <div class="innermsg right">
+       <p> {{msg}} </p>
+    </div>
+</ion-list>
+
   </div>
 </div>
-
+ </div>
 </ion-content>
 
 <ion-footer>
   <ion-item>
-    <ion-input type="text" [(ngModel)]="chat_input" placeholder="Enter message"></ion-input>
+    <ion-input id= "message-input" type="text" [(ngModel)]="chat_input" placeholder="Enter message"></ion-input>
     <ion-icon name="md-send" (click)="sendMessage(chat_input)" item-right></ion-icon>
   </ion-item>
 </ion-footer>
