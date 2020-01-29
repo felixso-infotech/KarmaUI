@@ -36,7 +36,7 @@ export class UserService {
 
   configureUsers(){
       console.log('configuring user');
-      
+
       this.authService.getUserInfo().then(data=>{
         this.user=data;
         console.log("The user from the auth 2 server",this.user);
@@ -47,13 +47,14 @@ export class UserService {
         }, error => {
           console.log('no user found in the server', error);
           if (error.status == 500) {
+            console.log('*******inside error');
             this.gatewayAggregateCommandResource.createRegisteredUserUsingPOST({
               userId: this.user.preferred_username,
               email: this.user.email,
               firstName: this.user.given_name,
               createdDate: this.dateService.getCurrentTime()
             }).subscribe(response => {
-              
+
               this.registeredUser= response;
               console.log('new registered user created', this.getRegisteredUser());
             }, err => console.log('error while creating the new registered user', err))

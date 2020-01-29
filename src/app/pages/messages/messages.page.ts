@@ -12,7 +12,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class MessagesPage implements OnInit {
 
-  private serverUrl = 'http://35.208.4.27:8045/socket';
+  private serverUrl = 'http://34.66.94.234:8045/socket';
   private title = 'WebSockets chat';
   private stompClient;
   chat_input: any;
@@ -30,7 +30,8 @@ export class MessagesPage implements OnInit {
 
   ngOnInit() {
     console.log('inside message page');
-     console.log('user, registered user', this.userService.getUser(), this.userService.getRegisteredUser());
+     console.log('user', this.userService.getUser());
+     console.log('RegisteredUser', this.userService.getRegisteredUser());
      this.userId = this.userService.getRegisteredUser().id;
      console.log('user id***', this.userId);
     }
