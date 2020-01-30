@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
@@ -15,57 +17,49 @@ export class MessagesPage implements OnInit {
   private serverUrl = 'http://34.66.94.234:8045/socket';
   private title = 'WebSockets chat';
   private stompClient;
-  chat_input: any;
+  chat_input:any;
   chats = [];
   messages: String[] = [];
-  userId: any;
-  message = {
-    content: '',
-    sender: ''
-  };
+  userId : any;
 
   constructor(public userService: UserService, public authService: AuthService) {
     this.initializeWebSocketConnection();
   }
 
   ngOnInit() {
-    console.log('inside message page');
-     console.log('user', this.userService.getUser());
-     console.log('RegisteredUser', this.userService.getRegisteredUser());
-     this.userId = this.userService.getRegisteredUser().id;
-     console.log('user id***', this.userId);
+    console.log("inside message page");
+     console.log("user, registered user", this.userService.getUser(), this.userService.getRegisteredUser());
+     this.userId=this.userService.getRegisteredUser().id;
+     console.log('user id***',this.userId);
     }
 
-  initializeWebSocketConnection() {
-    const ws = new SockJS(this.serverUrl);
+  initializeWebSocketConnection(){
+    let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
-    const that = this;
+    let that = this;
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe('/chat', (message) => {
-        if (message.body) {
+      that.stompClient.subscribe("/chat", (message) => {
+        if(message.body) {
          // $(".chat").append("<div class='message'>"+message.body+"</div>")
         that.messages.push(message.body);
 
          console.log(message.body);
 
-         console.log('messages content**', that.messages[0]);
+         console.log('messages content**',that.messages[0]);
 
         }
       });
     });
   }
 
-  sendMessage(message) {
-//	const that = this;
-	 this.message = {
-    content: this.chat_input,
+  sendMessage(message){
+	//let that = this;
+	var msg = {
+    content: $("#message-input").val(),
    // text: document.getElementById("text").value,
     sender: this.userId
   };
-//  that.message.content =$('#message-input').val();
-  // that.message.sender;: this.userId;
-
-    this.stompClient.send('/app/send/message' , {}, JSON.stringify(message));
+    this.stompClient.send("/app/send/message" , {}, JSON.stringify(msg));
     $('#input').val('');
 
   }
