@@ -1,11 +1,10 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import * as $ from 'jquery';
 import { UserService } from '../../providers/user/user.service';
 import { AuthService } from '../../auth/auth.service';
+import { Message } from './message';
 
 @Component({
   selector: 'messages',
@@ -14,13 +13,14 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class MessagesPage implements OnInit {
 
-  private serverUrl = 'http://34.66.94.234:8045/socket';
+  private serverUrl = 'http://35.209.40.232:8045/socket';
   private title = 'WebSockets chat';
   private stompClient;
   chat_input:any;
   chats = [];
-  messages: String[] = [];
+  messages: Message[] = [];
   userId : any;
+  message :Message;
 
   constructor(public userService: UserService, public authService: AuthService) {
     this.initializeWebSocketConnection();
@@ -28,8 +28,9 @@ export class MessagesPage implements OnInit {
 
   ngOnInit() {
     console.log("inside message page");
+    console.log("**********current user{}",this.authService.getUserInfo)
      console.log("user, registered user", this.userService.getUser(), this.userService.getRegisteredUser());
-     this.userId=this.userService.getRegisteredUser().id;
+     this.userId=this.userService.getRegisteredUser().userId;
      console.log('user id***',this.userId);
     }
 
@@ -37,15 +38,14 @@ export class MessagesPage implements OnInit {
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
+    console.log('inside initializeWebSocketConnection');
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe("/chat", (message) => {
-        if(message.body) {
-         // $(".chat").append("<div class='message'>"+message.body+"</div>")
-        that.messages.push(message.body);
+      that.stompClient.subscribe("/chat", (msg) => {
+        if(msg.body) {
 
-         console.log(message.body);
-
-         console.log('messages content**',that.messages[0]);
+        that.message=JSON.parse(msg.body);
+        console.log('that message body{}',that.message);
+        that.messages.push(that.message);
 
         }
       });
