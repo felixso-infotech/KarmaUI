@@ -78,3 +78,39 @@
 .msgbubble {
   margin-bottom: 10px;
 }
+
+
+
+
+.left-bubble {
+  position: relative;
+  background: #dcf8c6;
+border-top-right-radius: .4em;
+border-bottom-left-radius: .4em;
+border-bottom-right-radius: .4em;
+padding: 5px 10px 10px;
+left: 5%;
+span.msg-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: blue;
+}
+span.msg-date {
+  font-size: 10px;
+}
+}
+
+.right-bubble {
+  position: relative;
+  background: #dcf8c6;
+  border-top-left-radius: .4em;
+border-bottom-left-radius: .4em;
+border-bottom-right-radius: .4em;
+padding: 5px 10px 10px;
+left: 15%;
+span.msg-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: green;
+}
+}

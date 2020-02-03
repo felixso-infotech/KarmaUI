@@ -20,11 +20,13 @@
   <div class="chat">
     <div class="message">
   <ion-list no-lines class="msgbubble" *ngFor="let msg of messages">
-    <div class="innermsg left" *ngIf="this.userId!=msg.sender">
-      <p>{{msg.content}} </p>
+    <div class="right-bubble" *ngIf="this.userId==msg.sender">
+      <span class="msg-name">{{msg.sender}}</span>
+      <p text-wrap>{{msg.content}}</p>
     </div>
-    <div class="innermsg right" *ngIf="this.userId==msg.sender">
-      <p>{{msg.content}} </p>
+    <div class="left-bubble" *ngIf="this.userId!=msg.sender">
+      <span class="msg-name">{{msg.sender}}</span>
+      <p text-wrap>{{msg.content}}</p>
     </div>
 </ion-list>
 
